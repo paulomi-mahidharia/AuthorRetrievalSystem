@@ -4,5 +4,6 @@ public class SearchCriteria {
 	
 	String authorName;
 	String title;
-	
+	int papersPublished;
+	String conferenceName;
 }
