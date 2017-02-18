@@ -1,5 +1,13 @@
 package com.neu.msd.dblp.model;
 
-public class FilterCriteria {
+import java.sql.Date;
 
+public class FilterCriteria {
+	
+	Date startDate;
+	Date endDate;
+	String location;
+	String gender;
+	String domain;
+	int numOfResults;
 }
