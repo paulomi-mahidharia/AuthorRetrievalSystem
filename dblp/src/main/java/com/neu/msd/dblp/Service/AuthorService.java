@@ -9,10 +9,10 @@ public interface AuthorService {
 	
 	/**
 	 * Searches for author by name
-	 * @param name
+	 * @param name	
 	 * @return Author with matching name
 	 */
-	public Author getAuthor(String name);
+	public Author searchAuthorByName(String name);
 	
 	/**
 	 * search authors based on search criteria
