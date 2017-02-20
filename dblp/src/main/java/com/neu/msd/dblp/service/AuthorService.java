@@ -1,25 +1,19 @@
 package com.neu.msd.dblp.service;
 
-import java.util.List;
-
 import com.neu.msd.dblp.model.*;
-import com.neu.msd.dblp.model.SearchCriteria;
 
+/**
+ * This service declares the functions related to an author
+ * @author paulomimahidharia
+ *
+ */
 public interface AuthorService {
 	
 	/**
-	 * Searches for author by name
-	 * @param name	
-	 * @return Author with matching name
+	 * Retrieves an author's profile for the given authorId
+	 * @param authorId Id of an author
+	 * @return author's profile information 
 	 */
-	public Author searchAuthorByName(String name);
-	
-	/**
-	 * search authors based on search criteria
-	 * @param criteria
-	 * @return List of Authors matching the search criteria.
-	 */
-	public List<Author> searchAuthors(SearchCriteria criteria);
-	
+	public Author getAuthorProfile(int authorId);
 	
 }

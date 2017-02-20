@@ -17,7 +17,7 @@ public interface SearchService {
 	 * @param criteria search criteria 
 	 * @return list of authors matching the criteria
 	 */
-	public List<Author> searchAuthors(SearchCriteria criteria);
+	public List<Author> searchAuthorsByCriteria(SearchCriteria criteria);
 	
 	/**
 	 * Search for authors who have a matching profile as the given author

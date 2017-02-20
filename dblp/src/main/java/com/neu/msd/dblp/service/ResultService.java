@@ -2,8 +2,8 @@ package com.neu.msd.dblp.service;
 
 import java.util.List;
 
+import com.neu.msd.dblp.model.Author;
 import com.neu.msd.dblp.model.FilterCriteria;
-import com.neu.msd.dblp.model.Result;
 
 /**
  * 
@@ -17,14 +17,14 @@ public interface ResultService {
 	 * @param criteria criteria for filtering results
 	 * @return list of result records 
 	 */
-	public List<Result> filterResult(FilterCriteria criteria);
+	public List<Author> filterResult(FilterCriteria criteria);
 	
 	/**
 	 * Sorts by the given element (column name in result table)
 	 * @param sortBy element to sort by
 	 * @return list of result records
 	 */
-	public List<Result> sortResult(String sortBy);
+	public List<Author> sortResult(String resultAttribute);
 	
 	/**
 	 * Exports result in PDF, CSV, or other format

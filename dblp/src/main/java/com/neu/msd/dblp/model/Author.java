@@ -18,4 +18,5 @@ public class Author {
 	List<Inproceeding> inproceedings;
 	List<Article> articles;
 	List<Thesis> thesis;
+	List<Journal> journals;
 }

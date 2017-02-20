@@ -12,4 +12,5 @@ public class Journal {
 	int volume;
 	String url;
 	List<Article> articles;
+	List<Author> authors;
 }
