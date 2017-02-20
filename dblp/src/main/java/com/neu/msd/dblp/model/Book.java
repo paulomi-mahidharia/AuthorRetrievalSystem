@@ -1,3 +1,5 @@
+package com.neu.msd.dblp.model;
+
 class Book
 {
 	String isbn;
