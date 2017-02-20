@@ -1,6 +1,6 @@
 package com.neu.msd.dblp.model;
 
-import com.neu.msd.dblp.model.*;
+import java.util.List;
 
 /**
  * This class if the bean/model class for storing a result record
@@ -9,6 +9,5 @@ import com.neu.msd.dblp.model.*;
  */
 public class Result {
 	
-	Author authorName;
-	String authorWebsite;
+	List<Author> authors;
 }
