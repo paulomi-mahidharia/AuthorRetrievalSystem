@@ -1,4 +1,4 @@
-package com.neu.msd.dblp.Service;
+package com.neu.msd.dblp.service;
 
 public interface UserService {
 	/**

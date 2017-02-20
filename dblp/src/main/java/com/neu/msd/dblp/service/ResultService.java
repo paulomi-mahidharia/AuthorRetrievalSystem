@@ -1,4 +1,4 @@
-package com.neu.msd.dblp.Service;
+package com.neu.msd.dblp.service;
 
 import java.util.List;
 
