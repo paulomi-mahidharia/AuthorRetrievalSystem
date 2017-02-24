@@ -3,8 +3,11 @@
 Phase 2 - Initial System Design
 
 DELIVERABLES:
+
 1. FINAL USE CASES: phase2/USE-CASE.pdf
+
 2. TEAM DIVISION: phase2/SUB-TEAMS.pdf
+
 3. UML DIAGRAM: phase2/staticUML/CLASS-DIAGRAM.pdf
               : phase2/dynamicUML/SEQUENCE-FULL-SYSTEM.pdf
               : phase2/dynamicUML/SEQUENCE-FRONT-END.pdf
