@@ -8,13 +8,11 @@ DELIVERABLES:
 
 2. TEAM DIVISION: phase2/SUB-TEAMS.pdf
 
-3. UML DIAGRAM: phase2/staticUML/CLASS-DIAGRAM.pdf
-
-              : phase2/dynamicUML/SEQUENCE-FULL-SYSTEM.pdf
-              
-              : phase2/dynamicUML/SEQUENCE-FRONT-END.pdf
-              
-              : phase2/dynamicUML/SEQUENCE-QUERY-ENGINE.pdf
+3. UML DIAGRAM: phase2/UMLdiagrams/
+    - staticUML/CLASS-DIAGRAM.pdf
+    - dynamicUML/SEQUENCE-FULL-SYSTEM.pdf
+    - dynamicUML/SEQUENCE-FRONT-END.pdf
+    - dynamicUML/SEQUENCE-QUERY-ENGINE.pdf
 
 The interfaces are defined in the project itself. The project also consists of
 Bean classes for DB entities, which are used in interface design.
