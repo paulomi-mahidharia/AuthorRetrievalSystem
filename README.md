@@ -8,9 +8,9 @@
 2. TEAM DIVISION: [phase2/SUB-TEAMS.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/SUB-TEAMS.pdf)
 3. UML DIAGRAM: [phase2/UMLdiagrams/](https://github.ccs.neu.edu/CS5500-Spring2017/team3/tree/master/phase2/UMLdiagrams)
  * [staticUML/CLASS-DIAGRAM.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/CLASS-DIAGRAM.pdf)
- * seqDiagram/SEQUENCE-FULL-SYSTEM.pdf
- * seqDiagram/SEQUENCE-FRONT-END.pdf
- * seqDiagram/SEQUENCE-QUERY-ENGINE.pdf
+ * [seqDiagram/SEQUENCE-FULL-SYSTEM.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/SEQ_Diagrams/Sequence_diagram_entire_system.pdf)
+ * [seqDiagram/SEQUENCE-FRONT-END.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/SEQ_Diagrams/Front-End%20Seq.pdf)
+ * [seqDiagram/SEQUENCE-QUERY-ENGINE.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/SEQ_Diagrams/Query_Engine_SEQ.png)
 
 The interfaces are defined in the project directory named dblp.
 The project also contains model classes and data structures used while defining the interfaces.
