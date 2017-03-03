@@ -1,17 +1,17 @@
 package com.neu.msd.dblp;
 
+import static org.junit.Assert.assertTrue;
 
+import org.junit.Test;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Unit test for simple App.
  */
 public class SearchTest extends TestCase
 {
-	protected int value1, value2;
+	private int value1, value2;
 	
 	  // assigning the values
 	   protected void setUp(){
@@ -20,8 +20,10 @@ public class SearchTest extends TestCase
 	   }
 
 	   // test method to add two values
+	   @Test
 	   public void testAdd(){
-	      double result = value1 + value2;
+	      int result = value1 + value2;
+	      System.out.println(result);
 	      assertTrue(result == 6);
 	   }
 	   
