@@ -1,24 +1,23 @@
 # Team 3
 
-Phase 2 - Initial System Design
+###Phase 2 - Initial System Design
 
-DELIVERABLES:
+**DELIVERABLES:**
 
-1. FINAL USE CASES: phase2/USE-CASE.pdf
+1. FINAL USE CASES: [phase2/USE-CASE.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/USE-CASES.pdf)
+2. TEAM DIVISION: [phase2/SUB-TEAMS.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/SUB-TEAMS.pdf)
+3. UML DIAGRAM: [phase2/UMLdiagrams/](https://github.ccs.neu.edu/CS5500-Spring2017/team3/tree/master/phase2/UMLdiagrams)
+ * [staticUML/CLASS-DIAGRAM.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/CLASS-DIAGRAM.pdf)
+ * [seqDiagram/SEQUENCE-FULL-SYSTEM.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/SEQ_Diagrams/Sequence_diagram_entire_system.pdf)
+ * [seqDiagram/SEQUENCE-FRONT-END.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/SEQ_Diagrams/Front-End%20Seq.pdf)
+ * [seqDiagram/SEQUENCE-QUERY-ENGINE.pdf](https://github.ccs.neu.edu/CS5500-Spring2017/team3/blob/master/phase2/UMLdiagrams/SEQ_Diagrams/Query_Engine_SEQ.png)
 
-2. TEAM DIVISION: phase2/SUB-TEAMS.pdf
+The interfaces are defined in the project directory named dblp.
+The project also contains model classes and data structures used while defining the interfaces.
 
-3. UML DIAGRAM: phase2/UMLdiagrams/
-    - staticUML/CLASS-DIAGRAM.pdf
-    - dynamicUML/SEQUENCE-FULL-SYSTEM.pdf
-    - dynamicUML/SEQUENCE-FRONT-END.pdf
-    - dynamicUML/SEQUENCE-QUERY-ENGINE.pdf
-
-The interfaces are defined in the project itself. The project also consists of
-Bean classes for DB entities, which are used in interface design.
-
-4. INTERFACES : dblp/src/main/java/com/neu/msd/dblp/service/
-    - UserService : Interface that contains functions related to the User
-    - SearchService : Interface that contains functions related to the Search
-    - AuthorService : Interface that contains functions related to the Author
-    - ResultService : Interface that contains functions related to the Result
+4. INTERFACES : [dblp/src/main/java/com/neu/msd/dblp/service/](https://github.ccs.neu.edu/CS5500-Spring2017/team3/tree/master/dblp/src/main/java/com/neu/msd/dblp/service)
+ * UserService: Interface that contains functions related to the User operations
+ * SearchService: Interface that contains functions related to the Search opera
+ * AuthorService: Interface that contains functions related to the Author
+ * ResultService: Interface that contains functions related to the Result
+ * ImportService: Interface that contains functions related to Import dataset functionality.
