@@ -21,3 +21,11 @@ The project also contains model classes and data structures used while defining 
  * AuthorService: Interface that contains functions related to the Author
  * ResultService: Interface that contains functions related to the Result
  * ImportService: Interface that contains functions related to Import dataset functionality.
+
+### The project follows git-flow process
+ 1. Please open a ticket first for the change you are going to work
+ 1. Then create a feature branch having name same as jira ticket id.
+ 1. Push all your changes in the feature branch.
+ 1. Upon development assign it to a team member for code review.
+ 1. Once review is successful merge the feature branch to develop.
+ 1. Follow same workflow for making releases and bugfixes.
