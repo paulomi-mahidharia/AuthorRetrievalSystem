@@ -7,5 +7,5 @@ public interface UserService {
 	 * @param password of the user
 	 * @return If the user has valid credentials to access the system.
 	 */
-	public boolean login(String username, String password );
+	public boolean login(String username, String password);
 }
