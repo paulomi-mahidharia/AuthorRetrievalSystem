@@ -8,7 +8,7 @@ import org.junit.runners.Suite.*;
 @RunWith(Suite.class)
 
 @SuiteClasses({ 
-   SearchTest.class, UserTest.class
+   UserTest.class, ResultTest.class
 })
 
 public class AppTestSuit {

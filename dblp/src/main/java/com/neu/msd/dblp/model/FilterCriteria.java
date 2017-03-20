@@ -1,12 +1,17 @@
 package com.neu.msd.dblp.model;
 
-import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class FilterCriteria {
 	
 	Date startDate;
 	Date endDate;
+	String displayStartDate;
+	String displayEndDate;
 	String location;
 	String gender;
 	String fieldOfService;
@@ -16,12 +21,26 @@ public class FilterCriteria {
 	List<Integer> journalIds;
 	Boolean includeJournals;
 	
-	public FilterCriteria(Date startDate, Date endDate, String location, String gender, String fieldOfService,
-			int numOfResults, List<Integer> conferenceIds, Boolean includeConferences, List<Integer> journalIds,
-			Boolean includeJournals) {
+	public FilterCriteria() {
+		
+		this.displayStartDate = "";
+		this.displayEndDate = "";
+		this.location = "";
+		this.gender = "";
+		this.fieldOfService = "";
+		this.numOfResults = 0;
+		this.conferenceIds = new ArrayList<Integer>();
+		this.includeConferences = false;
+		this.journalIds = new ArrayList<Integer>();
+		this.includeJournals = false;
+	}
+
+	public FilterCriteria(String displayStartDate, String displayEndDate, String location,
+			String gender, String fieldOfService, int numOfResults, List<Integer> conferenceIds,
+			Boolean includeConferences, List<Integer> journalIds, Boolean includeJournals) {
 		super();
-		this.startDate = startDate;
-		this.endDate = endDate;
+		this.displayStartDate = displayStartDate;
+		this.displayEndDate = displayEndDate;
 		this.location = location;
 		this.gender = gender;
 		this.fieldOfService = fieldOfService;
@@ -111,4 +130,43 @@ public class FilterCriteria {
 	public void setIncludeJournals(Boolean includeJournals) {
 		this.includeJournals = includeJournals;
 	}
+	
+	public String getDisplayStartDate() {
+		return displayStartDate;
+	}
+
+	public void setDisplayStartDate(String displayStartDate) {
+		this.displayStartDate = displayStartDate;
+		
+		if(displayEndDate != null){ 
+			SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+			try {
+				if(displayStartDate == "") this.setStartDate(new Date());
+				this.setStartDate(fmt.parse(displayStartDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+	public String getDisplayEndDate() {
+		return displayEndDate;
+	}
+
+	public void setDisplayEndDate(String displayEndDate) {
+		this.displayEndDate = displayEndDate;
+		
+		if(displayEndDate != null){ 
+			SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd");
+			try {
+				if(displayEndDate == "") this.setStartDate(new Date());
+				else this.setEndDate(fmt.parse(displayEndDate));
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
 }
