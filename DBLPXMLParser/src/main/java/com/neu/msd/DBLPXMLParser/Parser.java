@@ -15,8 +15,10 @@ import javax.xml.stream.XMLStreamException;
 import com.neu.msd.DBLPXMLParser.config.ParserFactory;
 import com.neu.msd.DBLPXMLParser.handler.HandleArticle;
 import com.neu.msd.DBLPXMLParser.handler.HandlePaper;
+import com.neu.msd.DBLPXMLParser.handler.HandleProceeding;
 import com.neu.msd.DBLPXMLParser.model.Article;
 import com.neu.msd.DBLPXMLParser.model.Paper;
+import com.neu.msd.DBLPXMLParser.model.Proceeding;
 
 
 public class Parser {
@@ -25,10 +27,9 @@ public class Parser {
 		
 		//stax
 		XMLInputFactory xif = XMLInputFactory.newFactory();
-		FileInputStream in = new FileInputStream("inpro.xml");
+		FileInputStream in = new FileInputStream("dblp.xml");
 		XMLEventReader xer = xif.createXMLEventReader(in);
 		
-		ParserFactory parserFactory = new ParserFactory();
 		xer.next();
 		
 		/*JAXBContext jaxbContextPaper = JAXBContext.newInstance(Paper.class);
@@ -37,20 +38,24 @@ public class Parser {
 		JAXBContext jaxbContextArticle = JAXBContext.newInstance(Article.class);
 		Unmarshaller jaxbUnmarshallerArticle = jaxbContextArticle.createUnmarshaller();*/
 		
-		Unmarshaller jaxbUnmarshallerPaper = parserFactory.getInstance(Paper.class);
-		Unmarshaller jaxbUnmarshallerArticle = parserFactory.getInstance(Article.class);
+		Unmarshaller jaxbUnmarshallerPaper = ParserFactory.getInstance(Paper.class);
+		Unmarshaller jaxbUnmarshallerArticle = ParserFactory.getInstance(Article.class);
+		Unmarshaller jaxbUnmarshallerProceeding = ParserFactory.getInstance(Proceeding.class);
 		
 		List<Paper> paperList = new ArrayList<Paper>();
 		List<Article> articleList = new ArrayList<Article>();
+		List<Proceeding> proceedingList = new ArrayList<Proceeding>();
 		
 		HandlePaper handlePaper = new HandlePaper();
 		HandleArticle handleArticle = new HandleArticle();
+		HandleProceeding handleProceeding = new HandleProceeding();
 		
 		int counterPaper = 0;
 		int counterArticle = 0;
+		int counterProceeding = 0;
 		
 		while(xer.hasNext()){
-			if(xer.peek().isStartElement() 
+			/*if(xer.peek().isStartElement() 
 					&& xer.peek().asStartElement().getName().getLocalPart().equals("inproceedings")){
 				Paper paper = (Paper) jaxbUnmarshallerPaper.unmarshal(xer);
 				paperList.add(paper);
@@ -61,7 +66,18 @@ public class Parser {
 					paperList = new ArrayList<Paper>();
 				}
 				counterPaper++;
-			}else if(xer.peek().isStartElement() 
+			}else*/ if(xer.peek().isStartElement() 
+					&& xer.peek().asStartElement().getName().getLocalPart().equals("proceedings")){
+				
+				Proceeding proceeding = (Proceeding) jaxbUnmarshallerProceeding.unmarshal(xer);
+				proceedingList.add(proceeding);
+				if(proceedingList.size() == 500){
+					handleProceeding.insertProceedingRecords(proceedingList);
+					//empty the list
+					proceedingList = new ArrayList<Proceeding>();
+				}
+				counterProceeding++;
+			}/*else if(xer.peek().isStartElement() 
 					&& xer.peek().asStartElement().getName().getLocalPart().equals("article")){
 				
 				Article article = (Article) jaxbUnmarshallerArticle.unmarshal(xer);
@@ -72,7 +88,7 @@ public class Parser {
 					articleList = new ArrayList<Article>();
 				}
 				counterArticle++;
-			}else{
+			}*/else{
 				// any other information if you need to parse
 			}
 			xer.nextEvent();
@@ -90,8 +106,15 @@ public class Parser {
 			articleList = new ArrayList<Article>();
 		}
 		
+		// handle unprocessed elements in the proceedingList
+		if(!proceedingList.isEmpty()){
+			handleProceeding.insertProceedingRecords(proceedingList);
+			proceedingList = new ArrayList<Proceeding>();
+		}
+		
 		System.out.println("No. of Papers Processed:"+counterPaper);
 		System.out.println("No. of Articles Processed:"+counterArticle);
+		System.out.println("No. of Proceeding Processed:"+counterProceeding);
 		xer.close();
 		
 	}

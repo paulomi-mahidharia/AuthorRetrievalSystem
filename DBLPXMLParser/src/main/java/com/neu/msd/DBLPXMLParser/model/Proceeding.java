@@ -9,72 +9,84 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement(name="article")
+@XmlRootElement(name="proceedings")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Article {
+public class Proceeding {
 
 	@XmlAttribute(name="key")
 	String key;
 	
-	@XmlElement(name="author")
-	List<String> authors = new ArrayList<String>();
+	@XmlElement(name="editor")
+	List<String> editors = new ArrayList<String>();
 	
 	@XmlElement(name="title")
 	String title;
 	
-	@XmlElement(name="journal")
-	String journal;
+	@XmlElement(name="booktitle")
+	String bookTitle;
+	
+	@XmlElement(name="isbn")
+	String isbn;
 	
 	@XmlElement(name="year")
 	String year;
-	
+
 	@XmlElement(name="url")
 	String url;
-	
-	@XmlElement(name="crossref")
-	String conference;
-	
+
 	public String getKey() {
 		return key;
 	}
+
 	public void setKey(String key) {
 		this.key = key;
 	}
-	
-	public List<String> getAuthors() {
-		return authors;
+
+	public List<String> getEditors() {
+		return editors;
 	}
-	public void setAuthors(List<String> authors) {
-		this.authors = authors;
+
+	public void setEditors(List<String> editors) {
+		this.editors = editors;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getJournal() {
-		return journal;
+
+	public String getBookTitle() {
+		return bookTitle;
 	}
-	public void setJournal(String journal) {
-		this.journal = journal;
+
+	public void setBookTitle(String bookTitle) {
+		this.bookTitle = bookTitle;
 	}
+
+	public String getIsbn() {
+		return isbn;
+	}
+
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
+	}
+	
 	public String getYear() {
 		return year;
 	}
+
 	public void setYear(String year) {
 		this.year = year;
 	}
+
 	public String getUrl() {
 		return url;
 	}
+
 	public void setUrl(String url) {
 		this.url = url;
-	}
-	public String getConference() {
-		return conference;
-	}
-	public void setConference(String conference) {
-		this.conference = conference;
 	}
 }

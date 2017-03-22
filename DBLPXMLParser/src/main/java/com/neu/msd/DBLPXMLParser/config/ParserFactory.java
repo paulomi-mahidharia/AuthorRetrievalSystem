@@ -6,7 +6,7 @@ import javax.xml.bind.Unmarshaller;
 
 public class ParserFactory {
 	
-	public <T> Unmarshaller getInstance(Class<T> modelClass) throws JAXBException{
+	public static <T> Unmarshaller getInstance(Class<T> modelClass) throws JAXBException{
 		JAXBContext jaxbContext = JAXBContext.newInstance(modelClass);
 		Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 		

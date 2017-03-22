@@ -18,7 +18,7 @@ public class HandleArticle {
 		conn.setAutoCommit(false);
 		stmt_article = conn
 				.prepareStatement("insert into article(article_key, title, year, journal, url) "
-						+ "values (?,?,?,?,?)");
+						+ "values (?,?,?,?,?,?)");
 		
 		stmt_author_article_mapping = conn
 				.prepareStatement("insert into author_article_mapping(name, article_key) values (?, ?)");
@@ -40,6 +40,7 @@ public class HandleArticle {
 			stmt_article.setInt(3, year);
 			stmt_article.setString(4, a.getJournal());
 			stmt_article.setString(5, a.getUrl());
+			stmt_article.setString(6, a.getConference());
 			stmt_article.addBatch();
 			
 			for(String auth: a.getAuthors()){
