@@ -16,9 +16,13 @@ import com.neu.msd.DBLPXMLParser.config.ParserFactory;
 import com.neu.msd.DBLPXMLParser.handler.HandleArticle;
 import com.neu.msd.DBLPXMLParser.handler.HandlePaper;
 import com.neu.msd.DBLPXMLParser.handler.HandleProceeding;
+import com.neu.msd.DBLPXMLParser.handler.HandleThesis;
 import com.neu.msd.DBLPXMLParser.model.Article;
+import com.neu.msd.DBLPXMLParser.model.MasterThesis;
 import com.neu.msd.DBLPXMLParser.model.Paper;
+import com.neu.msd.DBLPXMLParser.model.PhdThesis;
 import com.neu.msd.DBLPXMLParser.model.Proceeding;
+import com.neu.msd.DBLPXMLParser.model.Thesis;
 
 
 public class Parser {
@@ -41,18 +45,23 @@ public class Parser {
 		Unmarshaller jaxbUnmarshallerPaper = ParserFactory.getInstance(Paper.class);
 		Unmarshaller jaxbUnmarshallerArticle = ParserFactory.getInstance(Article.class);
 		Unmarshaller jaxbUnmarshallerProceeding = ParserFactory.getInstance(Proceeding.class);
+		Unmarshaller jaxbUnmarshallerPhdThesis = ParserFactory.getInstance(PhdThesis.class);
+		Unmarshaller jaxbUnmarshallerMasterThesis = ParserFactory.getInstance(MasterThesis.class);
 		
 		List<Paper> paperList = new ArrayList<Paper>();
 		List<Article> articleList = new ArrayList<Article>();
 		List<Proceeding> proceedingList = new ArrayList<Proceeding>();
+		List<Thesis> thesisList = new ArrayList<Thesis>();
 		
 		HandlePaper handlePaper = new HandlePaper();
 		HandleArticle handleArticle = new HandleArticle();
 		HandleProceeding handleProceeding = new HandleProceeding();
+		HandleThesis handleThesis = new HandleThesis();
 		
 		int counterPaper = 0;
 		int counterArticle = 0;
 		int counterProceeding = 0;
+		int counterThesis = 0;
 		
 		while(xer.hasNext()){
 			/*if(xer.peek().isStartElement() 
@@ -66,7 +75,7 @@ public class Parser {
 					paperList = new ArrayList<Paper>();
 				}
 				counterPaper++;
-			}else*/ if(xer.peek().isStartElement() 
+			}else if(xer.peek().isStartElement() 
 					&& xer.peek().asStartElement().getName().getLocalPart().equals("proceedings")){
 				
 				Proceeding proceeding = (Proceeding) jaxbUnmarshallerProceeding.unmarshal(xer);
@@ -77,7 +86,7 @@ public class Parser {
 					proceedingList = new ArrayList<Proceeding>();
 				}
 				counterProceeding++;
-			}/*else if(xer.peek().isStartElement() 
+			}else if(xer.peek().isStartElement() 
 					&& xer.peek().asStartElement().getName().getLocalPart().equals("article")){
 				
 				Article article = (Article) jaxbUnmarshallerArticle.unmarshal(xer);
@@ -88,7 +97,24 @@ public class Parser {
 					articleList = new ArrayList<Article>();
 				}
 				counterArticle++;
-			}*/else{
+			} else*/ if(xer.peek().isStartElement() 
+					&& (xer.peek().asStartElement().getName().getLocalPart().equals("phdthesis")
+							||xer.peek().asStartElement().getName().getLocalPart().equals("mastersthesis"))){
+				
+				Thesis thesis;
+				if(xer.peek().asStartElement().getName().getLocalPart().equals("phdthesis")){
+					thesis = (PhdThesis) jaxbUnmarshallerPhdThesis.unmarshal(xer);
+				}else{
+					thesis = (MasterThesis) jaxbUnmarshallerMasterThesis.unmarshal(xer);
+				}
+				thesisList.add(thesis);
+				if(thesisList.size() == 500){
+					handleThesis.insertThesisRecords(thesisList);
+					//empty the list
+					thesisList = new ArrayList<Thesis>();
+				}
+				counterThesis++;
+			}else{
 				// any other information if you need to parse
 			}
 			xer.nextEvent();
@@ -112,9 +138,16 @@ public class Parser {
 			proceedingList = new ArrayList<Proceeding>();
 		}
 		
+		// handle unprocessed elements in the thesisList
+		if(!thesisList.isEmpty()){
+			handleThesis.insertThesisRecords(thesisList);
+			thesisList = new ArrayList<Thesis>();
+		}
+		
 		System.out.println("No. of Papers Processed:"+counterPaper);
 		System.out.println("No. of Articles Processed:"+counterArticle);
 		System.out.println("No. of Proceeding Processed:"+counterProceeding);
+		System.out.println("No. of Thesis Processed:"+counterThesis);
 		xer.close();
 		
 	}

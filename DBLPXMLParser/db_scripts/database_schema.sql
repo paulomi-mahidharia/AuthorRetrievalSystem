@@ -61,4 +61,17 @@ CREATE TABLE proceeding (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+DROP TABLE IF EXISTS `thesis`;
+CREATE TABLE thesis (
+  thesis_id INT AUTO_INCREMENT PRIMARY KEY,
+  thesis_key varchar(200) DEFAULT NULL,
+  author text,
+  title text,
+  school text,
+  `year` int(11) DEFAULT '0',
+  url text,
+  `type` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 commit;
