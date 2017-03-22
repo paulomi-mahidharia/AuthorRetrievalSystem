@@ -6,13 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 
+import com.neu.msd.DBLPXMLParser.config.ParserFactory;
 import com.neu.msd.DBLPXMLParser.handler.HandleArticle;
 import com.neu.msd.DBLPXMLParser.handler.HandlePaper;
 import com.neu.msd.DBLPXMLParser.model.Article;
@@ -21,22 +21,24 @@ import com.neu.msd.DBLPXMLParser.model.Paper;
 
 public class Parser {
 
-
-	@SuppressWarnings("restriction")
 	public static void main(String[] args) throws JAXBException, FileNotFoundException, XMLStreamException, SQLException {
 		
 		//stax
 		XMLInputFactory xif = XMLInputFactory.newFactory();
-		FileInputStream in = new FileInputStream("dblp.xml");
+		FileInputStream in = new FileInputStream("inpro.xml");
 		XMLEventReader xer = xif.createXMLEventReader(in);
 		
+		ParserFactory parserFactory = new ParserFactory();
 		xer.next();
-
-		JAXBContext jaxbContextPaper = JAXBContext.newInstance(Paper.class);
+		
+		/*JAXBContext jaxbContextPaper = JAXBContext.newInstance(Paper.class);
 		Unmarshaller jaxbUnmarshallerPaper = jaxbContextPaper.createUnmarshaller();
 		
 		JAXBContext jaxbContextArticle = JAXBContext.newInstance(Article.class);
-		Unmarshaller jaxbUnmarshallerArticle = jaxbContextArticle.createUnmarshaller();
+		Unmarshaller jaxbUnmarshallerArticle = jaxbContextArticle.createUnmarshaller();*/
+		
+		Unmarshaller jaxbUnmarshallerPaper = parserFactory.getInstance(Paper.class);
+		Unmarshaller jaxbUnmarshallerArticle = parserFactory.getInstance(Article.class);
 		
 		List<Paper> paperList = new ArrayList<Paper>();
 		List<Article> articleList = new ArrayList<Article>();
@@ -89,7 +91,7 @@ public class Parser {
 		}
 		
 		System.out.println("No. of Papers Processed:"+counterPaper);
-		System.out.println("No. of Articles Processed:"+counterPaper);
+		System.out.println("No. of Articles Processed:"+counterArticle);
 		xer.close();
 		
 	}

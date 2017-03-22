@@ -27,9 +27,17 @@ public class HandleArticle {
 	public boolean insertArticleRecords(List<Article> articles) throws SQLException{
 		
 		for(Article a: articles){
+			
+			int year = 0;
+			try{
+				year = Integer.parseInt(a.getYear());
+			}catch(NumberFormatException e){
+				System.out.println("Error parsing year:"+ a.getYear() +" in article: "+a.getKey());
+			}
+			
 			stmt_article.setString(1, a.getKey());
 			stmt_article.setString(2, a.getTitle());
-			stmt_article.setString(3, a.getYear());
+			stmt_article.setInt(3, year);
 			stmt_article.setString(4, a.getJournal());
 			stmt_article.setString(5, a.getUrl());
 			stmt_article.addBatch();

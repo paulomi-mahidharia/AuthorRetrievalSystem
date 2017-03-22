@@ -12,7 +12,7 @@ public class DBConnection {
 
 	public static Connection getConn() {
 		try {
-			Class.forName("org.gjt.mm.mysql.Driver");
+			Class.forName("com.mysql.jdbc.Driver");
 			return DriverManager.getConnection(dbUrl, user, password);
 		} catch (Exception e) {
 			System.out.println("Error while opening a conneciton to database server: "
