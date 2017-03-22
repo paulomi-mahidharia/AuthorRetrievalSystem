@@ -64,7 +64,7 @@ public class Parser {
 		int counterThesis = 0;
 		
 		while(xer.hasNext()){
-			/*if(xer.peek().isStartElement() 
+			if(xer.peek().isStartElement() 
 					&& xer.peek().asStartElement().getName().getLocalPart().equals("inproceedings")){
 				Paper paper = (Paper) jaxbUnmarshallerPaper.unmarshal(xer);
 				paperList.add(paper);
@@ -97,7 +97,7 @@ public class Parser {
 					articleList = new ArrayList<Article>();
 				}
 				counterArticle++;
-			} else*/ if(xer.peek().isStartElement() 
+			} else if(xer.peek().isStartElement() 
 					&& (xer.peek().asStartElement().getName().getLocalPart().equals("phdthesis")
 							||xer.peek().asStartElement().getName().getLocalPart().equals("mastersthesis"))){
 				
