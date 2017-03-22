@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.jsoup.Jsoup;
+
 import com.neu.msd.DBLPXMLParser.config.DBConnection;
 
 public class HandleCommittee {
@@ -37,7 +39,7 @@ public class HandleCommittee {
 			
 			committee.setString(1, confName);
 			committee.setInt(2, year);
-			committee.setString(3, ed);
+			committee.setString(3, Jsoup.parse(ed).text());
 			committee.setString(4, pos);
 			committee.addBatch();
 			
