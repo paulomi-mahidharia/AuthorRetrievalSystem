@@ -17,7 +17,7 @@ public class HandleArticle {
 		conn = DBConnection.getConn();
 		conn.setAutoCommit(false);
 		stmt_article = conn
-				.prepareStatement("insert into article(article_key, title, year, journal, url) "
+				.prepareStatement("insert into article(article_key, title, year, journal, url, conference) "
 						+ "values (?,?,?,?,?,?)");
 		
 		stmt_author_article_mapping = conn

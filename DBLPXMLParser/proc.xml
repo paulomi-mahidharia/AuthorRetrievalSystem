@@ -82,4 +82,20 @@
 <booktitle>Trans. Petri Nets and Other Models of Concurrency</booktitle>
 <url>db/journals/topnoc/topnoc10.html</url>
 </proceedings>
+
+<www mdate="2005-10-06" key="persons/Ley2003">
+<author>Michael Ley</author>
+<title>ACM SIGMOD Contribution Award 2003 Acceptance Speech</title>
+<year>2003</year>
+<url>http://www.informatik.uni-trier.de/~ley/db/about/contributionaward03.html</url>
+</www>
+
+<www mdate="2005-10-06" key="persons/Ley93">
+<author>Michael Ley</author>
+<author>Abhinav Maurya</author>
+<title>DBLP.uni-trier.de: Computer Science Bibliography</title>
+<url>http://dblp.uni-trier.de/</url>
+<year>1993</year>
+</www>
+
 </dblp>

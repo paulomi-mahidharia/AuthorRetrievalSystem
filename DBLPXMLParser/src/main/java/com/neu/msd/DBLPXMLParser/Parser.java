@@ -14,10 +14,12 @@ import javax.xml.stream.XMLStreamException;
 
 import com.neu.msd.DBLPXMLParser.config.ParserFactory;
 import com.neu.msd.DBLPXMLParser.handler.HandleArticle;
+import com.neu.msd.DBLPXMLParser.handler.HandleAuthorAlias;
 import com.neu.msd.DBLPXMLParser.handler.HandlePaper;
 import com.neu.msd.DBLPXMLParser.handler.HandleProceeding;
 import com.neu.msd.DBLPXMLParser.handler.HandleThesis;
 import com.neu.msd.DBLPXMLParser.model.Article;
+import com.neu.msd.DBLPXMLParser.model.AuthorAlias;
 import com.neu.msd.DBLPXMLParser.model.MasterThesis;
 import com.neu.msd.DBLPXMLParser.model.Paper;
 import com.neu.msd.DBLPXMLParser.model.PhdThesis;
@@ -28,6 +30,9 @@ import com.neu.msd.DBLPXMLParser.model.Thesis;
 public class Parser {
 
 	public static void main(String[] args) throws JAXBException, FileNotFoundException, XMLStreamException, SQLException {
+		
+		
+		Long start = System.currentTimeMillis();
 		
 		//stax
 		XMLInputFactory xif = XMLInputFactory.newFactory();
@@ -47,16 +52,19 @@ public class Parser {
 		Unmarshaller jaxbUnmarshallerProceeding = ParserFactory.getInstance(Proceeding.class);
 		Unmarshaller jaxbUnmarshallerPhdThesis = ParserFactory.getInstance(PhdThesis.class);
 		Unmarshaller jaxbUnmarshallerMasterThesis = ParserFactory.getInstance(MasterThesis.class);
+		Unmarshaller jaxbUnmarshallerAuthorAlias = ParserFactory.getInstance(AuthorAlias.class);
 		
 		List<Paper> paperList = new ArrayList<Paper>();
 		List<Article> articleList = new ArrayList<Article>();
 		List<Proceeding> proceedingList = new ArrayList<Proceeding>();
 		List<Thesis> thesisList = new ArrayList<Thesis>();
+		List<AuthorAlias> aliasList = new ArrayList<AuthorAlias>();
 		
 		HandlePaper handlePaper = new HandlePaper();
 		HandleArticle handleArticle = new HandleArticle();
 		HandleProceeding handleProceeding = new HandleProceeding();
 		HandleThesis handleThesis = new HandleThesis();
+		HandleAuthorAlias handleAuthorAlias = new HandleAuthorAlias();
 		
 		int counterPaper = 0;
 		int counterArticle = 0;
@@ -114,7 +122,17 @@ public class Parser {
 					thesisList = new ArrayList<Thesis>();
 				}
 				counterThesis++;
-			}else{
+			}else if(xer.peek().isStartElement() 
+					&& xer.peek().asStartElement().getName().getLocalPart().equals("www")){
+				
+				AuthorAlias authorAlias = (AuthorAlias) jaxbUnmarshallerAuthorAlias.unmarshal(xer);
+				aliasList.add(authorAlias);
+				if(aliasList.size() == 500){
+					handleAuthorAlias.insertAuthorAlias(aliasList);
+					//empty the list
+					aliasList = new ArrayList<AuthorAlias>();
+				}
+			} else{
 				// any other information if you need to parse
 			}
 			xer.nextEvent();
@@ -144,10 +162,19 @@ public class Parser {
 			thesisList = new ArrayList<Thesis>();
 		}
 		
+		// handle unprocessed elements in the thesisList
+		if(!aliasList.isEmpty()){
+			handleAuthorAlias.insertAuthorAlias(aliasList);
+			aliasList = new ArrayList<AuthorAlias>();
+		}
+		
 		System.out.println("No. of Papers Processed:"+counterPaper);
 		System.out.println("No. of Articles Processed:"+counterArticle);
 		System.out.println("No. of Proceeding Processed:"+counterProceeding);
 		System.out.println("No. of Thesis Processed:"+counterThesis);
+		
+		Long end = System.currentTimeMillis();
+		System.out.println("Total Time: " + (end - start) / 1000 + " seconds");
 		xer.close();
 		
 	}
