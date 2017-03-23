@@ -162,7 +162,7 @@ public class Parser {
 			thesisList = new ArrayList<Thesis>();
 		}
 		
-		// handle unprocessed elements in the thesisList
+		// handle unprocessed elements in the authorAlias
 		if(!aliasList.isEmpty()){
 			handleAuthorAlias.insertAuthorAlias(aliasList);
 			aliasList = new ArrayList<AuthorAlias>();

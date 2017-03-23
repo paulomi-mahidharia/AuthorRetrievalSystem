@@ -42,6 +42,7 @@ CREATE TABLE article (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
+
 DROP TABLE IF EXISTS `editor_proceeding_mapping`;
 CREATE TABLE `editor_proceeding_mapping` (
   `name` varchar(100) DEFAULT NULL,
@@ -72,6 +73,25 @@ CREATE TABLE thesis (
   `year` int(11) DEFAULT '0',
   url text,
   `type` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+DROP TABLE IF EXISTS `committee`;
+CREATE TABLE committee (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  conf_name varchar(200) DEFAULT NULL,
+  `year` int(11) DEFAULT '0',
+  editor text,
+  `position` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+DROP TABLE IF EXISTS `author_alias`;
+CREATE TABLE author_alias (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  alias_name text,
+  author_name text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 commit;
