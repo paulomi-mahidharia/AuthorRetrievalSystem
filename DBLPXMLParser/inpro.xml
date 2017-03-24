@@ -1,0 +1,26 @@
+<dblp>
+
+	<article mdate="2011-01-11" key="journals/acta/Saxena96">
+	<author>Sanjeev Saxena</author>
+	<title>Parallel Integer Sorting and Simulation Amongst CRCW Models.</title>
+	<pages>607-619</pages>
+	<year>1996</year>
+	<volume>33</volume>
+	<journal>Acta Inf.</journal>
+	<number>7</number>
+	<url>db/journals/acta/acta33.html#Saxena96</url>
+	<ee>http://dx.doi.org/10.1007/BF03036466</ee>
+	</article>
+	
+	
+	<inproceedings mdate="2011-06-14" key="journals/lncs/Novak91">
+	<author>Hans-Joachim Novak</author>
+	<title>Integrating a Generation Component into a Natural Language Understanding System.</title>
+	<pages>659-669</pages>
+	<year>1991</year>
+	<crossref>journals/lncs/1991-546</crossref>
+	<booktitle>Text Understanding in LILOG</booktitle>
+	<url>db/journals/lncs/lncs546.html#Novak91</url>
+	<ee>http://dx.doi.org/10.1007/3-540-54594-8_85</ee>
+	</inproceedings>
+</dblp>

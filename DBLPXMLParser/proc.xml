@@ -1,0 +1,101 @@
+<dblp>
+<proceedings mdate="2016-03-11" key="journals/thipeac/2009-2">
+<editor>Per Stenstrom</editor>
+<title>Transactions on High-Performance Embedded Architectures and Compilers II</title>
+<volume>5470</volume>
+<year>2009</year>
+<ee>http://dx.doi.org/10.1007/978-3-642-00904-4</ee>
+<isbn>978-3-642-00903-7</isbn>
+<booktitle>Trans. HiPEAC</booktitle>
+<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+<publisher>Springer</publisher>
+<url>db/journals/thipeac/thipeac2.html</url>
+</proceedings>
+
+<proceedings mdate="2016-03-11" key="journals/thipeac/2011-4">
+<editor>Per Stenstrom</editor>
+<title>Transactions on High-Performance Embedded Architectures and Compilers IV</title>
+<volume>6760</volume>
+<year>2011</year>
+<publisher>Springer</publisher>
+<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+<ee>http://dx.doi.org/10.1007/978-3-642-24568-8</ee>
+<isbn>978-3-642-24567-1</isbn>
+<booktitle>Trans. HiPEAC</booktitle>
+<url>db/journals/thipeac/thipeac4.html</url>
+</proceedings>
+
+<proceedings mdate="2016-03-11" key="journals/thipeac/2007-1">
+<editor>Per Stenstrom</editor>
+<editor>Michael F. P. O'Boyle</editor>
+<editor>Francois Bodin</editor>
+<editor>Marcelo Cintra</editor>
+<editor>Sally A. McKee</editor>
+<title>Transactions on High-Performance Embedded Architectures and Compilers I</title>
+<booktitle>Trans. HiPEAC</booktitle>
+<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+<volume>4050</volume>
+<publisher>Springer</publisher>
+<year>2007</year>
+<isbn>978-3-540-71527-6</isbn>
+<url>db/journals/thipeac/thipeac1.html</url>
+</proceedings>
+
+<proceedings mdate="2016-03-11" key="journals/thipeac/2011-3">
+<editor>Per Stenstrom</editor>
+<title>Transactions on High-Performance Embedded Architectures and Compilers III</title>
+<volume>6590</volume>
+<year>2011</year>
+<ee>http://dx.doi.org/10.1007/978-3-642-19448-1</ee>
+<isbn>978-3-642-19447-4</isbn>
+<booktitle>Trans. HiPEAC</booktitle>
+<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+<publisher>Springer</publisher>
+<url>db/journals/thipeac/thipeac3.html</url>
+</proceedings>
+
+<proceedings mdate="2016-03-11" key="journals/topnoc/2009-2">
+<editor>Kurt Jensen</editor>
+<editor>Wil M. P. van der Aalst</editor>
+<title>Transactions on Petri Nets and Other Models of Concurrency II, Special Issue on Concurrency in Process-Aware Information Systems</title>
+<volume>5460</volume>
+<year>2009</year>
+<ee>http://dx.doi.org/10.1007/978-3-642-00899-3</ee>
+<isbn>978-3-642-00898-6</isbn>
+<booktitle>Trans. Petri Nets and Other Models of Concurrency</booktitle>
+<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+<publisher>Springer</publisher>
+<url>db/journals/topnoc/topnoc2.html</url>
+</proceedings>
+
+<proceedings mdate="2016-03-11" key="journals/topnoc/2015-10">
+<editor>Maciej Koutny</editor>
+<editor>Jorg Desel</editor>
+<editor>Serge Haddad</editor>
+<title>Transactions on Petri Nets and Other Models of Concurrency X</title>
+<year>2015</year>
+<publisher>Springer</publisher>
+<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+<volume>9410</volume>
+<isbn>978-3-662-48649-8</isbn>
+<ee>http://dx.doi.org/10.1007/978-3-662-48650-4</ee>
+<booktitle>Trans. Petri Nets and Other Models of Concurrency</booktitle>
+<url>db/journals/topnoc/topnoc10.html</url>
+</proceedings>
+
+<www mdate="2005-10-06" key="persons/Ley2003">
+<author>Michael Ley</author>
+<title>ACM SIGMOD Contribution Award 2003 Acceptance Speech</title>
+<year>2003</year>
+<url>http://www.informatik.uni-trier.de/~ley/db/about/contributionaward03.html</url>
+</www>
+
+<www mdate="2005-10-06" key="persons/Ley93">
+<author>Michael Ley</author>
+<author>Abhinav Maurya</author>
+<title>DBLP.uni-trier.de: Computer Science Bibliography</title>
+<url>http://dblp.uni-trier.de/</url>
+<year>1993</year>
+</www>
+
+</dblp>
