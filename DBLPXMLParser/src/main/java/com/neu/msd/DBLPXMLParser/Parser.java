@@ -41,12 +41,6 @@ public class Parser {
 		
 		xer.next();
 		
-		/*JAXBContext jaxbContextPaper = JAXBContext.newInstance(Paper.class);
-		Unmarshaller jaxbUnmarshallerPaper = jaxbContextPaper.createUnmarshaller();
-		
-		JAXBContext jaxbContextArticle = JAXBContext.newInstance(Article.class);
-		Unmarshaller jaxbUnmarshallerArticle = jaxbContextArticle.createUnmarshaller();*/
-		
 		Unmarshaller jaxbUnmarshallerPaper = ParserFactory.getInstance(Paper.class);
 		Unmarshaller jaxbUnmarshallerArticle = ParserFactory.getInstance(Article.class);
 		Unmarshaller jaxbUnmarshallerProceeding = ParserFactory.getInstance(Proceeding.class);
@@ -72,6 +66,7 @@ public class Parser {
 		int counterThesis = 0;
 		
 		while(xer.hasNext()){
+			try{
 			if(xer.peek().isStartElement() 
 					&& xer.peek().asStartElement().getName().getLocalPart().equals("inproceedings")){
 				Paper paper = (Paper) jaxbUnmarshallerPaper.unmarshal(xer);
@@ -134,6 +129,9 @@ public class Parser {
 				}
 			} else{
 				// any other information if you need to parse
+			}
+			}catch(Exception e){
+				System.out.println("Unable to parse record.");
 			}
 			xer.nextEvent();
 		}
