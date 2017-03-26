@@ -8,11 +8,13 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -232,6 +234,20 @@ public class SearchScene {
 		ComboBox positionComboBox = new ComboBox(positionOptions);
 		positionComboBox.setValue("Program Chair");
 		grid2.add(positionComboBox, 1, 11);
+		
+		Button btn = new Button("Search Authors");
+		HBox hbBtn = new HBox(10);
+		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
+		hbBtn.getChildren().add(btn);
+		grid2.add(hbBtn, 1, 12);
+		
+		btn.setOnAction(new EventHandler<ActionEvent>() {
+       	 
+            @Override
+            public void handle(ActionEvent e) {
+            	System.out.println("CLicked");
+            }
+		});
 		
 	    Scene scene2 = new Scene(grid2, 1000, 1000, Color.BEIGE);
 	    return scene2;
