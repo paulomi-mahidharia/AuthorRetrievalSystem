@@ -1,5 +1,7 @@
 package application;
 
+import com.neu.msd.AuthorRetriever.model.Paper;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -246,6 +248,34 @@ public class SearchScene {
             @Override
             public void handle(ActionEvent e) {
             	System.out.println("CLicked");
+            	if(paperCheck.isSelected()){
+            		
+            		Paper paperInfo = new Paper();
+            		
+            		//Set minimum number of papers
+            		
+            		//Set published or not published
+            		if(publishComboBox.getValue().equals("Published in")){
+						paperInfo.setPublished(true);
+					}else{
+						paperInfo.setPublished(false);
+					}
+            		
+            		//Set conference name
+            		paperInfo.setConference_name(confName.getText());
+            		
+					//Set start date and/or end date
+            		if(yearRangeServedComboBox.getValue().equals("between")){
+           
+            		}else if(yearRangeServedComboBox.getValue().equals("before") 
+        					|| yearRangeServedComboBox.getValue().equals("after")){
+            			
+            		}
+            		
+            	
+					
+            		
+            	}
             }
 		});
 		
