@@ -6,7 +6,7 @@ public class Paper {
 	public String conferenceName;
 	public boolean isPublished;
 	public boolean contains;
-	public DateOptions options;
+	public String options;
 	public int startDate;
 	public int endDate;
 	public int numOfPapersPublished;
@@ -44,11 +44,11 @@ public class Paper {
 		this.isPublished = isPublished;
 	}
 
-	public DateOptions getOptions() {
+	public String getOptions() {
 		return options;
 	}
 
-	public void setOptions(DateOptions options) {
+	public void setOptions(String options) {
 		this.options = options;
 	}
 

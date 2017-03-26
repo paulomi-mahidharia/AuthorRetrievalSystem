@@ -1,7 +1,16 @@
 package application;
 
-import com.neu.msd.AuthorRetriever.model.Paper;
+import java.util.List;
 
+import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.model.Paper;
+import com.neu.msd.AuthorRetriever.model.SearchCriteria;
+import com.neu.msd.AuthorRetriever.model.ServiceInfo;
+import com.neu.msd.AuthorRetriever.service.SearchService;
+import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +23,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -25,11 +37,14 @@ import javafx.scene.text.Text;
 public class SearchScene {
 	
 	public static Scene getSearchScene(){
+		
 		GridPane grid2 = new GridPane();
 		grid2.setAlignment(Pos.TOP_LEFT);
 		grid2.setHgap(10);
 		grid2.setVgap(10);
 		grid2.setPadding(new Insets(25, 25, 25, 25));
+		
+		SearchCriteria searchCriteria = new SearchCriteria();
 		
 		Text scenetitle = new Text("SEARCH AUTHORS");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
@@ -136,6 +151,39 @@ public class SearchScene {
 		TextField titleKeywordValue = new TextField();
 		titleKeywordValue.setPromptText("Enter keyword or title");
 		grid2.add(titleKeywordValue, 1, 6);
+		
+		//Add union condition
+		final ToggleGroup unionGroup = new ToggleGroup();
+		
+		RadioButton radioButtonAnd = new RadioButton("AND");
+		radioButtonAnd.setToggleGroup(unionGroup);
+		radioButtonAnd.setUserData("AND");
+		radioButtonAnd.setSelected(true);
+		grid2.add(radioButtonAnd, 0, 7);
+		
+		RadioButton radioButtonOr = new RadioButton("OR");
+		radioButtonOr.setUserData("OR");
+		radioButtonOr.setToggleGroup(unionGroup);
+		grid2.add(radioButtonOr, 1, 7);
+		
+		MyString unionGroupSelection = new MyString();
+		
+		unionGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				// TODO Auto-generated method stub
+
+				if (unionGroup.getSelectedToggle() != null) {
+					if(unionGroup.getSelectedToggle().getUserData().toString().equals(radioButtonAnd.getText())){
+						searchCriteria.setUnion(true);
+					}else{
+						searchCriteria.setUnion(false);
+					}
+	            }     
+			}
+			
+		});
 		
 		CheckBox serviceCheck = new CheckBox("Search based on service information");
 		serviceCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -248,11 +296,12 @@ public class SearchScene {
             @Override
             public void handle(ActionEvent e) {
             	System.out.println("CLicked");
+            	
+            	Paper paperInfo = new Paper();
             	if(paperCheck.isSelected()){
             		
-            		Paper paperInfo = new Paper();
-            		
             		//Set minimum number of papers
+            		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
             		
             		//Set published or not published
             		if(publishComboBox.getValue().equals("Published in")){
@@ -262,24 +311,71 @@ public class SearchScene {
 					}
             		
             		//Set conference name
-            		paperInfo.setConference_name(confName.getText());
+            		paperInfo.setConferenceName(confName.getText());
+            		
+            		//Set date options
+            		paperInfo.setOptions(yearRangeServedComboBox.getValue().toString());
             		
 					//Set start date and/or end date
-            		if(yearRangeServedComboBox.getValue().equals("between")){
-           
-            		}else if(yearRangeServedComboBox.getValue().equals("before") 
-        					|| yearRangeServedComboBox.getValue().equals("after")){
-            			
+            		if(yearRangeComboBox.getValue().equals("between")){
+            			paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+            			paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
+            		}else if(yearRangeComboBox.getValue().equals("before") 
+        					|| yearRangeComboBox.getValue().equals("after")){
+            			paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+            		}
+        		}
+            	
+            	ServiceInfo serviceInfo = new ServiceInfo();
+            	if(serviceCheck.isSelected()){
+            		
+            		//Set has served of not
+            		if(serveComboBox.getValue().toString().equalsIgnoreCase("Served in")){
+                		serviceInfo.setHasServed(true);
+            		}else{
+            			serviceInfo.setHasServed(false);
             		}
             		
-            	
-					
+            		//Set conference name
+            		serviceInfo.setConferenceName(confNameServedIn.getText());
             		
+            		//Set position
+            		serviceInfo.setPosition(positionComboBox.getValue().toString());
+            		
+            		//Set start date and/or end date
+            		if(yearRangeServedComboBox.getValue().equals("between")){
+            			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+            			serviceInfo.setEndDate(Integer.parseInt(toYearServed.getText()));
+            		}else if(yearRangeServedComboBox.getValue().equals("before") 
+        					|| yearRangeServedComboBox.getValue().equals("after")){
+            			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+            		}
             	}
-            }
+            		
+        		searchCriteria.setPaperInfo(paperInfo);
+        		searchCriteria.setServiceInfo(serviceInfo);
+        		
+        		SearchService searchService = new SearchServiceImpl();
+        		List<Author> authors = searchService.searchAuthorsByCriteria(searchCriteria);
+        		authors.size();
+        	}
 		});
+		
 		
 	    Scene scene2 = new Scene(grid2, 1000, 1000, Color.BEIGE);
 	    return scene2;
+	}
+}
+
+
+class MyString{
+	String x;
+	
+	public String getMyString(){
+		return x;
+	}
+	
+	public void setMyString(String a){
+		x = a;
 	}
 }

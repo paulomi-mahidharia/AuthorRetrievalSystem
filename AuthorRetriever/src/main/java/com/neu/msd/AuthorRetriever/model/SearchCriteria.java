@@ -1,11 +1,41 @@
 package com.neu.msd.AuthorRetriever.model;
 
 public class SearchCriteria {
-	public Paper paper_info;
-	public ServiceInfo service_info;
+	public Paper paperInfo;
+	public ServiceInfo serviceInfo;
+	public boolean union;
 
-	public SearchCriteria(Paper paper_info, ServiceInfo service_info) {
-		this.paper_info = paper_info;
-		this.service_info = service_info;
+	public SearchCriteria(Paper paperInfo, ServiceInfo serviceInfo, boolean union) {
+		this.paperInfo = paperInfo;
+		this.serviceInfo = serviceInfo;
+		this.union = union;
+	}
+	
+	public SearchCriteria() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Paper getPaperInfo() {
+		return paperInfo;
+	}
+
+	public void setPaperInfo(Paper paperInfo) {
+		this.paperInfo = paperInfo;
+	}
+
+	public ServiceInfo getServiceInfo() {
+		return serviceInfo;
+	}
+
+	public void setServiceInfo(ServiceInfo serviceInfo) {
+		this.serviceInfo = serviceInfo;
+	}
+
+	public boolean isUnion() {
+		return union;
+	}
+
+	public void setUnion(boolean union) {
+		this.union = union;
 	}
 }
