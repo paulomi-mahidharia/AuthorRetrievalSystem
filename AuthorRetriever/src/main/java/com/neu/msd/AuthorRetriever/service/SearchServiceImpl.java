@@ -1,11 +1,12 @@
 package com.neu.msd.AuthorRetriever.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Paper;
 import com.neu.msd.AuthorRetriever.model.Author;
@@ -24,7 +25,7 @@ public class SearchServiceImpl implements SearchService {
 		
 		
 		String query = "SELECT author_paper_mapping.Author_Id FROM author_paper_mapping INNER JOIN paper on author_paper_mapping.Paper_Id = paper.paper_id";
-		query += buildPaperQuery(query, criteria.paper_info);
+		query += buildPaperQuery(query, criteria.getPaperInfo());
 		
 		// Limiting to 100 Rows for now. 
 		String author_query = "SELECT author.* FROM author WHERE Id IN (" + query + ")" + " LIMIT 100";
@@ -60,7 +61,7 @@ public class SearchServiceImpl implements SearchService {
 			conditions.add(TitleUtil.titleQuery(paper.getKeyword(), "paper", paper.contains));
 		}
 		
-		String yearResult = YearUtil.formYearQuery(paper.getOptions(), paper.startDate, paper.endDate, "paper");
+		String yearResult = YearUtil.formYearQuery(paper.getOptions(), paper.getStartDate(), paper.getEndDate(), "paper");
 		
 		if(yearResult!= null && !yearResult.isEmpty()){
 		   conditions.add(yearResult);	
@@ -86,5 +87,4 @@ public class SearchServiceImpl implements SearchService {
 
 		return "";
 	}
-
 }

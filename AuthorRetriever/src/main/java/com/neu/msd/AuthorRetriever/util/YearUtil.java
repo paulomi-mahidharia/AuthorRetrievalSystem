@@ -4,17 +4,17 @@ import com.neu.msd.AuthorRetriever.model.DateOptions;
 
 public class YearUtil {
 
-	public static String formYearQuery(DateOptions type, int start, int end, String tablename) {
+	public static String formYearQuery(String type, int start, int end, String tablename) {
 
 		switch (type) {
 
-		case AFTER:
+		case "after":
 			return tablename + ".year > " + start;
 
-		case BEFORE:
+		case "before":
 			return tablename + ".year < " + end;
 
-		case BETWEEN:
+		case "between":
 			return tablename + ".year BETWEEN " + start + " AND " + end;
 
 		default:
