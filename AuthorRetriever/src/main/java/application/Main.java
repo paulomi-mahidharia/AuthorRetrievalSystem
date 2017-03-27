@@ -1,7 +1,7 @@
 package application;
 
 import com.neu.msd.AuthorRetriever.model.Author;
-import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
+import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -19,7 +19,7 @@ public class Main extends Application {
 			Author author = new Author();
 			author.setAuthorId(575214);
 			
-			SearchServiceImpl sl = new SearchServiceImpl();
+			SearchSimilarProfileServiceImpl sl = new SearchSimilarProfileServiceImpl();
 			sl.searchSimilarAuthorProfiles(author);
 			
 			
