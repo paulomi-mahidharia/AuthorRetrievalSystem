@@ -41,4 +41,10 @@ public class ServiceInfo {
 	public void setEndDate(int endDate) {
 		this.endDate = endDate;
 	}
+	public String getOptions() {
+		return options;
+	}
+	public void setOptions(String options) {
+		this.options = options;
+	}
 }

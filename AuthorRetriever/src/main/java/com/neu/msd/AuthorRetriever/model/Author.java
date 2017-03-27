@@ -19,4 +19,24 @@ public class Author {
 	List<Article> articles;
 	List<Thesis> thesis;
 	List<Journal> journals;
+	
+	
+	public int getAuthorId() {
+		return authorId;
+	}
+	public void setAuthorId(int authorId) {
+		this.authorId = authorId;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Author a = (Author) obj;
+		return this.authorId == a.getAuthorId();
+	}
 }
