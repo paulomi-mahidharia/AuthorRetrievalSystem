@@ -366,16 +366,3 @@ public class SearchScene {
 	    return scene2;
 	}
 }
-
-
-class MyString{
-	String x;
-	
-	public String getMyString(){
-		return x;
-	}
-	
-	public void setMyString(String a){
-		x = a;
-	}
-}
