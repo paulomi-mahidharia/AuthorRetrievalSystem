@@ -1,5 +1,6 @@
 package application;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
@@ -165,8 +166,6 @@ public class SearchScene {
 		radioButtonOr.setUserData("OR");
 		radioButtonOr.setToggleGroup(unionGroup);
 		grid2.add(radioButtonOr, 1, 7);
-		
-		MyString unionGroupSelection = new MyString();
 		
 		unionGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
@@ -356,8 +355,13 @@ public class SearchScene {
         		searchCriteria.setServiceInfo(serviceInfo);
         		
         		SearchService searchService = new SearchServiceImpl();
-        		List<Author> authors = searchService.searchAuthorsByCriteria(searchCriteria);
-        		authors.size();
+        		List<Author> authors;
+				try {
+					authors = searchService.searchAuthorsByCriteria(searchCriteria);
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
         	}
 		});
 		
