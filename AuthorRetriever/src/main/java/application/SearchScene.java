@@ -1,6 +1,7 @@
 package application;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
@@ -34,10 +35,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class SearchScene {
 	
-	public static Scene getSearchScene(){
+	public static Scene getSearchScene(Stage primaryStage){
 		
 		GridPane grid2 = new GridPane();
 		grid2.setAlignment(Pos.TOP_LEFT);
@@ -355,13 +357,16 @@ public class SearchScene {
         		searchCriteria.setServiceInfo(serviceInfo);
         		
         		SearchService searchService = new SearchServiceImpl();
-        		List<Author> authors;
-				try {
-					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-				} catch (SQLException e1) {
+        		List<Author> authors = new ArrayList<Author>();
+				//try {
+					//authors = searchService.searchAuthorsByCriteria(searchCriteria);
+					Scene resultScene = ResultScene.getResultScene(authors);
+					primaryStage.setScene(resultScene);
+					primaryStage.show();
+				//} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+					//e1.printStackTrace();
+				//}
         	}
 		});
 		
