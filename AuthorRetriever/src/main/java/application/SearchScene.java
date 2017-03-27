@@ -1,14 +1,16 @@
 package application;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
+import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
 import com.neu.msd.AuthorRetriever.model.SearchCriteria;
 import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
+import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,10 +36,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class SearchScene {
 	
-	public static Scene getSearchScene(){
+	public static Scene getSearchScene(Stage primaryStage){
 		
 		GridPane grid2 = new GridPane();
 		grid2.setAlignment(Pos.TOP_LEFT);
@@ -296,8 +299,10 @@ public class SearchScene {
             public void handle(ActionEvent e) {
             	System.out.println("CLicked");
             	
-            	Paper paperInfo = new Paper();
+            	Paper paperInfo = null;
             	if(paperCheck.isSelected()){
+            		
+            		paperInfo = new Paper();
             		
             		//Set minimum number of papers
             		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
@@ -325,9 +330,10 @@ public class SearchScene {
             		}
         		}
             	
-            	ServiceInfo serviceInfo = new ServiceInfo();
+            	ServiceInfo serviceInfo = null;
             	if(serviceCheck.isSelected()){
             		
+            		serviceInfo = new ServiceInfo();
             		//Set has served of not
             		if(serveComboBox.getValue().toString().equalsIgnoreCase("Served in")){
                 		serviceInfo.setHasServed(true);
@@ -354,14 +360,25 @@ public class SearchScene {
         		searchCriteria.setPaperInfo(paperInfo);
         		searchCriteria.setServiceInfo(serviceInfo);
         		
-        		SearchService searchService = new SearchServiceImpl();
-        		List<Author> authors;
-				try {
-					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+
+        		String isValid = SearchSceneValidation.validateSearchCriteria(searchCriteria);
+        		
+        		if(isValid.equalsIgnoreCase(ValidationConstants.VALID_CRITERIA)){
+        			SearchService searchService = new SearchServiceImpl();
+            		List<Author> authors = new ArrayList<Author>();
+    				//try {
+    					//authors = searchService.searchAuthorsByCriteria(searchCriteria);
+    					Scene resultScene = ResultScene.getResultScene(authors);
+    					primaryStage.setScene(resultScene);
+    					primaryStage.show();
+    				//} catch (SQLException e1) {
+    					// TODO Auto-generated catch block
+    					//e1.printStackTrace();
+    				//}
+        		}else{
+        			//Display Error Message
+        		}
+        		
         	}
 		});
 		

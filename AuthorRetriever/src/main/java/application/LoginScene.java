@@ -72,7 +72,7 @@ public class LoginScene {
             	
             	if(isLoginSuccessful){
             		
-    		        Scene searchScene = SearchScene.getSearchScene(); 
+    		        Scene searchScene = SearchScene.getSearchScene(primaryStage); 
         			primaryStage.setScene(searchScene);
         			primaryStage.show();
             		
