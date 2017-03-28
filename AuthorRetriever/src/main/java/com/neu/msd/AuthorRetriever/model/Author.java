@@ -6,19 +6,19 @@ import com.neu.msd.AuthorRetriever.model.Inproceeding;
 
 public class Author {
 	
-	int authorId;
-	String authorKey;
-	String name;
-	int age;
-	String degree;
-	String gender;
-	String country;
-	String url;
-	List<String> aliasNames;
-	List<Inproceeding> inproceedings;
-	List<Article> articles;
-	List<Thesis> thesis;
-	List<Journal> journals;
+	private int authorId;
+	private String authorKey;
+	private String name;
+	private int age;
+	private String degree;
+	private String gender;
+	private String country;
+	private String url;
+	private List<String> aliasNames;
+	private List<Inproceeding> inproceedings;
+	private List<Article> articles;
+	private List<Thesis> thesis;
+	private List<Journal> journals;
 	
 	
 	public int getAuthorId() {

@@ -73,7 +73,7 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		if(paper.getKeyword() !=null && !paper.getKeyword().isEmpty()){
-			conditions.add(TitleUtil.titleQuery(paper.getKeyword(), "paper", paper.contains));
+			conditions.add(TitleUtil.titleQuery(paper.getKeyword(), "paper", paper.isContains()));
 		}
 		
 		String yearResult = YearUtil.formYearQuery(paper.getOptions(), paper.getStartDate(), paper.getEndDate(), "paper");
@@ -92,7 +92,7 @@ public class SearchServiceImpl implements SearchService {
 		
 		String groupByClause = "";
 		if(paper.getNumOfPapersPublished() > 0){
-			groupByClause = GroupByUtil.groupByQuery("author_paper_mapping", paper.numOfPapersPublished, "author_id", "paper_id");
+			groupByClause = GroupByUtil.groupByQuery("author_paper_mapping", paper.getNumOfPapersPublished(), "author_id", "paper_id");
 		}
 		
 		return whereCond.toString() + groupByClause;
