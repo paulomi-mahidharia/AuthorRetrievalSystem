@@ -19,23 +19,55 @@ public class SearchSceneValidation {
 		}
 		
 		if(paperInfo != null){
+			
+			// Validate date if everything else is empty
 			if(paperInfo.getNumOfPapersPublished() == 0 &&
 				paperInfo.getKeyword().isEmpty() &&
 				paperInfo.getConferenceName().isEmpty()){
 				
-					//Atleast date must be present
+					//At least date must be present 
 					String isDateValid = isDateValid(paperInfo.getOptions(), 
 														paperInfo.getStartDate(), 
 														paperInfo.getEndDate());
+					System.out.println("isDateValid:::"+isDateValid);
 					if(isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
 						return ValidationConstants.VALID_CRITERIA;
 					}else{
 						return ValidationConstants.INVALID_PAPER_CRITERIA;
 					}
 			}else{
-				if(paperInfo.getStartDate() != 0){
-					
+				// Validate number of papers published
+				if(paperInfo.getNumOfPapersPublished() != 0){
+					if(!isNumberOfPapersValid(paperInfo.getNumOfPapersPublished())){
+						return ValidationConstants.INVALID_NUMBER_OF_PAPERS;
+					}
 				}
+				
+				// Validate conference name
+				if(!paperInfo.getConferenceName().isEmpty()){
+					if(!isStringValid(paperInfo.getConferenceName())){
+						return ValidationConstants.INVALID_CONFERENCE_NAME;
+					}
+				}
+				
+				// Validate Keyword name
+				if(!paperInfo.getKeyword().isEmpty()){
+					if(!isStringValid(paperInfo.getKeyword())){
+						return ValidationConstants.INVALID_KEYWORD;
+					}
+				}
+				
+				//Validate date
+				if(paperInfo.getStartDate() != 0 || paperInfo.getEndDate() != 0){
+					String isDateValid = isDateValid(paperInfo.getOptions(), 
+							paperInfo.getStartDate(), 
+							paperInfo.getEndDate());
+					if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
+						return ValidationConstants.INVALID_DATE;
+					}
+				}
+				
+				return ValidationConstants.VALID_CRITERIA;
 			}
 		}
 		
@@ -48,29 +80,35 @@ public class SearchSceneValidation {
 	
 	public static String isDateValid(String dateOption, int startDate, int endDate){
 		
-		String dateValidStatus = "";
+		System.out.println("dateOption:::"+dateOption);
 		
 		switch(dateOption){
 			case "between":
 				if(startDate == 0 || endDate == 0 || isYearInValid(startDate) || isYearInValid(endDate)){
-					dateValidStatus = ValidationConstants.INVALID_DATE_RANGE;
+					return ValidationConstants.INVALID_DATE_RANGE;
 				}
 			case "before":
 				if(startDate == 0 || isYearInValid(startDate)){
-					dateValidStatus = ValidationConstants.INVALID_DATE;
+					return ValidationConstants.INVALID_DATE;
 				}
 			case "after":
 				if(startDate == 0 || isYearInValid(startDate)){
-					dateValidStatus = ValidationConstants.INVALID_DATE;
+					return ValidationConstants.INVALID_DATE;
 				}
 			default:
-				dateValidStatus = ValidationConstants.VALID_DATE;
+				return ValidationConstants.VALID_DATE;
 		}
-		return dateValidStatus;
-		
 	}
 	
 	public static boolean isYearInValid(int year){
 		return !Integer.toString(year).matches("/^\\d{4}$/");
+	}
+	
+	public static boolean isNumberOfPapersValid(int numberOfPapers){
+		return Integer.toString(numberOfPapers).matches("^([1-9][0-9]{0,2})$");
+	}
+	
+	public static boolean isStringValid(String str){
+		return str.matches("^[a-zA-Z]+[a-zA-Z0-9]*$");
 	}
 }

@@ -11,6 +11,8 @@ import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -305,7 +307,9 @@ public class SearchScene {
             		paperInfo = new Paper();
             		
             		//Set minimum number of papers
-            		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
+            		if(!numberOfPapersField.getText().isEmpty()){
+                		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
+            		}
             		
             		//Set published or not published
             		if(publishComboBox.getValue().equals("Published in")){
@@ -322,12 +326,18 @@ public class SearchScene {
             		
 					//Set start date and/or end date
             		if(yearRangeComboBox.getValue().equals("between")){
-            			paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
-            			paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
+            			if(!fromYear.getText().isEmpty()) 
+            				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+            			if(!toYear.getText().isEmpty()) 
+            				paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
             		}else if(yearRangeComboBox.getValue().equals("before") 
         					|| yearRangeComboBox.getValue().equals("after")){
-            			paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+            			if(!fromYear.getText().isEmpty()) 
+            				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
             		}
+            		
+            		//Set keyword
+            		paperInfo.setKeyword(titleKeywordValue.getText());
         		}
             	
             	ServiceInfo serviceInfo = null;
@@ -362,6 +372,7 @@ public class SearchScene {
         		
 
         		String isValid = SearchSceneValidation.validateSearchCriteria(searchCriteria);
+        		System.out.println(isValid);
         		
         		if(isValid.equalsIgnoreCase(ValidationConstants.VALID_CRITERIA)){
         			SearchService searchService = new SearchServiceImpl();
@@ -377,6 +388,12 @@ public class SearchScene {
     				//}
         		}else{
         			//Display Error Message
+        			Alert alert = new Alert(AlertType.ERROR);
+        			alert.setTitle("Error");
+        			alert.setHeaderText("Oops, you got soemthing wrong!");
+        			alert.setContentText(isValid);
+
+        			alert.showAndWait();
         		}
         		
         	}

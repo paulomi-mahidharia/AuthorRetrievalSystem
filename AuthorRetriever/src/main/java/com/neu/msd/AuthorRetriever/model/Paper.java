@@ -11,6 +11,14 @@ public class Paper {
 	public int endDate;
 	public int numOfPapersPublished;
 	
+	public Paper(){
+		this.conferenceName = "";
+		this.numOfPapersPublished = 0;
+		this.startDate = 0;
+		this.endDate = 0;
+		this.options = "";
+	}
+	
 	
 	public int getNumOfPapersPublished() {
 		return numOfPapersPublished;
