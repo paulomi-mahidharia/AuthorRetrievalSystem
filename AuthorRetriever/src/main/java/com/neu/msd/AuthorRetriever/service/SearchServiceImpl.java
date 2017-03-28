@@ -39,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
 		List<Author> paperAuthors = searchDao.searchAuthorsByCriteria(authorPaperQuery);
 		List<Author> confAuthors = searchDao.searchAuthorsByCriteria(authConfQuery);
 		
-		List<Author> authors = processLists(paperAuthors, confAuthors, criteria.union);
+		List<Author> authors = processLists(paperAuthors, confAuthors, criteria.isUnion());
 		
 		//System.out.println(author_ids.toString());
 		System.out.println("DONE!");
