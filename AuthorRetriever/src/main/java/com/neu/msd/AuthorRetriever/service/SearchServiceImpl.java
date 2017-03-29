@@ -25,37 +25,46 @@ public class SearchServiceImpl implements SearchService {
 	@Override
 	public List<Author> searchAuthorsByCriteria(SearchCriteria criteria) throws SQLException {
 		
-		String paperQuery = "SELECT author_paper_mapping.Author_Id FROM author_paper_mapping INNER JOIN paper on author_paper_mapping.Paper_Id = paper.paper_id";
-		paperQuery += buildPaperQuery(paperQuery, criteria.getPaperInfo());
-		// Limiting to 100 Rows for now. 
-		String authorPaperQuery = "SELECT author.* FROM author WHERE Id IN (" + paperQuery + ")" + " LIMIT 100";
-		
+		List<Author> paperAuthors = new ArrayList<>();
+		List<Author> confAuthors = new ArrayList<>();
+		if(criteria.getPaperInfo() != null){
+			String paperQuery = "SELECT author_paper_mapping.Author_Id FROM author_paper_mapping INNER JOIN paper on author_paper_mapping.Paper_Id = paper.paper_id";
+			paperQuery += buildPaperQuery(paperQuery, criteria.getPaperInfo());
+			// Limiting to 100 Rows for now. 
+			String authorPaperQuery = "SELECT author.* FROM author WHERE Id IN (" + paperQuery + ")" + " LIMIT 100";
+			paperAuthors = searchDao.searchAuthorsByCriteria(authorPaperQuery);
+		}
 
-		String editorQuery = "SELECT conference_editor_mapping.editorId FROM conference_editor_mapping INNER JOIN conference on conference_editor_mapping.confId = conference.id";
-		editorQuery += buildServiceInfoQuery(editorQuery, criteria.getServiceInfo());
+		if(criteria.getServiceInfo() != null){
+			String editorQuery = "SELECT conference_editor_mapping.editorId FROM conference_editor_mapping INNER JOIN conference on conference_editor_mapping.confId = conference.id";
+			editorQuery += buildServiceInfoQuery(editorQuery, criteria.getServiceInfo());
+			
+			String authConfQuery = "SELECT author.* from author WHERE Id IN (SELECT editor.Author_Id from editor WHERE editor.id IN ("+ editorQuery +"))";
+			confAuthors = searchDao.searchAuthorsByCriteria(authConfQuery);
+		}
 		
-		String authConfQuery = "SELECT author.* from author WHERE Id IN (SELECT editor.Author_Id from editor WHERE editor.id IN ("+ editorQuery +"))";
-		
-		List<Author> paperAuthors = searchDao.searchAuthorsByCriteria(authorPaperQuery);
-		List<Author> confAuthors = searchDao.searchAuthorsByCriteria(authConfQuery);
-		
-		List<Author> authors = processLists(paperAuthors, confAuthors, criteria.isUnion());
+		List<Author> authors = processLists(paperAuthors, confAuthors, criteria);
 		
 		//System.out.println(author_ids.toString());
 		System.out.println("DONE!");
 		return authors;
 	}
 
-	private List<Author> processLists(List<Author> paperAuthors, List<Author> confAuthors, boolean union) {
+	private List<Author> processLists(List<Author> paperAuthors, List<Author> confAuthors, SearchCriteria criteria) {
 		
 		Set<Author> authors = new HashSet<Author>();
-		if(union){
-			authors.addAll(confAuthors);
-			
+		if(criteria.getPaperInfo() != null && criteria.getServiceInfo() != null){
+			authors.addAll(paperAuthors);
+			if(criteria.isUnion()){
+				authors.addAll(confAuthors);
+			}else{
+				authors.retainAll(confAuthors);
+			}
 		}else{
-			authors.retainAll(confAuthors);
+			authors.addAll(paperAuthors);
+			authors.addAll(confAuthors);
 		}
-		return new ArrayList<Author>();
+		return new ArrayList<Author>(authors);
 	}
 
 	public static String buildPaperQuery(String query, Paper paper){
