@@ -2,10 +2,10 @@ package com.neu.msd.AuthorRetriever.model;
 
 public class User {
 	
-	int userId;
-	String name;
-	String username;
-	String password;
+	private int userId;
+	private String name;
+	 private String username;
+	 private String password;
 	
 	public int getUserId() {
 		return userId;

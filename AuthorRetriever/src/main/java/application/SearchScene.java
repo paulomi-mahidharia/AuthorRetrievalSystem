@@ -4,12 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
 import com.neu.msd.AuthorRetriever.model.SearchCriteria;
 import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
+import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +23,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -37,9 +41,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+@SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
 	
-	public static Scene getSearchScene(Stage primaryStage){
+		public static Scene getSearchScene(Stage primaryStage){
 		
 		GridPane grid2 = new GridPane();
 		grid2.setAlignment(Pos.TOP_LEFT);
@@ -298,11 +303,15 @@ public class SearchScene {
             public void handle(ActionEvent e) {
             	System.out.println("CLicked");
             	
-            	Paper paperInfo = new Paper();
+            	Paper paperInfo = null;
             	if(paperCheck.isSelected()){
             		
+            		paperInfo = new Paper();
+            		
             		//Set minimum number of papers
-            		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
+            		if(!numberOfPapersField.getText().isEmpty()){
+                		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
+            		}
             		
             		//Set published or not published
             		if(publishComboBox.getValue().equals("Published in")){
@@ -319,17 +328,24 @@ public class SearchScene {
             		
 					//Set start date and/or end date
             		if(yearRangeComboBox.getValue().equals("between")){
-            			paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
-            			paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
+            			if(!fromYear.getText().isEmpty()) 
+            				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+            			if(!toYear.getText().isEmpty()) 
+            				paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
             		}else if(yearRangeComboBox.getValue().equals("before") 
         					|| yearRangeComboBox.getValue().equals("after")){
-            			paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+            			if(!fromYear.getText().isEmpty()) 
+            				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
             		}
+            		
+            		//Set keyword
+            		paperInfo.setKeyword(titleKeywordValue.getText());
         		}
             	
-            	ServiceInfo serviceInfo = new ServiceInfo();
+            	ServiceInfo serviceInfo = null;
             	if(serviceCheck.isSelected()){
             		
+            		serviceInfo = new ServiceInfo();
             		//Set has served of not
             		if(serveComboBox.getValue().toString().equalsIgnoreCase("Served in")){
                 		serviceInfo.setHasServed(true);
@@ -355,18 +371,32 @@ public class SearchScene {
             		
         		searchCriteria.setPaperInfo(paperInfo);
         		searchCriteria.setServiceInfo(serviceInfo);
+
+        		String isValid = SearchSceneValidation.validateSearchCriteria(searchCriteria);
+        		System.out.println(isValid);
         		
-        		SearchService searchService = new SearchServiceImpl();
-        		List<Author> authors = new ArrayList<Author>();
-				//try {
-					//authors = searchService.searchAuthorsByCriteria(searchCriteria);
-					Scene resultScene = ResultScene.getResultScene(authors);
-					primaryStage.setScene(resultScene);
-					primaryStage.show();
-				//} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					//e1.printStackTrace();
-				//}
+        		if(isValid.equalsIgnoreCase(ValidationConstants.VALID_CRITERIA)){
+        			SearchService searchService = new SearchServiceImpl();
+            		List<Author> authors = new ArrayList<Author>();
+    				try {
+    					authors = searchService.searchAuthorsByCriteria(searchCriteria);
+    					Scene resultScene = ResultScene.getResultScene(authors);
+    					primaryStage.setScene(resultScene);
+    					primaryStage.show();
+    				} catch (SQLException e1) {
+    					// TODO Auto-generated catch block
+    					//e1.printStackTrace();
+    				}
+        		}else{
+        			//Display Error Message
+        			Alert alert = new Alert(AlertType.ERROR);
+        			alert.setTitle("Error");
+        			alert.setHeaderText("Oops, you got soemthing wrong!");
+        			alert.setContentText(isValid);
+
+        			alert.showAndWait();
+        		}
+
         	}
 		});
 		

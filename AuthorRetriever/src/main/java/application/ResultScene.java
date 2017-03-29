@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 
+@SuppressWarnings({ "rawtypes", "restriction" })
 public class ResultScene {
 	
 	private static TableView table = new TableView();
@@ -55,5 +56,4 @@ public class ResultScene {
 		
 		return resultScene;
 	}
-	
 }

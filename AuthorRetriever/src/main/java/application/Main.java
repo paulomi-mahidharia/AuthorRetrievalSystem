@@ -1,5 +1,8 @@
 package application;
 
+import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -12,6 +15,14 @@ public class Main extends Application {
 			Scene loginScene = LoginScene.getLoginScene(primaryStage);
 			primaryStage.setScene(loginScene);
 			primaryStage.show();
+			
+			Author author = new Author();
+			author.setAuthorId(575214);
+			
+			SearchSimilarProfileServiceImpl sl = new SearchSimilarProfileServiceImpl();
+			sl.searchSimilarAuthorProfiles(author);
+			
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
