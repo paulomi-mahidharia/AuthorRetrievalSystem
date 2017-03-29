@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.neu.msd.AuthorRetriever.dao.SearchDao;
-import com.neu.msd.AuthorRetriever.dao.SearchDaoImpl;
+import com.neu.msd.AuthorRetriever.dao.SearchAuthorDao;
+import com.neu.msd.AuthorRetriever.dao.SearchAuthorDaoImpl;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
 import com.neu.msd.AuthorRetriever.model.SearchCriteria;
@@ -20,7 +20,7 @@ import com.neu.msd.AuthorRetriever.util.YearUtil;
 
 public class SearchServiceImpl implements SearchService {
 
-	private SearchDao searchDao = new SearchDaoImpl();
+	private SearchAuthorDao searchDao = new SearchAuthorDaoImpl();
 	
 	@Override
 	public List<Author> searchAuthorsByCriteria(SearchCriteria criteria) throws SQLException {

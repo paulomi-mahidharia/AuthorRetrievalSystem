@@ -6,7 +6,7 @@ import java.util.List;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.SearchCriteria;
 
-public interface SearchDao {
+public interface SearchAuthorDao {
 	/**
 	 * Search for authors based on the given search criteria
 	 * @param queryString

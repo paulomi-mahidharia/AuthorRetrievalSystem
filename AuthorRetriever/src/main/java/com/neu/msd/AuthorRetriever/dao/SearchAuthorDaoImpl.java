@@ -10,7 +10,7 @@ import java.util.List;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.service.DatabaseConnection;
 
-public class SearchDaoImpl implements SearchDao{
+public class SearchAuthorDaoImpl implements SearchAuthorDao{
 
 	private Connection conn = DatabaseConnection.getConn();
 	
