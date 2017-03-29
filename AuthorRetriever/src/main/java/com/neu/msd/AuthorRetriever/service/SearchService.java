@@ -21,10 +21,4 @@ public interface SearchService {
 	 */
 	public List<Author> searchAuthorsByCriteria(SearchCriteria criteria) throws SQLException;
 	
-	/**
-	 * Search for authors who have a matching profile as the given author
-	 * @param author author whose matching profile is to be found
-	 * @return list of authors with matching profile
-	 */
-	public List<Author> searchSimilarAuthorProfiles(Author author);
 }

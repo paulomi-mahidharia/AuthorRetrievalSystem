@@ -58,12 +58,6 @@ public class SearchServiceImpl implements SearchService {
 		return new ArrayList<Author>();
 	}
 
-	@Override
-	public List<Author> searchSimilarAuthorProfiles(Author author) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String buildPaperQuery(String query, Paper paper){
 
 		List<String> conditions = new ArrayList<String>();
