@@ -5,20 +5,22 @@ import java.util.List;
 import com.neu.msd.AuthorRetriever.model.Inproceeding;
 
 public class Author {
+
+	private int authorId;
+	private String authorKey;
+	private String name;
+	private int age;
+	private String degree;
+	private String gender;
+	private String country;
+	private String url;
+	private List<String> aliasNames;
+	private List<Inproceeding> inproceedings;
+	private List<Article> articles;
+	private List<Thesis> thesis;
+	private List<Journal> journals;
 	
-	int authorId;
-	String authorKey;
-	String name;
-	int age;
-	String degree;
-	String gender;
-	String country;
-	String url;
-	List<String> aliasNames;
-	List<Inproceeding> inproceedings;
-	List<Article> articles;
-	List<Thesis> thesis;
-	List<Journal> journals;
+
 	
 	public int getAuthorId() {
 		return authorId;
@@ -26,18 +28,21 @@ public class Author {
 	public void setAuthorId(int authorId) {
 		this.authorId = authorId;
 	}
+
 	public String getAuthorKey() {
 		return authorKey;
 	}
 	public void setAuthorKey(String authorKey) {
 		this.authorKey = authorKey;
 	}
+
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public int getAge() {
 		return age;
 	}
@@ -99,4 +104,10 @@ public class Author {
 		this.journals = journals;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		Author a = (Author) obj;
+		return this.authorId == a.getAuthorId();
+	}
+
 }

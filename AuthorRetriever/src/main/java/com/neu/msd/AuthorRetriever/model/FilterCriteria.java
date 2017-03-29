@@ -8,18 +8,18 @@ import java.util.List;
 
 public class FilterCriteria {
 	
-	Date startDate;
-	Date endDate;
-	String displayStartDate;
-	String displayEndDate;
-	String location;
-	String gender;
-	String fieldOfService;
-	int numOfResults;
-	List<Integer> conferenceIds;
-	Boolean includeConferences;
-	List<Integer> journalIds;
-	Boolean includeJournals;
+	private Date startDate;
+	private Date endDate;
+	private String displayStartDate;
+	private String displayEndDate;
+	private String location;
+	private String gender;
+	private String fieldOfService;
+	private int numOfResults;
+	private List<Integer> conferenceIds;
+	private Boolean includeConferences;
+	private List<Integer> journalIds;
+	private Boolean includeJournals;
 	
 	public FilterCriteria() {
 		
