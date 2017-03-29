@@ -27,8 +27,8 @@ public class SearchSceneValidation {
 				
 					//At least date must be present 
 					String isDateValid = isDateValid(paperInfo.getOptions(), 
-														paperInfo.getStartDate(), 
-														paperInfo.getEndDate());
+														paperInfo.getStartDate()+"", 
+														paperInfo.getEndDate()+"");
 					System.out.println("isDateValid:::"+isDateValid);
 					if(isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
 						return ValidationConstants.VALID_CRITERIA;
@@ -60,8 +60,8 @@ public class SearchSceneValidation {
 				//Validate date
 				if(paperInfo.getStartDate() != 0 || paperInfo.getEndDate() != 0){
 					String isDateValid = isDateValid(paperInfo.getOptions(), 
-							paperInfo.getStartDate(), 
-							paperInfo.getEndDate());
+							paperInfo.getStartDate()+"", 
+							paperInfo.getEndDate()+"");
 					if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
 						return ValidationConstants.INVALID_DATE;
 					}
@@ -78,9 +78,17 @@ public class SearchSceneValidation {
 		return validationStatus;
 	}
 	
-	public static String isDateValid(String dateOption, int startDate, int endDate){
+	public static String isDateValid(String dateOption, String start, String end){
 		
 		System.out.println("dateOption:::"+dateOption);
+		int startDate;
+		int endDate;
+		try{
+			startDate = Integer.parseInt(start);
+			endDate = Integer.parseInt(end);
+		}catch(NumberFormatException e){
+			return ValidationConstants.INVALID_DATE;
+		}
 		
 		switch(dateOption){
 			case "between":
@@ -101,7 +109,13 @@ public class SearchSceneValidation {
 	}
 	
 	public static boolean isYearInValid(int year){
-		return !Integer.toString(year).matches("/^\\d{4}$/");
+		if((year+"").length() != 4)
+			return false;
+		
+		if(year < 1960 || year > 2020)
+			return true;
+		
+		return false;
 	}
 	
 	public static boolean isNumberOfPapersValid(int numberOfPapers){

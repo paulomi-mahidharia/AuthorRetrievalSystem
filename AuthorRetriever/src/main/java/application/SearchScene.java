@@ -1,5 +1,6 @@
 package application;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,6 @@ import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,6 +23,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -377,15 +378,15 @@ public class SearchScene {
         		if(isValid.equalsIgnoreCase(ValidationConstants.VALID_CRITERIA)){
         			SearchService searchService = new SearchServiceImpl();
             		List<Author> authors = new ArrayList<Author>();
-    				//try {
-    					//authors = searchService.searchAuthorsByCriteria(searchCriteria);
+    				try {
+    					authors = searchService.searchAuthorsByCriteria(searchCriteria);
     					Scene resultScene = ResultScene.getResultScene(authors);
     					primaryStage.setScene(resultScene);
     					primaryStage.show();
-    				//} catch (SQLException e1) {
+    				} catch (SQLException e1) {
     					// TODO Auto-generated catch block
     					//e1.printStackTrace();
-    				//}
+    				}
         		}else{
         			//Display Error Message
         			Alert alert = new Alert(AlertType.ERROR);
