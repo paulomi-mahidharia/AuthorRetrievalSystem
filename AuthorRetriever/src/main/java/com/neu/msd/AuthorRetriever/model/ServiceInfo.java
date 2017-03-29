@@ -4,12 +4,12 @@ import java.util.Date;
 
 public class ServiceInfo {
 
-	public boolean hasServed;
-	public String conferenceName;
-	public String position;
-	public String options;
-	public int startDate;
-	public int endDate;
+	private boolean hasServed;
+	private String conferenceName;
+	private String position;
+	private String options;
+	private int startDate;
+	private int endDate;
 	
 	public boolean isHasServed() {
 		return hasServed;

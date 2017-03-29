@@ -39,7 +39,7 @@ public class SearchServiceImpl implements SearchService {
 		List<Author> paperAuthors = searchDao.searchAuthorsByCriteria(authorPaperQuery);
 		List<Author> confAuthors = searchDao.searchAuthorsByCriteria(authConfQuery);
 		
-		List<Author> authors = processLists(paperAuthors, confAuthors, criteria.union);
+		List<Author> authors = processLists(paperAuthors, confAuthors, criteria.isUnion());
 		
 		//System.out.println(author_ids.toString());
 		System.out.println("DONE!");
@@ -58,12 +58,6 @@ public class SearchServiceImpl implements SearchService {
 		return new ArrayList<Author>();
 	}
 
-	@Override
-	public List<Author> searchSimilarAuthorProfiles(Author author) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public static String buildPaperQuery(String query, Paper paper){
 
 		List<String> conditions = new ArrayList<String>();
@@ -73,7 +67,7 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		if(paper.getKeyword() !=null && !paper.getKeyword().isEmpty()){
-			conditions.add(TitleUtil.titleQuery(paper.getKeyword(), "paper", paper.contains));
+			conditions.add(TitleUtil.titleQuery(paper.getKeyword(), "paper", paper.isContains()));
 		}
 		
 		String yearResult = YearUtil.formYearQuery(paper.getOptions(), paper.getStartDate(), paper.getEndDate(), "paper");
@@ -92,7 +86,7 @@ public class SearchServiceImpl implements SearchService {
 		
 		String groupByClause = "";
 		if(paper.getNumOfPapersPublished() > 0){
-			groupByClause = GroupByUtil.groupByQuery("author_paper_mapping", paper.numOfPapersPublished, "author_id", "paper_id");
+			groupByClause = GroupByUtil.groupByQuery("author_paper_mapping", paper.getNumOfPapersPublished(), "author_id", "paper_id");
 		}
 		
 		return whereCond.toString() + groupByClause;
