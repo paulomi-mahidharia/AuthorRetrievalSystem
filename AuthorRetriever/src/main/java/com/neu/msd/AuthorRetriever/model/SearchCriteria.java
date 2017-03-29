@@ -1,9 +1,9 @@
 package com.neu.msd.AuthorRetriever.model;
 
 public class SearchCriteria {
-	public Paper paperInfo;
-	public ServiceInfo serviceInfo;
-	public boolean union;
+	private Paper paperInfo;
+	private ServiceInfo serviceInfo;
+	private boolean union;
 
 	public SearchCriteria(Paper paperInfo, ServiceInfo serviceInfo, boolean union) {
 		this.paperInfo = paperInfo;

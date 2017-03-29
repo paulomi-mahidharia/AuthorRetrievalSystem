@@ -6,6 +6,10 @@ public class YearUtil {
 
 	public static String formYearQuery(String type, int start, int end, String tablename) {
 
+		if (type == null) {
+			type = "before";
+		}
+		
 		switch (type) {
 
 		case "after":
@@ -18,7 +22,7 @@ public class YearUtil {
 			return tablename + ".year BETWEEN " + start + " AND " + end;
 
 		default:
-			return "";
+			return tablename + ".year < " + end;
 		}
 
 	}
