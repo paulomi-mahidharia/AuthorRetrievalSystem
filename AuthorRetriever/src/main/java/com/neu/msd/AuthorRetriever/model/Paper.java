@@ -3,14 +3,28 @@ package com.neu.msd.AuthorRetriever.model;
 import java.util.Date;
 
 public class Paper {
-	private  String conferenceName;
+	private int numOfPapersPublished;
 	private  boolean isPublished;
+	private  String conferenceName;
 	private  boolean contains;
 	private  String options;
 	private  int startDate;
 	private  int endDate;
-	private int numOfPapersPublished;
 	
+	public Paper(int numOfPapersPublished, boolean isPublished, String conferenceName, boolean contains, String options,
+			int startDate, int endDate, String keyword) {
+		super();
+		this.numOfPapersPublished = numOfPapersPublished;
+		this.isPublished = isPublished;
+		this.conferenceName = conferenceName;
+		this.contains = contains;
+		this.options = options;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.keyword = keyword;
+	}
+
+
 	public Paper(){
 		this.conferenceName = "";
 		this.numOfPapersPublished = 0;
@@ -18,8 +32,8 @@ public class Paper {
 		this.endDate = 0;
 		this.options = "";
 	}
-	
-	
+
+
 	public int getNumOfPapersPublished() {
 		return numOfPapersPublished;
 	}

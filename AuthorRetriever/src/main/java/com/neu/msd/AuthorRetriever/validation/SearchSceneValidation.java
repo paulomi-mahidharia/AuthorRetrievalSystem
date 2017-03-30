@@ -1,86 +1,115 @@
 package com.neu.msd.AuthorRetriever.validation;
 
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
-import com.neu.msd.AuthorRetriever.model.Paper;
-import com.neu.msd.AuthorRetriever.model.SearchCriteria;
-import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+
+@SuppressWarnings({ "rawtypes", "restriction" })
 public class SearchSceneValidation {
 	
-	public static String validateSearchCriteria(SearchCriteria criteria){
-		
-		String validationStatus = "";
-		
-		Paper paperInfo = criteria.getPaperInfo();
-		ServiceInfo serviceInfo = criteria.getServiceInfo();
-		
-		if(paperInfo == null && serviceInfo == null){
+	public static String validateCriteria(CheckBox paperCheck, CheckBox serviceCheck){
+		if(paperCheck.isSelected() || serviceCheck.isSelected())
+			return ValidationConstants.VALID_CRITERIA;
+		else
 			return ValidationConstants.NO_CRITERIA_SELECTED;
+	}
+	
+	public static String validatePaperInfo(TextField numberOfPapersField,
+											TextField confName,
+											ComboBox yearRangeComboBox,
+											TextField fromYear,
+											TextField toYear,
+											TextField keyword){
+    		
+		int numberOfPublications = 0;
+		
+		//Check minimum number of papers
+		if(!numberOfPapersField.getText().isEmpty()){
+			try{
+				numberOfPublications = Integer.parseInt(numberOfPapersField.getText());
+			}catch(NumberFormatException ex){
+				//error
+				return ValidationConstants.INVALID_NUMBER_OF_PAPERS;
+			}
+    		
 		}
 		
-		if(paperInfo != null){
+		// Validate date if everything else is empty
+		if(numberOfPublications == 0 && keyword.getText().isEmpty() && confName.getText().isEmpty()){
 			
-			// Validate date if everything else is empty
-			if(paperInfo.getNumOfPapersPublished() == 0 &&
-				paperInfo.getKeyword().isEmpty() &&
-				paperInfo.getConferenceName().isEmpty()){
+				//At least date must be present 
+				String isDateValid = isDateValid(yearRangeComboBox.getValue().toString(), 
+												fromYear.getText(), 
+												toYear.getText());
 				
-					//At least date must be present 
-					String isDateValid = isDateValid(paperInfo.getOptions(), 
-														paperInfo.getStartDate()+"", 
-														paperInfo.getEndDate()+"");
-					System.out.println("isDateValid:::"+isDateValid);
-					if(isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
-						return ValidationConstants.VALID_CRITERIA;
-					}else{
-						return ValidationConstants.INVALID_PAPER_CRITERIA;
-					}
-			}else{
-				// Validate number of papers published
-				if(paperInfo.getNumOfPapersPublished() != 0){
-					if(!isNumberOfPapersValid(paperInfo.getNumOfPapersPublished())){
-						return ValidationConstants.INVALID_NUMBER_OF_PAPERS;
-					}
+				if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
+					return ValidationConstants.INVALID_DATE;
 				}
-				
-				// Validate conference name
-				if(!paperInfo.getConferenceName().isEmpty()){
-					if(!isStringValid(paperInfo.getConferenceName())){
-						return ValidationConstants.INVALID_CONFERENCE_NAME;
-					}
-				}
-				
-				// Validate Keyword name
-				if(!paperInfo.getKeyword().isEmpty()){
-					if(!isStringValid(paperInfo.getKeyword())){
-						return ValidationConstants.INVALID_KEYWORD;
-					}
-				}
-				
-				//Validate date
-				if(paperInfo.getStartDate() != 0 || paperInfo.getEndDate() != 0){
-					String isDateValid = isDateValid(paperInfo.getOptions(), 
-							paperInfo.getStartDate()+"", 
-							paperInfo.getEndDate()+"");
-					if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
-						return ValidationConstants.INVALID_DATE;
-					}
-				}
-				
-				return ValidationConstants.VALID_CRITERIA;
+		}
+		
+		// Validate range for number of publications
+		if(numberOfPublications != 0){
+			if(!isNumberOfPapersValid(numberOfPublications)){
+				return ValidationConstants.INVALID_NUMBER_OF_PAPERS;
 			}
 		}
 		
-		if(serviceInfo != null){
-			
+		// Validate conference name
+		if(!confName.getText().isEmpty()){
+			if(!isStringValid(confName.getText())){
+				return ValidationConstants.INVALID_CONFERENCE_NAME;
+			}
 		}
 		
-		return validationStatus;
+		// Validate Keyword name
+		if(!keyword.getText().isEmpty()){
+			if(!isStringValid(keyword.getText())){
+				return ValidationConstants.INVALID_KEYWORD;
+			}
+		}
+		
+		//Validate date
+		if(!fromYear.getText().isEmpty() || !toYear.getText().isEmpty()){
+			String isDateValid = isDateValid(yearRangeComboBox.getValue().toString(), 
+											fromYear.getText(), 
+											toYear.getText());
+			if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
+				return ValidationConstants.INVALID_DATE;
+			}
+		}
+		
+		return ValidationConstants.VALID_PAPER_CRITERIA;
+	}
+	
+	public static String validateServiceInformation(TextField confNameServedIn, 
+													ComboBox yearRangeServedComboBox, 
+													TextField fromYearServed, 
+													TextField toYearServed) {
+		
+		// Validate conference name
+		if(!confNameServedIn.getText().isEmpty()){
+			if(!isStringValid(confNameServedIn.getText())){
+				return ValidationConstants.INVALID_CONFERENCE_NAME;
+			}
+		}
+		
+		//Validate date
+		if(!fromYearServed.getText().isEmpty() || !toYearServed.getText().isEmpty()){
+			String isDateValid = isDateValid(yearRangeServedComboBox.getValue().toString(), 
+											fromYearServed.getText(), 
+											toYearServed.getText());
+			if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
+				return ValidationConstants.INVALID_DATE;
+			}
+		}
+		
+		return ValidationConstants.VALID_SERVICE_CRITERIA;
 	}
 	
 	public static String isDateValid(String dateOption, String start, String end){
 		
-		System.out.println("dateOption:::"+dateOption);
 		int startDate;
 		int endDate;
 		try{
@@ -92,17 +121,24 @@ public class SearchSceneValidation {
 		
 		switch(dateOption){
 			case "between":
-				if(startDate == 0 || endDate == 0 || isYearInValid(startDate) || isYearInValid(endDate)){
+				System.out.println(startDate);
+				System.out.println(endDate);
+				System.out.println(isYearInValid(startDate));
+				System.out.println(isYearInValid(endDate));
+				if(startDate == 0 || endDate == 0 || isYearInValid(startDate) || isYearInValid(endDate))
 					return ValidationConstants.INVALID_DATE_RANGE;
-				}
+				else 
+					return ValidationConstants.VALID_DATE;
 			case "before":
-				if(startDate == 0 || isYearInValid(startDate)){
+				if(startDate == 0 || isYearInValid(startDate))
 					return ValidationConstants.INVALID_DATE;
-				}
+				else 
+					return ValidationConstants.VALID_DATE;
 			case "after":
-				if(startDate == 0 || isYearInValid(startDate)){
+				if(startDate == 0 || isYearInValid(startDate))
 					return ValidationConstants.INVALID_DATE;
-				}
+				else 
+					return ValidationConstants.VALID_DATE;
 			default:
 				return ValidationConstants.VALID_DATE;
 		}
@@ -110,9 +146,9 @@ public class SearchSceneValidation {
 	
 	public static boolean isYearInValid(int year){
 		if((year+"").length() != 4)
-			return false;
+			return true;
 		
-		if(year < 1960 || year > 2020)
+		if(year < 1600 || year > 2020)
 			return true;
 		
 		return false;
