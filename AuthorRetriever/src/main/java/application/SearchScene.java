@@ -11,6 +11,7 @@ import com.neu.msd.AuthorRetriever.model.SearchCriteria;
 import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
+import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 
 import javafx.beans.value.ChangeListener;
@@ -23,8 +24,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
@@ -41,6 +40,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+@SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
 	
 	public static Scene getSearchScene(Stage primaryStage){
@@ -300,103 +300,79 @@ public class SearchScene {
        	 
             @Override
             public void handle(ActionEvent e) {
-            	System.out.println("CLicked");
-            	
             	Paper paperInfo = null;
-            	if(paperCheck.isSelected()){
-            		
-            		paperInfo = new Paper();
-            		
-            		//Set minimum number of papers
-            		if(!numberOfPapersField.getText().isEmpty()){
-                		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
-            		}
-            		
-            		//Set published or not published
-            		if(publishComboBox.getValue().equals("Published in")){
-						paperInfo.setPublished(true);
-					}else{
-						paperInfo.setPublished(false);
-					}
-            		
-            		//Set conference name
-            		paperInfo.setConferenceName(confName.getText());
-            		
-            		//Set date options
-            		paperInfo.setOptions(yearRangeServedComboBox.getValue().toString());
-            		
-					//Set start date and/or end date
-            		if(yearRangeComboBox.getValue().equals("between")){
-            			if(!fromYear.getText().isEmpty()) 
-            				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
-            			if(!toYear.getText().isEmpty()) 
-            				paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
-            		}else if(yearRangeComboBox.getValue().equals("before") 
-        					|| yearRangeComboBox.getValue().equals("after")){
-            			if(!fromYear.getText().isEmpty()) 
-            				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
-            		}
-            		
-            		//Set keyword
-            		paperInfo.setKeyword(titleKeywordValue.getText());
-        		}
-            	
             	ServiceInfo serviceInfo = null;
-            	if(serviceCheck.isSelected()){
-            		
-            		serviceInfo = new ServiceInfo();
-            		//Set has served of not
-            		if(serveComboBox.getValue().toString().equalsIgnoreCase("Served in")){
-                		serviceInfo.setHasServed(true);
-            		}else{
-            			serviceInfo.setHasServed(false);
+            	
+            	String isCriteriaValid = SearchSceneValidation.validateCriteria(paperCheck, serviceCheck);
+            	
+            	if(isCriteriaValid.equalsIgnoreCase(ValidationConstants.NO_CRITERIA_SELECTED)){
+            		AlertUtil.displayAlert("Error", 
+            								"Oops, you got soemthing wrong!", 
+        									ValidationConstants.NO_CRITERIA_SELECTED);
+            		return;
+            	}else{
+            		if(paperCheck.isSelected()){
+            			String isPaperInfoValid = SearchSceneValidation.validatePaperInfo(paperCheck, 
+													numberOfPapersField, 
+													publishComboBox,
+													confName,
+													yearRangeComboBox,
+													fromYear,
+													toYear,
+													titleKeywordValue);
+            			
+            			if(!isPaperInfoValid.equalsIgnoreCase(ValidationConstants.VALID_PAPER_CRITERIA)){
+            				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", isPaperInfoValid);
+            				return;
+            			}else{
+            				//set paper info bean
+            				paperInfo = setPaperInformation(numberOfPapersField, 
+															publishComboBox,
+															confName,
+															yearRangeComboBox,
+															fromYear,
+															toYear,
+															titleKeywordValue);
+            			}
+            				
             		}
             		
-            		//Set conference name
-            		serviceInfo.setConferenceName(confNameServedIn.getText());
-            		
-            		//Set position
-            		serviceInfo.setPosition(positionComboBox.getValue().toString());
-            		
-            		//Set start date and/or end date
-            		if(yearRangeServedComboBox.getValue().equals("between")){
-            			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
-            			serviceInfo.setEndDate(Integer.parseInt(toYearServed.getText()));
-            		}else if(yearRangeServedComboBox.getValue().equals("before") 
-        					|| yearRangeServedComboBox.getValue().equals("after")){
-            			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+            		if(serviceCheck.isSelected()){
+            			String isServiceInfoValid = "";
+            			if(!isServiceInfoValid.equalsIgnoreCase(ValidationConstants.VALID_PAPER_CRITERIA)){
+            				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", isServiceInfoValid);
+            				return;
+            			}else{
+            				//set paper info bean
+            				serviceInfo = setServiceInformation(serveComboBox,
+        														confNameServedIn,
+        														positionComboBox,
+																yearRangeServedComboBox,
+																fromYearServed,
+																toYearServed);
+            			}
             		}
             	}
             		
         		searchCriteria.setPaperInfo(paperInfo);
         		searchCriteria.setServiceInfo(serviceInfo);
         		
-
-        		String isValid = SearchSceneValidation.validateSearchCriteria(searchCriteria);
-        		System.out.println(isValid);
-        		
-        		if(isValid.equalsIgnoreCase(ValidationConstants.VALID_CRITERIA)){
-        			SearchService searchService = new SearchServiceImpl();
-            		List<Author> authors = new ArrayList<Author>();
-    				try {
-    					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-    					Scene resultScene = ResultScene.getResultScene(authors);
-    					primaryStage.setScene(resultScene);
-    					primaryStage.show();
-    				} catch (SQLException e1) {
-    					// TODO Auto-generated catch block
-    					//e1.printStackTrace();
-    				}
-        		}else{
-        			//Display Error Message
-        			Alert alert = new Alert(AlertType.ERROR);
-        			alert.setTitle("Error");
-        			alert.setHeaderText("Oops, you got soemthing wrong!");
-        			alert.setContentText(isValid);
-
-        			alert.showAndWait();
-        		}
-        		
+    			SearchService searchService = new SearchServiceImpl();
+        		List<Author> authors = new ArrayList<Author>();
+				try {
+					authors = searchService.searchAuthorsByCriteria(searchCriteria);
+					System.out.println("NO> OF AUT:::"+authors.size());
+					Scene resultScene = ResultScene.getResultScene(authors);
+					primaryStage.setScene(resultScene);
+					primaryStage.show();
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					AlertUtil.displayAlert("Error", 
+											"Oops, you got soemthing wrong!", 
+											ValidationConstants.SQL_FAILURE);
+					return;
+				}
         	}
 		});
 		
@@ -404,4 +380,85 @@ public class SearchScene {
 	    Scene scene2 = new Scene(grid2, 1000, 1000, Color.BEIGE);
 	    return scene2;
 	}
+		
+	public static Paper setPaperInformation(TextField numberOfPapersField,
+											ComboBox publishComboBox,
+											TextField confName,
+											ComboBox yearRangeComboBox,
+											TextField fromYear,
+											TextField toYear,
+											TextField titleKeywordValue){
+    		
+		Paper paperInfo = new Paper();
+		
+		//Set minimum number of papers
+		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
+		
+		//Set published or not published
+		if(publishComboBox.getValue().equals("Published in")){
+			paperInfo.setPublished(true);
+		}else{
+			paperInfo.setPublished(false);
+		}
+		
+		//Set conference name
+		paperInfo.setConferenceName(confName.getText());
+		
+		//Set date options
+		paperInfo.setOptions(yearRangeComboBox.getValue().toString());
+		
+		//Set start date and/or end date
+		if(yearRangeComboBox.getValue().equals("between")){
+			if(!fromYear.getText().isEmpty()) 
+				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+			if(!toYear.getText().isEmpty()) 
+				paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
+		}else if(yearRangeComboBox.getValue().equals("before") 
+				|| yearRangeComboBox.getValue().equals("after")){
+			if(!fromYear.getText().isEmpty()) 
+				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+				paperInfo.setEndDate(Integer.parseInt(fromYear.getText()));
+		}
+		
+		//Set keyword
+		paperInfo.setKeyword(titleKeywordValue.getText());
+		
+		return paperInfo;
+	}	
+	
+	public static ServiceInfo setServiceInformation(ComboBox serveComboBox,
+													TextField confNameServedIn,
+													ComboBox positionComboBox,
+													ComboBox yearRangeServedComboBox,
+													TextField fromYearServed,
+													TextField toYearServed){
+		
+		ServiceInfo serviceInfo = new ServiceInfo();
+		
+		//Set has served of not
+		if(serveComboBox.getValue().toString().equalsIgnoreCase("Served in")){
+    		serviceInfo.setHasServed(true);
+		}else{
+			serviceInfo.setHasServed(false);
+		}
+		
+		//Set conference name
+		serviceInfo.setConferenceName(confNameServedIn.getText());
+		
+		//Set position
+		serviceInfo.setPosition(positionComboBox.getValue().toString());
+		
+		//Set start date and/or end date
+		if(yearRangeServedComboBox.getValue().equals("between")){
+			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+			serviceInfo.setEndDate(Integer.parseInt(toYearServed.getText()));
+		}else if(yearRangeServedComboBox.getValue().equals("before") 
+				|| yearRangeServedComboBox.getValue().equals("after")){
+			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+			serviceInfo.setStartDate(Integer.parseInt(toYearServed.getText()));
+		}
+		
+		return serviceInfo;
+	}
+	
 }
