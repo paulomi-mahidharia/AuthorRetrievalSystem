@@ -392,7 +392,9 @@ public class SearchScene {
 		Paper paperInfo = new Paper();
 		
 		//Set minimum number of papers
-		paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
+		if(!numberOfPapersField.getText().isEmpty()){
+			paperInfo.setNumOfPapersPublished(Integer.parseInt(numberOfPapersField.getText()));
+		}
 		
 		//Set published or not published
 		if(publishComboBox.getValue().equals("Published in")){
@@ -408,16 +410,18 @@ public class SearchScene {
 		paperInfo.setOptions(yearRangeComboBox.getValue().toString());
 		
 		//Set start date and/or end date
-		if(yearRangeComboBox.getValue().equals("between")){
-			if(!fromYear.getText().isEmpty()) 
-				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
-			if(!toYear.getText().isEmpty()) 
-				paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
-		}else if(yearRangeComboBox.getValue().equals("before") 
-				|| yearRangeComboBox.getValue().equals("after")){
-			if(!fromYear.getText().isEmpty()) 
-				paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
-				paperInfo.setEndDate(Integer.parseInt(fromYear.getText()));
+		if(!fromYear.getText().isEmpty() || !toYear.getText().isEmpty()){
+			if(yearRangeComboBox.getValue().equals("between")){
+				if(!fromYear.getText().isEmpty()) 
+					paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+				if(!toYear.getText().isEmpty()) 
+					paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
+			}else if(yearRangeComboBox.getValue().equals("before") 
+					|| yearRangeComboBox.getValue().equals("after")){
+				if(!fromYear.getText().isEmpty()) 
+					paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
+					paperInfo.setEndDate(Integer.parseInt(fromYear.getText()));
+			}
 		}
 		
 		//Set keyword

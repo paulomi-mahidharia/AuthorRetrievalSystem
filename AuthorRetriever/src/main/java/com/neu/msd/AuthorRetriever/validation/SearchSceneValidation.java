@@ -47,7 +47,7 @@ public class SearchSceneValidation {
 												toYear.getText());
 				
 				if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
-					return ValidationConstants.INVALID_PAPER_CRITERIA;
+					return ValidationConstants.INVALID_DATE;
 				}
 		}
 		
@@ -78,7 +78,7 @@ public class SearchSceneValidation {
 											fromYear.getText(), 
 											toYear.getText());
 			if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
-				return ValidationConstants.INVALID_PAPER_CRITERIA;
+				return ValidationConstants.INVALID_DATE;
 			}
 		}
 		
@@ -98,17 +98,24 @@ public class SearchSceneValidation {
 		
 		switch(dateOption){
 			case "between":
-				if(startDate == 0 || endDate == 0 || isYearInValid(startDate) || isYearInValid(endDate)){
+				System.out.println(startDate);
+				System.out.println(endDate);
+				System.out.println(isYearInValid(startDate));
+				System.out.println(isYearInValid(endDate));
+				if(startDate == 0 || endDate == 0 || isYearInValid(startDate) || isYearInValid(endDate))
 					return ValidationConstants.INVALID_DATE_RANGE;
-				}
+				else 
+					return ValidationConstants.VALID_DATE;
 			case "before":
-				if(startDate == 0 || isYearInValid(startDate)){
+				if(startDate == 0 || isYearInValid(startDate))
 					return ValidationConstants.INVALID_DATE;
-				}
+				else 
+					return ValidationConstants.VALID_DATE;
 			case "after":
-				if(startDate == 0 || isYearInValid(startDate)){
+				if(startDate == 0 || isYearInValid(startDate))
 					return ValidationConstants.INVALID_DATE;
-				}
+				else 
+					return ValidationConstants.VALID_DATE;
 			default:
 				return ValidationConstants.VALID_DATE;
 		}
@@ -118,7 +125,7 @@ public class SearchSceneValidation {
 		if((year+"").length() != 4)
 			return true;
 		
-		if(year < 1960 || year > 2020)
+		if(year < 1600 || year > 2020)
 			return true;
 		
 		return false;
