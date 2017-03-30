@@ -7,6 +7,9 @@ public class ValidationConstants {
 	public static final String INVALID_PAPER_CRITERIA = "Please selects valid Paper Info Criteria";
 	public static final String VALID_PAPER_CRITERIA = "The Paper Information criteria is correct";
 	
+	public static final String INVALID_SERVICE_CRITERIA = "Please selects valid Service Info Criteria";
+	public static final String VALID_SERVICE_CRITERIA = "The Service Information criteria is correct";
+	
 	public static final String INVALID_DATE_RANGE = "Please select a valid date range";
 	public static final String INVALID_DATE = "Please select a valid date";
 	public static final String VALID_DATE = "Valid date selection";

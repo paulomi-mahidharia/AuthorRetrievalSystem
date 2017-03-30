@@ -16,9 +16,7 @@ public class SearchSceneValidation {
 			return ValidationConstants.NO_CRITERIA_SELECTED;
 	}
 	
-	public static String validatePaperInfo(CheckBox paperCheck, 
-											TextField numberOfPapersField,
-											ComboBox publishComboBox,
+	public static String validatePaperInfo(TextField numberOfPapersField,
 											TextField confName,
 											ComboBox yearRangeComboBox,
 											TextField fromYear,
@@ -83,6 +81,31 @@ public class SearchSceneValidation {
 		}
 		
 		return ValidationConstants.VALID_PAPER_CRITERIA;
+	}
+	
+	public static String validateServiceInformation(TextField confNameServedIn, 
+													ComboBox yearRangeServedComboBox, 
+													TextField fromYearServed, 
+													TextField toYearServed) {
+		
+		// Validate conference name
+		if(!confNameServedIn.getText().isEmpty()){
+			if(!isStringValid(confNameServedIn.getText())){
+				return ValidationConstants.INVALID_CONFERENCE_NAME;
+			}
+		}
+		
+		//Validate date
+		if(!fromYearServed.getText().isEmpty() || !toYearServed.getText().isEmpty()){
+			String isDateValid = isDateValid(yearRangeServedComboBox.getValue().toString(), 
+											fromYearServed.getText(), 
+											toYearServed.getText());
+			if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
+				return ValidationConstants.INVALID_DATE;
+			}
+		}
+		
+		return ValidationConstants.VALID_SERVICE_CRITERIA;
 	}
 	
 	public static String isDateValid(String dateOption, String start, String end){

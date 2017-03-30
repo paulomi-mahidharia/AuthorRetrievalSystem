@@ -2,8 +2,12 @@ package application;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.swing.text.Position;
+
+import com.neu.msd.AuthorRetriever.constants.PositionAlias;
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
@@ -280,14 +284,11 @@ public class SearchScene {
 	    Label position = new Label("Position served as:");
 		grid2.add(position, 0, 11);
 		
-		ObservableList<String> positionOptions = 
-			    FXCollections.observableArrayList(
-			        "Program Chair",
-			        "Conference Chair",
-			        "External Review Committee"
-			    );
+		List<String> positions =new ArrayList<>(Arrays.asList("All", "General Chair", "Program Chair", "Conference Chair","External Review Committee"));
+		ObservableList<String> positionOptions = FXCollections.observableArrayList(positions);
+		
 		ComboBox positionComboBox = new ComboBox(positionOptions);
-		positionComboBox.setValue("Program Chair");
+		positionComboBox.setValue(positions.get(0));
 		grid2.add(positionComboBox, 1, 11);
 		
 		Button btn = new Button("Search Authors");
@@ -312,9 +313,7 @@ public class SearchScene {
             		return;
             	}else{
             		if(paperCheck.isSelected()){
-            			String isPaperInfoValid = SearchSceneValidation.validatePaperInfo(paperCheck, 
-													numberOfPapersField, 
-													publishComboBox,
+            			String isPaperInfoValid = SearchSceneValidation.validatePaperInfo(numberOfPapersField, 
 													confName,
 													yearRangeComboBox,
 													fromYear,
@@ -338,8 +337,12 @@ public class SearchScene {
             		}
             		
             		if(serviceCheck.isSelected()){
-            			String isServiceInfoValid = "";
-            			if(!isServiceInfoValid.equalsIgnoreCase(ValidationConstants.VALID_PAPER_CRITERIA)){
+            			String isServiceInfoValid = SearchSceneValidation.validateServiceInformation(confNameServedIn,
+														yearRangeServedComboBox,
+														fromYearServed,
+														toYearServed);
+            			
+            			if(!isServiceInfoValid.equalsIgnoreCase(ValidationConstants.VALID_SERVICE_CRITERIA)){
             				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", isServiceInfoValid);
             				return;
             			}else{
@@ -410,7 +413,7 @@ public class SearchScene {
 		paperInfo.setOptions(yearRangeComboBox.getValue().toString());
 		
 		//Set start date and/or end date
-		if(!fromYear.getText().isEmpty() || !toYear.getText().isEmpty()){
+		if(!fromYear.getText().isEmpty() || !toYear.getText().isEmpty())
 			if(yearRangeComboBox.getValue().equals("between")){
 				if(!fromYear.getText().isEmpty()) 
 					paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
@@ -418,10 +421,10 @@ public class SearchScene {
 					paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
 			}else if(yearRangeComboBox.getValue().equals("before") 
 					|| yearRangeComboBox.getValue().equals("after")){
-				if(!fromYear.getText().isEmpty()) 
+				if(!fromYear.getText().isEmpty()) {
 					paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
 					paperInfo.setEndDate(Integer.parseInt(fromYear.getText()));
-			}
+				}
 		}
 		
 		//Set keyword
@@ -450,16 +453,26 @@ public class SearchScene {
 		serviceInfo.setConferenceName(confNameServedIn.getText());
 		
 		//Set position
-		serviceInfo.setPosition(positionComboBox.getValue().toString());
+		String position = positionComboBox.getValue().toString();
+		switch(position){
+			case "All": serviceInfo.setPosition(PositionAlias.ALL_ALIAS);
+			case "General Chair": serviceInfo.setPosition(PositionAlias.GENERAL_CHAIR_ALIAS);
+			case "Program Chair": serviceInfo.setPosition(PositionAlias.PROGRAM_CHAIR_ALIAS);
+			case "Conference Chair": serviceInfo.setPosition(PositionAlias.CONFERENCE_CHAIR_ALIAS);
+			case "External Review Committee": serviceInfo.setPosition(PositionAlias.EXTERNAL_REVIEW_ALIAS);
+			default : serviceInfo.setPosition(PositionAlias.ALL_ALIAS);
+		}
 		
 		//Set start date and/or end date
-		if(yearRangeServedComboBox.getValue().equals("between")){
-			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
-			serviceInfo.setEndDate(Integer.parseInt(toYearServed.getText()));
-		}else if(yearRangeServedComboBox.getValue().equals("before") 
-				|| yearRangeServedComboBox.getValue().equals("after")){
-			serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
-			serviceInfo.setStartDate(Integer.parseInt(toYearServed.getText()));
+		if(!fromYearServed.getText().isEmpty() || !toYearServed.getText().isEmpty()){
+			if(yearRangeServedComboBox.getValue().equals("between")){
+				serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+				serviceInfo.setEndDate(Integer.parseInt(toYearServed.getText()));
+			}else if(yearRangeServedComboBox.getValue().equals("before") 
+					|| yearRangeServedComboBox.getValue().equals("after")){
+				serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+				serviceInfo.setStartDate(Integer.parseInt(toYearServed.getText()));
+			}
 		}
 		
 		return serviceInfo;
