@@ -11,6 +11,21 @@ public class ServiceInfo {
 	private int startDate;
 	private int endDate;
 	
+	public ServiceInfo(boolean hasServed, String conferenceName, String position, String options, int startDate,
+			int endDate) {
+		super();
+		this.hasServed = hasServed;
+		this.conferenceName = conferenceName;
+		this.position = position;
+		this.options = options;
+		this.startDate = startDate;
+		this.endDate = endDate;
+	}
+	
+	public ServiceInfo() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public boolean isHasServed() {
 		return hasServed;
 	}
@@ -20,6 +35,7 @@ public class ServiceInfo {
 	public String getConferenceName() {
 		return conferenceName;
 	}
+
 	public void setConferenceName(String conferenceName) {
 		this.conferenceName = conferenceName;
 	}
