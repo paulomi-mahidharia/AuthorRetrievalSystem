@@ -459,10 +459,15 @@ public class SearchScene {
 		String position = positionComboBox.getValue().toString();
 		switch(position){
 			case "All": serviceInfo.setPosition(PositionAlias.ALL_ALIAS);
+				break;
 			case "General Chair": serviceInfo.setPosition(PositionAlias.GENERAL_CHAIR_ALIAS);
+				break;
 			case "Program Chair": serviceInfo.setPosition(PositionAlias.PROGRAM_CHAIR_ALIAS);
+				break;
 			case "Conference Chair": serviceInfo.setPosition(PositionAlias.CONFERENCE_CHAIR_ALIAS);
+				break;
 			case "External Review Committee": serviceInfo.setPosition(PositionAlias.EXTERNAL_REVIEW_ALIAS);
+				break;
 			default : serviceInfo.setPosition(PositionAlias.ALL_ALIAS);
 		}
 		
