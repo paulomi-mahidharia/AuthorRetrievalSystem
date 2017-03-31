@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
-import com.neu.msd.AuthorRetriever.service.DatabaseConnection;
 
 public class AuthorDaoImpl implements AuthorDao{
 	

@@ -7,10 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.AuthorPaper;
 import com.neu.msd.AuthorRetriever.model.Paper;
-import com.neu.msd.AuthorRetriever.service.DatabaseConnection;
 
 public class SearchPaperDaoImpl implements SearchPaperDao {
 

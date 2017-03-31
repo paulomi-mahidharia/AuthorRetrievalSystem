@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Conference;
-import com.neu.msd.AuthorRetriever.service.DatabaseConnection;
 
 public class SeachConferenceDaoImpl implements SearchConferenceDao {
 

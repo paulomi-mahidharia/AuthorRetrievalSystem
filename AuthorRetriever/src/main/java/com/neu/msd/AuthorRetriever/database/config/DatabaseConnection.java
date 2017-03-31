@@ -1,4 +1,4 @@
-package com.neu.msd.AuthorRetriever.service;
+package com.neu.msd.AuthorRetriever.database.config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
