@@ -11,14 +11,22 @@ import com.neu.msd.AuthorRetriever.dao.SearchPaperDaoImpl;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.AuthorPaper;
 
-public class AuthorServiceImpl implements AuthorService {
+public class AuthorInfoServiceImpl implements AuthorInfoService {
 
 	private SearchPaperDao searchPaperDao = new SearchPaperDaoImpl();
+	private SearchAuthorDao searchAuthorDao = new SearchAuthorDaoImpl();
 	
 	@Override
 	public Author getAuthorProfile(int authorId) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Author> authors = new ArrayList<Author>();
+		String queryString = "SELECT * FROM author WHERE author.id = "+authorId+")";
+		try {
+			authors = searchAuthorDao.searchAuthorsByCriteria(queryString);
+		} catch (SQLException e) {
+			return null;
+		}
+		
+		return authors.isEmpty()? null :authors.get(0);
 	}
 
 	@Override

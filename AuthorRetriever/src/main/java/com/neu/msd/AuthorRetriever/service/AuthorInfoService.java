@@ -11,7 +11,7 @@ import com.neu.msd.AuthorRetriever.model.AuthorPaper;
  * @author paulomimahidharia
  *
  */
-public interface AuthorService {
+public interface AuthorInfoService {
 	
 	/**
 	 * Retrieves an author's profile for the given authorId

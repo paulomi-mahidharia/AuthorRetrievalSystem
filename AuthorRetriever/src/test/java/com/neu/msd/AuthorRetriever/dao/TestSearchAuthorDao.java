@@ -10,7 +10,7 @@ import com.neu.msd.AuthorRetriever.model.Author;
 
 import junit.framework.TestCase;
 
-public class SearchAuthorDaoTest extends TestCase {
+public class TestSearchAuthorDao extends TestCase {
 
 	@Test
 	public void testSearchAuthorByCriteriaValidQuery(){
