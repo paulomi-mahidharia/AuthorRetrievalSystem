@@ -19,7 +19,7 @@ public class AuthorInfoServiceImpl implements AuthorInfoService {
 	@Override
 	public Author getAuthorProfile(int authorId) {
 		List<Author> authors = new ArrayList<Author>();
-		String queryString = "SELECT * FROM author WHERE author.id = "+authorId+")";
+		String queryString = "SELECT * FROM author WHERE author.id = "+authorId;
 		try {
 			authors = searchAuthorDao.searchAuthorsByCriteria(queryString);
 		} catch (SQLException e) {
