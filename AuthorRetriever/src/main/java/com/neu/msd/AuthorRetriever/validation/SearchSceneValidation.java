@@ -113,8 +113,8 @@ public class SearchSceneValidation {
 		int startDate;
 		int endDate;
 		try{
-			startDate = Integer.parseInt(start);
-			endDate = Integer.parseInt(end);
+			startDate = start.isEmpty()? 0:Integer.parseInt(start);
+			endDate = end.isEmpty()?0:Integer.parseInt(end);
 		}catch(NumberFormatException e){
 			return ValidationConstants.INVALID_DATE;
 		}

@@ -6,6 +6,9 @@ public class YearUtil {
 
 	public static String formYearQuery(String type, int start, int end, String tablename) {
 
+		if(start == 0 && end == 0){
+			return null;
+		}
 		if (type == null) {
 			type = "before";
 		}

@@ -8,9 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
+import com.neu.msd.AuthorRetriever.model.AuthorPaper;
 import com.neu.msd.AuthorRetriever.model.Conference;
 
-public class SeachConferenceDaoImpl implements SearchConferenceDao {
+public class SearchConferenceDaoImpl implements SearchConferenceDao {
 
 	private Connection conn = DatabaseConnection.getConn();
 	
@@ -21,7 +22,12 @@ public class SeachConferenceDaoImpl implements SearchConferenceDao {
 		
 		List<Conference> confs = new ArrayList<Conference>();
 		while(rs.next()){
-			//populate papers list
+			Conference c = new Conference();
+			c.setConferenceId(Integer.parseInt(rs.getString(1)));
+			c.setName(rs.getString(2));
+			c.setYear(Integer.parseInt(rs.getString(5)));
+			
+			confs.add(c);
 		}
 		return confs;
 	}

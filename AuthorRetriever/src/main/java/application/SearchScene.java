@@ -452,6 +452,9 @@ public class SearchScene {
 		//Set conference name
 		serviceInfo.setConferenceName(confNameServedIn.getText());
 		
+		//set options
+		serviceInfo.setOptions(yearRangeServedComboBox.getValue().toString());
+		
 		//Set position
 		String position = positionComboBox.getValue().toString();
 		switch(position){

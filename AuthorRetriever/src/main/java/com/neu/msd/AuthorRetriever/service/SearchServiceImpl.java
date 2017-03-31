@@ -109,15 +109,15 @@ public class SearchServiceImpl implements SearchService {
 			conditions.add(PublicationUtil.conferenceQuery("conference", serviceInfo.getConferenceName(), serviceInfo.isHasServed()));
 		}
 		
-		/*if(serviceInfo.getPosition() !=null && !serviceInfo.getPosition().isEmpty()){
+		if(serviceInfo.getPosition() !=null && !serviceInfo.getPosition().isEmpty()){
 			conditions.add(CriteriaUtil.equalCriteriaQuery("confernece", "name", serviceInfo.getPosition()));
-		}*/
+		}
 		
-		//String yearResult = YearUtil.formYearQuery(serviceInfo.getOptions(), serviceInfo.getStartDate(), serviceInfo.getEndDate(), "conference");
+		String yearResult = YearUtil.formYearQuery(serviceInfo.getOptions(), serviceInfo.getStartDate(), serviceInfo.getEndDate(), "conference");
 		
-		/*if(yearResult!= null && !yearResult.isEmpty()){
+		if(yearResult!= null && !yearResult.isEmpty()){
 			   conditions.add(yearResult);	
-		}*/
+		}
 		
 		StringBuilder whereCond = conditions.isEmpty() ? new StringBuilder("") : new StringBuilder(" WHERE ");
 		for(int i = 0; i<conditions.size() ; i++){
