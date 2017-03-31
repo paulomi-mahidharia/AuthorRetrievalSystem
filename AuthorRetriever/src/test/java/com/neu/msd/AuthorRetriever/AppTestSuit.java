@@ -9,6 +9,7 @@ import com.neu.msd.AuthorRetriever.dao.TestSearchConferenceDao;
 import com.neu.msd.AuthorRetriever.dao.TestSearchPaperDao;
 import com.neu.msd.AuthorRetriever.dao.TestUserDao;
 import com.neu.msd.AuthorRetriever.service.TestAuthorInfoService;
+import com.neu.msd.AuthorRetriever.service.TestResultService;
 import com.neu.msd.AuthorRetriever.service.TestSearchAuthorService;
 import com.neu.msd.AuthorRetriever.service.TestSearchSimilarProfileService;
 import com.neu.msd.AuthorRetriever.service.TestUserService;
@@ -17,11 +18,11 @@ import com.neu.msd.AuthorRetriever.service.TestUserService;
 @RunWith(Suite.class)
 
 @SuiteClasses({ 
-   UserTest.class, ResultTest.class, 
    TestSearchAuthorDao.class, TestSearchConferenceDao.class, 
    TestSearchPaperDao.class, TestUserDao.class,
    TestAuthorInfoService.class, TestSearchAuthorService.class, 
-   TestSearchSimilarProfileService.class, TestUserService.class
+   TestSearchSimilarProfileService.class, TestUserService.class,
+   TestResultService.class
 })
 
 public class AppTestSuit {
