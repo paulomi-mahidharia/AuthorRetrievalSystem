@@ -29,11 +29,4 @@ public class SearchAuthorDaoImpl implements SearchAuthorDao{
 		}
 		return authors;
 	}
-
-	@Override
-	public List<Author> searchSimilarAuthorProfiles(Author author) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }
