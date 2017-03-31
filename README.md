@@ -1,6 +1,20 @@
 # Team 3
 
+
+
+# Phase 3
+# How to run project:
+  Step1 : Import the project AuthorRetrival as a maven project in Eclipse<br />
+  Step2 : Run the mvn test command to check number of test cases running in terminal or eclipse<br />
+  Step3 : Run main.java to start application<br/>
+  Step4 : In the login and password page insert a and a<br />
+  Step5 : You will redirected to search page where you can search authors<br/>
+
+
 ###Phase 2 - Initial System Design
+
+
+
 
 **DELIVERABLES:**
 
