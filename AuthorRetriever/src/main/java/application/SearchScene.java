@@ -365,7 +365,7 @@ public class SearchScene {
 				try {
 					authors = searchService.searchAuthorsByCriteria(searchCriteria);
 					System.out.println("NO> OF AUT:::"+authors.size());
-					Scene resultScene = ResultScene.getResultScene(authors);
+					Scene resultScene = ResultScene.getResultScene(authors,primaryStage);
 					primaryStage.setScene(resultScene);
 					primaryStage.show();
 					
