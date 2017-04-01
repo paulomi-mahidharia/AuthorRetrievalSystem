@@ -380,7 +380,8 @@ public class SearchScene {
             		List<Author> authors = new ArrayList<Author>();
     				try {
     					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-    					Scene resultScene = ResultScene.getResultScene(authors);
+    				//	System.out.println(authors.size());
+    					Scene resultScene = ResultScene.getResultScene(authors,primaryStage);
     					primaryStage.setScene(resultScene);
     					primaryStage.show();
     				} catch (SQLException e1) {
