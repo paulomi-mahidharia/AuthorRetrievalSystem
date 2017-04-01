@@ -83,6 +83,8 @@ public class AuthorDispayInformationScene {
 		hbBtn1.getChildren().add(btn1);
 		grid.add(hbBtn1, 1, 17);
 		
+		
+		
 		Scene authorDispalyScene = new Scene(grid, 1000, 1000, Color.BEIGE);
 		
 		return authorDispalyScene;
