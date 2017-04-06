@@ -43,3 +43,16 @@ The project also contains model classes and data structures used while defining 
  1. Upon development assign it to a team member for code review.
  1. Once review is successful merge the feature branch to develop.
  1. Follow same workflow for making releases and bugfixes.
+
+
+5. DATABASE:
+   To view how the database is structured and look up data without interacting with the application, you can connect to this AWS Instance with following username and password. 
+   Please note that the credentials used below only have READ ONLY access. 
+
+   Connection : dblp.c1lyqqia3dks.us-east-1.rds.amazonaws.com
+   Username : testuser
+   password : testuser
+   PORT : 3306
+
+   
+
