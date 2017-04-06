@@ -9,8 +9,8 @@ public class TestUserDao extends TestCase {
 	@Test
 	public void testValidUser(){
 		UserDao userDao = new UserDaoImpl();
-		String username= "a";
-		String password = "b";
+		String username= "Abhinav";
+		String password = "Abhinav1234@";
 		String queryString="select password from UserCredentials where username=?";
 		assertTrue(userDao.login(username, password,queryString));
 	}
@@ -18,11 +18,57 @@ public class TestUserDao extends TestCase {
 	@Test
 	public void testInvalidUser(){
 		UserDao userDao = new UserDaoImpl();
-		String username= "a";
+		String username= "xyz";
+		String password = "dkdxXdcxcs";
+		String queryString="select password from UserCredentials where username=?";
+		assertFalse(userDao.login(username, password,queryString));
+	}
+	@Test
+	public void testEmptyUsername(){
+		UserDao userDao = new UserDaoImpl();
+		String username= "";
+		String password = "dkdxXdcxcs";
+		String queryString="select password from UserCredentials where username=?";
+		assertFalse(userDao.login(username, password,queryString));
+	}
+	@Test
+	public void testEmptyPassword(){
+		UserDao userDao = new UserDaoImpl();
+		String username= "Abhinav";
 		String password = "";
 		String queryString="select password from UserCredentials where username=?";
 		assertFalse(userDao.login(username, password,queryString));
 	}
-	
+
+	@Test
+	public void testEmptyUsernameEmptyPassword(){
+		UserDao userDao = new UserDaoImpl();
+		String username= "";
+		String password = "";
+		String queryString="select password from UserCredentials where username=?";
+		assertFalse(userDao.login(username, password,queryString));
+	}
+	@Test
+	public void testNullUsername(){
+		UserDao userDao = new UserDaoImpl();
+		String username= null;
+		String password = "dkdxXdcxcs";
+		String queryString="select password from UserCredentials where username=?";
+		assertFalse(userDao.login(username, password,queryString));
+	}
+	public void testNullPassword(){
+		UserDao userDao = new UserDaoImpl();
+		String username= "Abhinav";
+		String password = null;
+		String queryString="select password from UserCredentials where username=?";
+		assertFalse(userDao.login(username, password,queryString));
+	}
+	public void testNullUsernameNullPassword(){
+		UserDao userDao = new UserDaoImpl();
+		String username= null;
+		String password = null;
+		String queryString="select password from UserCredentials where username=?";
+		assertFalse(userDao.login(username, password,queryString));
+	}
 	// more cases
 }
