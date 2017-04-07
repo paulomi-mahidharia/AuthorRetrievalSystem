@@ -5,6 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+		sh "sudo su"
 		sh "mvn -f AuthorRetriever/pom.xml clean install -DskipTests"
 	
             }
