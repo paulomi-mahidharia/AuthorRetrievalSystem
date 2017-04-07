@@ -5,20 +5,20 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-		sh "mvn -f dblp/pom.xml clean install -DskipTests"
+		sh "mvn -f AuthorRetrival/pom.xml clean install -DskipTests"
 	
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-		sh "mvn -f dblp/pom.xml test"
+		sh "mvn -f AuthorRetrival/pom.xml test"
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-		sh "mvn -f dblp/pom.xml clean install"
+		sh "mvn -f AuthorRetrival/pom.xml clean install"
             }
         }
     }
