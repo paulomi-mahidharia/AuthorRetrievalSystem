@@ -1,13 +1,42 @@
 package com.neu.msd.AuthorRetriever.model;
 
-import java.util.List;
-
 public class Conference {
 	
-	int conferenceId;
-	String conferenceKey;
-	String name;
-	String acronym;
-	String detail;
-	List<Proceeding> proceedings;
+	private int conferenceId;
+	private int year;
+	private String conferenceKey;
+	private String name;
+	private String title;
+	
+	public int getConferenceId() {
+		return conferenceId;
+	}
+	public void setConferenceId(int conferenceId) {
+		this.conferenceId = conferenceId;
+	}
+	public int getYear() {
+		return year;
+	}
+	public void setYear(int year) {
+		this.year = year;
+	}
+	public String getConferenceKey() {
+		return conferenceKey;
+	}
+	public void setConferenceKey(String conferenceKey) {
+		this.conferenceKey = conferenceKey;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	
 }

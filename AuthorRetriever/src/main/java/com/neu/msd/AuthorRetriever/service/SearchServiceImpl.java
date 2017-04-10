@@ -36,10 +36,16 @@ public class SearchServiceImpl implements SearchService {
 		}
 
 		if(criteria.getServiceInfo() != null){
+			
 			String editorQuery = "SELECT conference_editor_mapping.editorId FROM conference_editor_mapping INNER JOIN conference on conference_editor_mapping.confId = conference.id";
 			editorQuery += buildServiceInfoQuery(editorQuery, criteria.getServiceInfo());
 			
-			String authConfQuery = "SELECT author.* from author WHERE Id IN (SELECT editor.Author_Id from editor WHERE editor.id IN ("+ editorQuery +"))";
+			String positionCondition = "";
+			if(criteria.getServiceInfo().getPosition() !=null && !criteria.getServiceInfo().getPosition().isEmpty()){
+				positionCondition = " AND " + CriteriaUtil.equalCriteriaQuery("editor", "position", criteria.getServiceInfo().getPosition());
+			}
+			
+			String authConfQuery = "SELECT author.* from author WHERE Id IN (SELECT editor.Author_Id from editor WHERE editor.id IN ("+ editorQuery +")" + positionCondition +")";
 			confAuthors = searchDao.searchAuthorsByCriteria(authConfQuery);
 		}
 		
@@ -110,14 +116,14 @@ public class SearchServiceImpl implements SearchService {
 		}
 		
 		/*if(serviceInfo.getPosition() !=null && !serviceInfo.getPosition().isEmpty()){
-			conditions.add(CriteriaUtil.equalCriteriaQuery("confernece", "name", serviceInfo.getPosition()));
+			conditions.add(CriteriaUtil.equalCriteriaQuery("editor", "position", serviceInfo.getPosition()));
 		}*/
 		
-		//String yearResult = YearUtil.formYearQuery(serviceInfo.getOptions(), serviceInfo.getStartDate(), serviceInfo.getEndDate(), "conference");
+		String yearResult = YearUtil.formYearQuery(serviceInfo.getOptions(), serviceInfo.getStartDate(), serviceInfo.getEndDate(), "conference");
 		
-		/*if(yearResult!= null && !yearResult.isEmpty()){
+		if(yearResult!= null && !yearResult.isEmpty()){
 			   conditions.add(yearResult);	
-		}*/
+		}
 		
 		StringBuilder whereCond = conditions.isEmpty() ? new StringBuilder("") : new StringBuilder(" WHERE ");
 		for(int i = 0; i<conditions.size() ; i++){

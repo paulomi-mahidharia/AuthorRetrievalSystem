@@ -5,7 +5,8 @@ import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
 
-public interface AuthorDao {
+public interface SearchSimilarAuthorsDao {
+	
+	public List<Author> SearchSimilarAuthors(String queryString) throws SQLException;
 
-	public List<Author> getAuthorByAuthorId(int authorId) throws SQLException;
 }

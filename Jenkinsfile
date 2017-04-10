@@ -5,20 +5,21 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
-		sh "mvn -f dblp/pom.xml clean install -DskipTests"
+		sh "mvn -f AuthorRetriever/pom.xml clean install -DskipTests"
 	
             }
         }
         stage('Test') {
             steps {
                 echo 'Testing..'
-		sh "mvn -f dblp/pom.xml test"
+		sh "mvn -f AuthorRetriever/pom.xml test"
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Deploying....'
-		sh "mvn -f dblp/pom.xml clean install"
+		sh "mvn -f AuthorRetriever/pom.xml clean install"
+		sh "mvn cobertura:cobertura -Dcobertura.report.format=xml"
             }
         }
     }

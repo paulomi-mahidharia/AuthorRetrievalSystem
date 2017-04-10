@@ -7,10 +7,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.neu.msd.AuthorRetriever.dao.SearchSimilarAuthorsDao;
+import com.neu.msd.AuthorRetriever.dao.SearchSimilarAuthorsDaoImpl;
+import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
 
 public class SearchSimilarProfileServiceImpl implements SearchSimilarProfileService {
 
+	SearchSimilarAuthorsDao searchdao = new SearchSimilarAuthorsDaoImpl();
+	
 	@Override
 	public List<Author> searchSimilarAuthorProfiles(Author author) throws SQLException {
 		// TODO Auto-generated method stub
@@ -24,15 +29,8 @@ public class SearchSimilarProfileServiceImpl implements SearchSimilarProfileServ
 		
 		String finalQuery = query1AuthorQuery + " UNION " + query2AuthorQuery;
 		
-		PreparedStatement stmt = conn.prepareStatement(finalQuery);
-		ResultSet rs = stmt.executeQuery();
-		
-		List<Integer> author_ids = new ArrayList<Integer>();
-		
-		while(rs.next()){
-			author_ids.add(Integer.parseInt(rs.getString(1)));
-		}
-		return null;
+		return searchdao.SearchSimilarAuthors(finalQuery);
+
 	}
 
 }

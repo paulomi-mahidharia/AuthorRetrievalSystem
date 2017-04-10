@@ -68,7 +68,7 @@ public class LoginScene {
             	
             	UserService user = new UserServiceImpl();
             	Boolean isLoginSuccessful = user.login(username, password);
-            	System.out.println(isLoginSuccessful);
+            	//System.out.println(isLoginSuccessful);
             	
             	if(isLoginSuccessful){
             		

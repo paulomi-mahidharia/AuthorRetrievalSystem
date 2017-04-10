@@ -1,6 +1,19 @@
 # Team 3
 
-###Phase 2 - Initial System Design
+
+
+# Phase 3
+# How to run project:
+  Step1 : Go to the terminal and run: `git clone https://github.ccs.neu.edu/CS5500-Spring2017/team3.git`<br />
+  Step2 : Import the project **AuthorRetrival** as a maven project in Eclipse IDE<br />
+  Step3 : Run `mvn clean && mvn compile` to clean and compile the project
+  Step3 : Navigate to project folder and run the `mvn test` command to check test cases running in terminal or right click on src/test/java/AppTestSuite.java and select Run As-> JUnit test in eclipse<br />
+  Step4 : Run main.java to start application<br/>
+  Step5 : In the login and password page insert "abc" and "abc" and click on "Login" button<br />
+  Step6 : You will be redirected to Search Authors page where you can search authors<br/>
+
+
+###Phase 23 - Initial System Implementation
 
 **DELIVERABLES:**
 
@@ -29,3 +42,16 @@ The project also contains model classes and data structures used while defining 
  1. Upon development assign it to a team member for code review.
  1. Once review is successful merge the feature branch to develop.
  1. Follow same workflow for making releases and bugfixes.
+
+
+5. DATABASE:
+   To view how the database is structured and look up data without interacting with the application, you can connect to this AWS Instance with following username and password. 
+   Please note that the credentials used below only have READ ONLY access. 
+
+   Connection : dblp.c1lyqqia3dks.us-east-1.rds.amazonaws.com
+   Username : testuser
+   password : testuser
+   PORT : 3306
+
+   
+

@@ -10,21 +10,20 @@ import java.util.List;
 import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
 
-public class SearchAuthorDaoImpl implements SearchAuthorDao{
+public class SearchSimilarAuthorsDaoImpl implements SearchSimilarAuthorsDao {
 
 	private Connection conn = DatabaseConnection.getConn();
-	
+
 	@Override
-	public List<Author> searchAuthorsByCriteria(String queryString) throws SQLException {
-		
+	public List<Author> SearchSimilarAuthors(String queryString) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement(queryString);
 		ResultSet rs = stmt.executeQuery();
 		List<Author> authors = new ArrayList<Author>();
-		
-		while(rs.next()){
+
+		while (rs.next()) {
 			Author a = new Author();
 			a.setAuthorId(Integer.parseInt(rs.getString(1)));
-			a.setName(rs.getString(2));
+			//a.setName(rs.getString(2));
 			authors.add(a);
 		}
 		return authors;
