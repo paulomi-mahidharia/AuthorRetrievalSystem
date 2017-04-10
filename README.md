@@ -4,17 +4,16 @@
 
 # Phase 3
 # How to run project:
-  Step1 : Import the project AuthorRetrival as a maven project in Eclipse<br />
-  Step2 : Run the mvn test command to check number of test cases running in terminal or eclipse<br />
-  Step3 : Run main.java to start application<br/>
-  Step4 : In the login and password page insert a and a<br />
-  Step5 : You will redirected to search page where you can search authors<br/>
+  Step1 : Go to the terminal and run: `git clone https://github.ccs.neu.edu/CS5500-Spring2017/team3.git`<br />
+  Step2 : Import the project **AuthorRetrival** as a maven project in Eclipse IDE<br />
+  Step3 : Run `mvn clean && mvn compile` to clean and compile the project
+  Step3 : Navigate to project folder and run the `mvn test` command to check test cases running in terminal or right click on src/test/java/AppTestSuite.java and select Run As-> JUnit test in eclipse<br />
+  Step4 : Run main.java to start application<br/>
+  Step5 : In the login and password page insert "abc" and "abc" and click on "Login" button<br />
+  Step6 : You will be redirected to Search Authors page where you can search authors<br/>
 
 
-###Phase 2 - Initial System Design
-
-
-
+###Phase 23 - Initial System Implementation
 
 **DELIVERABLES:**
 
