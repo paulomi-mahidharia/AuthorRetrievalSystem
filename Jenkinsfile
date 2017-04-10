@@ -19,7 +19,7 @@ pipeline {
             steps {
                 echo 'Deploying....'
 		sh "mvn -f AuthorRetriever/pom.xml clean install"
-		sh "mvn cobertura:cobertura -Dcobertura.report.format=xml"
+	
             }
         }
     }
