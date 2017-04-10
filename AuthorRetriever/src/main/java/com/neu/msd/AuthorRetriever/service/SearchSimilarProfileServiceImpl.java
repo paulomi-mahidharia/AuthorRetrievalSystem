@@ -27,9 +27,9 @@ public class SearchSimilarProfileServiceImpl implements SearchSimilarProfileServ
 		String query2EditorQuery = "SELECT editorId FROM conference_editor_mapping WHERE confId IN (" + query2Editor + ")";
 		String query2AuthorQuery = java.text.MessageFormat.format("SELECT Author_Id FROM editor where Id IN (" + query2EditorQuery + ")" +  " AND editor.Author_Id <> {0}",Long.toString(author.getAuthorId()));
 		
-		String finalQuery = query1AuthorQuery + " UNION " + query2AuthorQuery;
+		String finalQuery = "SELECT * FROM author where author.id IN (" + query1AuthorQuery + " UNION " + query2AuthorQuery +")";
 		
-		return searchdao.SearchSimilarAuthors(finalQuery);
+		return searchdao.searchSimilarAuthors(finalQuery);
 
 	}
 
