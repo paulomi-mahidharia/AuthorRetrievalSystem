@@ -99,6 +99,7 @@ public class AuthorDispayInformationScene {
 					List<Author> similarAuthors = searchSimilarProfileService.searchSimilarAuthorProfiles(selectedAuthor);
 					if(!similarAuthors.isEmpty() || similarAuthors.size() != 0){
 						ResultScene.displayResultScene(similarAuthors, primaryStage);
+						SceneStack.pushSceneToStack(authorDispalyScene);
 					}else{
 						AlertUtil.displayAlert("Error", 
 								"Oops, you got soemthing wrong!", 
