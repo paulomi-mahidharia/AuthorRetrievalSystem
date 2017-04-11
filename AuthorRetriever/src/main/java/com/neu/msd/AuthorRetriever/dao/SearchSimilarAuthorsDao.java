@@ -7,6 +7,6 @@ import com.neu.msd.AuthorRetriever.model.Author;
 
 public interface SearchSimilarAuthorsDao {
 	
-	public List<Author> SearchSimilarAuthors(String queryString) throws SQLException;
+	public List<Author> searchSimilarAuthors(String queryString) throws SQLException;
 
 }

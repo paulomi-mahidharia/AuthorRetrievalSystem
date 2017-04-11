@@ -15,7 +15,7 @@ public class SearchSimilarAuthorsDaoImpl implements SearchSimilarAuthorsDao {
 	private Connection conn = DatabaseConnection.getConn();
 
 	@Override
-	public List<Author> SearchSimilarAuthors(String queryString) throws SQLException {
+	public List<Author> searchSimilarAuthors(String queryString) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement(queryString);
 		ResultSet rs = stmt.executeQuery();
 		List<Author> authors = new ArrayList<Author>();
@@ -23,7 +23,7 @@ public class SearchSimilarAuthorsDaoImpl implements SearchSimilarAuthorsDao {
 		while (rs.next()) {
 			Author a = new Author();
 			a.setAuthorId(Integer.parseInt(rs.getString(1)));
-			//a.setName(rs.getString(2));
+			a.setName(rs.getString(2));
 			authors.add(a);
 		}
 		return authors;

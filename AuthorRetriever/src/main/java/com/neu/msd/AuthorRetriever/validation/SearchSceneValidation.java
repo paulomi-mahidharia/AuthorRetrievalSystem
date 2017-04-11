@@ -37,7 +37,7 @@ public class SearchSceneValidation {
 		}
 		
 		// Validate date if everything else is empty
-		if(numberOfPublications == 0 && keyword.getText().isEmpty() && confName.getText().isEmpty()){
+		if(numberOfPapersField.getText().isEmpty() && keyword.getText().isEmpty() && confName.getText().isEmpty()){
 			
 				//At least date must be present 
 				String isDateValid = isDateValid(yearRangeComboBox.getValue().toString(), 

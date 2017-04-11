@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.swing.text.Position;
-
 import com.neu.msd.AuthorRetriever.constants.PositionAlias;
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
@@ -16,6 +14,7 @@ import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
+import com.neu.msd.AuthorRetriever.util.SceneStack;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 
 import javafx.beans.value.ChangeListener;
@@ -46,8 +45,8 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
-	
-		public static Scene getSearchScene(Stage primaryStage){
+
+		public static void displaySearchScene(Stage primaryStage){
 		
 		GridPane grid2 = new GridPane();
 		grid2.setAlignment(Pos.TOP_LEFT);
@@ -297,6 +296,10 @@ public class SearchScene {
 		hbBtn.getChildren().add(btn);
 		grid2.add(hbBtn, 1, 12);
 		
+		Scene searchScene = new Scene(grid2, 1000, 1000, Color.BEIGE);
+		primaryStage.setScene(searchScene);
+		primaryStage.show();
+		
 		btn.setOnAction(new EventHandler<ActionEvent>() {
        	 
             @Override
@@ -393,11 +396,17 @@ public class SearchScene {
         		List<Author> authors = new ArrayList<Author>();
 				try {
 					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-					System.out.println("NO> OF AUT:::"+authors.size());
-					Scene resultScene = ResultScene.getResultScene(authors,primaryStage);
-					primaryStage.setScene(resultScene);
-					primaryStage.show();
 					
+					if(!authors.isEmpty() && authors.size() != 0){
+						SceneStack.pushSceneToStack(searchScene);
+						ResultScene.displayResultScene(authors,primaryStage);
+						
+					}else{
+						AlertUtil.displayAlert("Error", 
+								"Oops, you got soemthing wrong!", 
+								ValidationConstants.NO_AUTHORS_FOUND);
+						return;
+					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					AlertUtil.displayAlert("Error", 
@@ -408,10 +417,6 @@ public class SearchScene {
 //>>>>>>> 36586b4949af3723bad68cfc523906eb86932d6e
         	}
 		});
-		
-		
-	    Scene scene2 = new Scene(grid2, 1000, 1000, Color.BEIGE);
-	    return scene2;
 	}
 		
 	public static Paper setPaperInformation(TextField numberOfPapersField,

@@ -1,0 +1,8 @@
+Parser Run Instructions : 
+
+1) Run the scripts database_schema.sql from dbscripts folder in "AuthorRetriever" project.
+2) Run the script proceedings_process.sql following the above script. 
+3) Place "dblp.xml" inside the project "DBLPXMLParser" poject.
+4) Execute the parser from the DBLPXMLParser project. 
+5) Run the script "Normalize.sql" for normalizing the database.
+
