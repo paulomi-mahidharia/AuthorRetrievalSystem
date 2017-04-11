@@ -16,7 +16,7 @@ public class SearchAuthorDaoImpl implements SearchAuthorDao{
 	
 	@Override
 	public List<Author> searchAuthorsByCriteria(String queryString) throws SQLException {
-		
+		System.out.println(queryString);
 		PreparedStatement stmt = conn.prepareStatement(queryString);
 		ResultSet rs = stmt.executeQuery();
 		List<Author> authors = new ArrayList<Author>();

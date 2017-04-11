@@ -513,8 +513,12 @@ public class SearchScene {
 				serviceInfo.setEndDate(Integer.parseInt(toYearServed.getText()));
 			}else if(yearRangeServedComboBox.getValue().equals("before") 
 					|| yearRangeServedComboBox.getValue().equals("after")){
-				serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
-				serviceInfo.setStartDate(Integer.parseInt(toYearServed.getText()));
+				if(!fromYearServed.getText().isEmpty()) {
+					serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+					serviceInfo.setEndDate(Integer.parseInt(fromYearServed.getText()));
+				}
+				//serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
+				//serviceInfo.setStartDate(Integer.parseInt(toYearServed.getText()));
 			}
 		}
 		

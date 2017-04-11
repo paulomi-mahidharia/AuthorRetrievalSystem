@@ -17,6 +17,7 @@ public class SearchConferenceDaoImpl implements SearchConferenceDao {
 	
 	@Override
 	public List<Conference> retrieveConference(String queryString) throws SQLException {
+		System.out.println(queryString);
 		PreparedStatement stmt = conn.prepareStatement(queryString);
 		ResultSet rs = stmt.executeQuery();
 		

@@ -12,7 +12,7 @@ public class UserDaoImpl implements UserDao {
 	private Connection conn = DatabaseConnection.getConn();
 
 	public int login(String username, String password, String queryString) {
-
+		System.out.println(queryString);
 		if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
 			return 0;
 		} else {

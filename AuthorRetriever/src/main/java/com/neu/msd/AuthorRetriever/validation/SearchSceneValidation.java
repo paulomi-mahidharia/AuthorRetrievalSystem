@@ -36,10 +36,16 @@ public class SearchSceneValidation {
     		
 		}
 		
+		
+		
 		// Validate date if everything else is empty
 		if(numberOfPapersField.getText().isEmpty() && keyword.getText().isEmpty() && confName.getText().isEmpty()){
 			
-				//At least date must be present 
+				// if dates are also not present return invalid paper criteria
+				if(fromYear.getText() == "0" && toYear.getText() == "0"){
+					return ValidationConstants.INVALID_PAPER_CRITERIA;
+				}
+				//validate date
 				String isDateValid = isDateValid(yearRangeComboBox.getValue().toString(), 
 												fromYear.getText(), 
 												toYear.getText());
