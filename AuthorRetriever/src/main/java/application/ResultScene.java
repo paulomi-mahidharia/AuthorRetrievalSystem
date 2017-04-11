@@ -35,14 +35,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.SelectionModel;
 import javafx.stage.FileChooser;
-
+import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Pagination;
+import javafx.beans.binding.Bindings;
 @SuppressWarnings({ "rawtypes", "restriction" })
 public class ResultScene {
 	
 	private static TableView table = new TableView();
-	public static Scene getResultScene(List<Author> resultedAuthors,Stage primaryStage){
+	private final static int rowsPerPage = 20;
+	private static List<Author>authorList=null;
+	public static  Scene getResultScene(List<Author> resultedAuthors,Stage primaryStage){
 		List<Author> authors = resultedAuthors;
-		
+		authorList=authors;
 		//Pane pane = new Pane();
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_LEFT);
@@ -66,7 +70,7 @@ public class ResultScene {
        // srNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(YourTable.getItems().indexOf(column.getValue())));
         author.setCellValueFactory(rmbutton);
         srNo.setCellValueFactory(new PropertyValueFactory<>("authorId"));
-        table.setItems(authorData);
+        //table.setItems(authorData);
 
        
         table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Author>() {
@@ -96,7 +100,7 @@ public class ResultScene {
         grid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
         
         Button btn = new Button("Search Page");
-        btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+       
 		HBox hbBtn = new HBox(20);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().add(btn);
@@ -113,10 +117,10 @@ public class ResultScene {
 			}
 			
 		});
-		grid.add(hbBtn, 1, 15);
+		grid.add(hbBtn, 1, 18);
 		
 	    Button buttonExportPdf = new Button("Export PDF");
-	    buttonExportPdf.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+	   
 		HBox hbbuttonExportPdf= new HBox(20);
 		hbbuttonExportPdf.setAlignment(Pos.BOTTOM_CENTER);
 		hbbuttonExportPdf.getChildren().add(buttonExportPdf);
@@ -140,9 +144,28 @@ public class ResultScene {
 			}
 		});
 		
-		Scene resultScene = new Scene(grid, 1000, 1000, Color.BEIGE);
+		BorderPane bp = new BorderPane();
+		bp.setPadding(new Insets(10, 20, 10, 20));
+		bp.setTop(btn);
+		bp.setLeft(buttonExportPdf);
+		ResultScene resultScenePaginate=new ResultScene();
+		
+		bp.setCenter(resultScenePaginate.paginate());
+		Scene resultScene = new Scene(bp, 1000, 1000, Color.BEIGE);
 		return resultScene;
 	}
 	
+	private Pagination paginate(){
+		Pagination pagination = new Pagination((authorList.size() / rowsPerPage + 1), 0);
+		pagination.setPageFactory(this::createPage);
+		return pagination;
 		
+	}
+    private Node createPage(int pageIndex) {
+
+        int fromIndex = pageIndex * rowsPerPage;
+       int toIndex = Math.min(fromIndex + rowsPerPage,authorList.size());
+       table.setItems(FXCollections.observableArrayList(authorList.subList(fromIndex, toIndex)));
+       return new BorderPane(table);
+    }
 }
