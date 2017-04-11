@@ -183,7 +183,7 @@ public class SearchScene {
 				// TODO Auto-generated method stub
 
 				if (unionGroup.getSelectedToggle() != null) {
-					if(unionGroup.getSelectedToggle().getUserData().toString().equals(radioButtonAnd.getText())){
+					if(unionGroup.getSelectedToggle().getUserData().toString().equals(radioButtonOr.getText())){
 						searchCriteria.setUnion(true);
 					}else{
 						searchCriteria.setUnion(false);

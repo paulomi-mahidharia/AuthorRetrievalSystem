@@ -6,8 +6,8 @@ import java.util.List;
 
 import com.neu.msd.AuthorRetriever.dao.UserDao;
 import com.neu.msd.AuthorRetriever.dao.UserDaoImpl;
-import com.neu.msd.AuthorRetriever.dao.addSelectedAuthorsDao;
-import com.neu.msd.AuthorRetriever.dao.addSelectedAuthorsDaoImpl;
+import com.neu.msd.AuthorRetriever.dao.AddSelectedAuthorsDao;
+import com.neu.msd.AuthorRetriever.dao.AddSelectedAuthorsDaoImpl;
 import com.neu.msd.AuthorRetriever.model.Author;
 
 public class UserServiceImpl implements UserService {
@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
 	public void addSelectedAuthors(List<Author> authors) {
 		// TODO Auto-generated method stub
 		try {
-			addSelectedAuthorsDao selectedAuthorsDao = new addSelectedAuthorsDaoImpl();
+			AddSelectedAuthorsDao selectedAuthorsDao = new AddSelectedAuthorsDaoImpl();
 			selectedAuthorsDao.addSelectedAuthors(loggedInUser, authors);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

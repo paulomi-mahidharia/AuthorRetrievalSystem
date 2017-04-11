@@ -9,12 +9,12 @@ import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
 
 
-public class addSelectedAuthorsDaoImpl implements addSelectedAuthorsDao {
+public class AddSelectedAuthorsDaoImpl implements AddSelectedAuthorsDao {
 	
 	private Connection conn;
 	PreparedStatement add_selected_authors;
 	
-	public addSelectedAuthorsDaoImpl() throws SQLException {
+	public AddSelectedAuthorsDaoImpl() throws SQLException {
 		conn = DatabaseConnection.getConn();
 		conn.setAutoCommit(false);
 		add_selected_authors = conn

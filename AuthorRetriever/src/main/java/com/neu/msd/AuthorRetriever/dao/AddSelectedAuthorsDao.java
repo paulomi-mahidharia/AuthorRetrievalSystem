@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
 
-public interface addSelectedAuthorsDao {
+public interface AddSelectedAuthorsDao {
 
 	/**
 	 * add authors selected by the user to a list 
