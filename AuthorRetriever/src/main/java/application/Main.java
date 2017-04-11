@@ -1,13 +1,12 @@
 package application;
 
-import com.neu.msd.AuthorRetriever.model.Author;
-import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
+import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-
+@SuppressWarnings({"restriction"})
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
@@ -16,13 +15,7 @@ public class Main extends Application {
 			primaryStage.setScene(loginScene);
 			primaryStage.show();
 			
-			Author author = new Author();
-			author.setAuthorId(575214);
-			
-			SearchSimilarProfileServiceImpl sl = new SearchSimilarProfileServiceImpl();
-			sl.searchSimilarAuthorProfiles(author);
-			
-			
+			SceneStack.createSceneStack();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
