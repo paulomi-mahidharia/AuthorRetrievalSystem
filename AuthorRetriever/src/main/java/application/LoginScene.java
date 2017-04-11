@@ -20,6 +20,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+@SuppressWarnings({"restriction"})
 public class LoginScene {
 	
 	public static Scene getLoginScene(Stage primaryStage){
@@ -68,14 +69,9 @@ public class LoginScene {
             	
             	UserService user = new UserServiceImpl();
             	Boolean isLoginSuccessful = user.login(username, password);
-            	//System.out.println(isLoginSuccessful);
             	
             	if(isLoginSuccessful){
-            		
-    		        Scene searchScene = SearchScene.getSearchScene(primaryStage); 
-        			primaryStage.setScene(searchScene);
-        			primaryStage.show();
-            		
+    		        SearchScene.displaySearchScene(primaryStage); 		
             	}else{
             		actiontarget.setFill(Color.FIREBRICK);
 	                actiontarget.setText("Invalid credentials!");

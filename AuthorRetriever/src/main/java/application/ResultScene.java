@@ -1,12 +1,9 @@
 package application;
 
-import java.util.ArrayList;
-
 import java.util.List;
 
-import org.sonar.api.server.ws.WebService.SelectionMode;
-
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,18 +20,19 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.collections.*;
-import javafx.scene.input.MouseEvent;
 import javafx.event.*;
-import javafx.scene.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.control.SelectionModel;
 
-@SuppressWarnings({ "rawtypes", "restriction" })
+@SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class ResultScene {
 	
-	private static TableView table = new TableView();
-	public static Scene getResultScene(List<Author> resultedAuthors,Stage primaryStage){
+	private static TableView table = null;
+	public static void displayResultScene(List<Author> resultedAuthors,Stage primaryStage){
+		
+		table = new TableView();
+		
+		System.out.println("RESULT ::: "+resultedAuthors.size());
 		List<Author> authors = resultedAuthors;
 		
 		//Pane pane = new Pane();
@@ -48,6 +46,7 @@ public class ResultScene {
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
 		scenetitle.setFill(Color.FIREBRICK);
 		grid.add(scenetitle, 1, 0);
+		
 		TableColumn editColumn = new TableColumn("AuthorInformation");
         editColumn.setCellValueFactory(new PropertyValueFactory<Author,Hyperlink>("authorKey"));
 		table.setEditable(false);
@@ -61,27 +60,10 @@ public class ResultScene {
         author.setCellValueFactory(rmbutton);
         srNo.setCellValueFactory(new PropertyValueFactory<>("authorId"));
         table.setItems(authorData);
-
-       
-        table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Author>() {
-            public void onChanged(ListChangeListener.Change<? extends Author> c) {
-            	Author author=null;
-                for (Author p : c.getList()) {
-                  author=p;
-                }
-             Scene authorDispayInformationScene =AuthorDispayInformationScene.getAuthorDisplayScene(author,primaryStage);
-             primaryStage.setScene(authorDispayInformationScene);
-				primaryStage.show();
-
-             
-            }
-        });
-
-        
         table.getColumns().addAll(srNo, author,editColumn);
         
         grid.add(table, 1, 2);
-                        ColumnConstraints col1Constraints = new ColumnConstraints();
+        ColumnConstraints col1Constraints = new ColumnConstraints();
         col1Constraints.setPercentWidth(5);
         ColumnConstraints col2Constraints = new ColumnConstraints();
         col2Constraints.setPercentWidth(90);
@@ -94,23 +76,31 @@ public class ResultScene {
 		HBox hbBtn = new HBox(20);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().add(btn);
+		grid.add(hbBtn, 1, 15);
+		
+		Scene resultScene = new Scene(grid, 1000, 1000, Color.BEIGE);
+		primaryStage.setScene(resultScene);
+		primaryStage.show();
+		
+		table.getSelectionModel().getSelectedItems().addListener(new ListChangeListener<Author>() {
+            public void onChanged(ListChangeListener.Change<? extends Author> c) {
+            	Author author=null;
+                for (Author p : c.getList()) {
+                  author=p;
+                }
+             SceneStack.pushSceneToStack(resultScene);
+             AuthorDispayInformationScene.displayAuthorDisplayScene(author,primaryStage);
+            }
+        });
+
 		
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				Scene searchScene = SearchScene.getSearchScene(primaryStage); 
-    			primaryStage.setScene(searchScene);
+    			primaryStage.setScene(SceneStack.getSceneAtTopOfStack());
     			primaryStage.show();
-        		
-				
-			}
-			
+			}	
 		});
-		grid.add(hbBtn, 1, 15);
-		Scene resultScene = new Scene(grid, 1000, 1000, Color.BEIGE);
-		
-		return resultScene;
-	}
-		
+	}	
 }
