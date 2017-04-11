@@ -10,6 +10,8 @@ import java.util.List;
 import org.sonar.api.server.ws.WebService.SelectionMode;
 
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.service.ExportResult;
+import com.neu.msd.AuthorRetriever.service.ExportResultPdfImpl;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -131,7 +133,8 @@ public class ResultScene {
 	             File file = fileChooser.showSaveDialog(primaryStage);
 	              
 	              if(file != null){
-	                  SaveFile("Pdf_File", file);
+	                  ExportResult exportResult=new ExportResultPdfImpl();
+	                  exportResult.exportResultAsPdf(authors, file);
 	              }
 				
 			}
@@ -140,18 +143,6 @@ public class ResultScene {
 		Scene resultScene = new Scene(grid, 1000, 1000, Color.BEIGE);
 		return resultScene;
 	}
-	private static void  SaveFile(String content, File file){
-        try {
-        	
-            FileWriter fileWriter = null;
-             
-            fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.close();
-        } catch (IOException ex) {
-       //     Logger.getLogger(JavaFX_Text.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         
-    }
+	
 		
 }
