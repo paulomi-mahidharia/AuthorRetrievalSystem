@@ -70,11 +70,11 @@ public class SearchSceneValidation {
 		}
 		
 		// Validate Keyword name
-		if(!keyword.getText().isEmpty()){
-			if(!isStringValid(keyword.getText())){
-				return ValidationConstants.INVALID_KEYWORD;
-			}
-		}
+//		if(!keyword.getText().isEmpty()){
+//			if(!isStringValid(keyword.getText())){
+//				return ValidationConstants.INVALID_KEYWORD;
+//			}
+//		}
 		
 		//Validate date
 		if(!fromYear.getText().isEmpty() || !toYear.getText().isEmpty()){
@@ -165,9 +165,6 @@ public class SearchSceneValidation {
 	}
 	
 	public static boolean isStringValid(String str){
-	// Either of the regex below works. But we are choosing to ignore regex for now. 
-	//	return str.matches("^[a-zA-Z0-9 ]*$");
-	//	return str.matches( "^(?=.*[A-Za-z0-9])[A-Za-z0-9 ]*$");
-		return true;
+		return str.matches("^[a-zA-Z]+[a-zA-Z0-9]*$");
 	}
 }
