@@ -368,7 +368,7 @@ public class SearchScene {
 				try {
 					authors = searchService.searchAuthorsByCriteria(searchCriteria);
 					
-					if(!authors.isEmpty() || authors.size() != 0){
+					if(!authors.isEmpty() && authors.size() != 0){
 						SceneStack.pushSceneToStack(searchScene);
 						ResultScene.displayResultScene(authors,primaryStage);
 						

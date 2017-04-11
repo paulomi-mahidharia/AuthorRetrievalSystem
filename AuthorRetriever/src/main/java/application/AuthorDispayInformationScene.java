@@ -97,7 +97,9 @@ public class AuthorDispayInformationScene {
 				SearchSimilarProfileService searchSimilarProfileService = new SearchSimilarProfileServiceImpl();
 				try {
 					List<Author> similarAuthors = searchSimilarProfileService.searchSimilarAuthorProfiles(selectedAuthor);
-					if(!similarAuthors.isEmpty() || similarAuthors.size() != 0){
+					
+					System.out.println("similarAuthors :::" +similarAuthors.size());
+					if(!similarAuthors.isEmpty() && similarAuthors.size() != 0){
 						ResultScene.displayResultScene(similarAuthors, primaryStage);
 						SceneStack.pushSceneToStack(authorDispalyScene);
 					}else{
