@@ -362,6 +362,35 @@ public class SearchScene {
             		
         		searchCriteria.setPaperInfo(paperInfo);
         		searchCriteria.setServiceInfo(serviceInfo);
+/*<<<<<<< HEAD
+
+        		String isValid = SearchSceneValidation.validateSearchCriteria(searchCriteria);
+        		System.out.println(isValid);
+        		
+        		if(isValid.equalsIgnoreCase(ValidationConstants.VALID_CRITERIA)){
+        			SearchService searchService = new SearchServiceImpl();
+            		List<Author> authors = new ArrayList<Author>();
+    				try {
+    					authors = searchService.searchAuthorsByCriteria(searchCriteria);
+    				//	System.out.println(authors.size());
+    					Scene resultScene = ResultScene.getResultScene(authors,primaryStage);
+    					primaryStage.setScene(resultScene);
+    					primaryStage.show();
+    				} catch (SQLException e1) {
+    					// TODO Auto-generated catch block
+    					//e1.printStackTrace();
+    				}
+        		}else{
+        			//Display Error Message
+        			Alert alert = new Alert(AlertType.ERROR);
+        			alert.setTitle("Error");
+        			alert.setHeaderText("Oops, you got soemthing wrong!");
+        			alert.setContentText(isValid);
+
+        			alert.showAndWait();
+        		}
+
+=======*/
         		
     			SearchService searchService = new SearchServiceImpl();
         		List<Author> authors = new ArrayList<Author>();
@@ -385,6 +414,7 @@ public class SearchScene {
 											ValidationConstants.SQL_FAILURE);
 					return;
 				}
+//>>>>>>> 36586b4949af3723bad68cfc523906eb86932d6e
         	}
 		});
 	}
