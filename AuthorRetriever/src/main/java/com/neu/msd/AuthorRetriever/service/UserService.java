@@ -17,5 +17,7 @@ public interface UserService {
 	public boolean login(String username, String password);
 
 	public void addSelectedAuthors(List<Author> authors);
+	
+	public List<Author> getAllAuthorsForUser();
 
 }
