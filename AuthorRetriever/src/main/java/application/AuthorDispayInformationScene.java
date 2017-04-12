@@ -3,8 +3,13 @@ package application;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.security.sasl.AuthorizeCallback;
+
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.model.AuthorPaper;
+import com.neu.msd.AuthorRetriever.service.AuthorInfoService;
+import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileService;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
@@ -42,6 +47,14 @@ public class AuthorDispayInformationScene {
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
 		scenetitle.setFill(Color.FIREBRICK);
 		grid.add(scenetitle, 1, 0);
+		AuthorInfoService authorInfoService=new AuthorInfoServiceImpl();
+		try {
+			List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(selectedAuthor.getAuthorId());
+			//List<>
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		Text t1 = new Text(10, 50,selectedAuthor.getName() );
 		t1.setFont(new Font(20));

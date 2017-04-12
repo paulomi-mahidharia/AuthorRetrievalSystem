@@ -32,18 +32,22 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.beans.value.ObservableValue;
+import javafx.util.Callback;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.*;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class ResultScene {
 	
-	private static TableView table = null;
-	private final static int rowsPerPage = 20;
+	private static TableView table = new TableView();
+	private final static int rowsPerPage = 15;
 	private static List<Author>authorList=null;
 	private static Scene resultScene = null;
 	
 	public static void displayResultScene(List<Author> resultedAuthors,Stage primaryStage){
 		
-		table = new TableView();
+		 
 		System.out.println("RESULT ::: "+resultedAuthors.size());
 		authorList = resultedAuthors;
 		
@@ -59,8 +63,6 @@ public class ResultScene {
 		scenetitle.setFill(Color.FIREBRICK);
 		//grid.add(scenetitle, 1, 0);
 		
-		TableColumn editColumn = new TableColumn("AuthorInformation");
-        editColumn.setCellValueFactory(new PropertyValueFactory<Author,Hyperlink>("authorKey"));
 		table.setEditable(false);
 		ObservableList<Author> authorData = FXCollections.observableArrayList(authorList);
         TableColumn srNo = new TableColumn("Sr. No.");
@@ -70,9 +72,10 @@ public class ResultScene {
         author.setCellValueFactory(rmbutton);
         srNo.setCellValueFactory(new PropertyValueFactory<>("authorId"));
         //table.setItems(authorData);
-
+        TableColumn authorColumn = new TableColumn("AuthorInfo");
+        
         //table.setItems(authorData);
-        table.getColumns().addAll(srNo, author, editColumn);
+        table.getColumns().addAll(srNo, author, authorColumn);
         
         //grid.add(table, 1, 2);
         ColumnConstraints col1Constraints = new ColumnConstraints();
@@ -94,7 +97,7 @@ public class ResultScene {
 		primaryStage.setScene(resultScene);
 		primaryStage.show();*/
 		
-		
+        
 
 		
 		btnBackToSearch.setOnAction(new EventHandler<ActionEvent>() {
@@ -109,11 +112,11 @@ public class ResultScene {
 		
 	    Button buttonExportPdf = new Button("Export PDF");
 	   
-		HBox hbbuttonExportPdf= new HBox(20);
+		/*HBox hbbuttonExportPdf= new HBox(20);
 		hbbuttonExportPdf.setAlignment(Pos.BOTTOM_CENTER);
 		hbbuttonExportPdf.getChildren().add(buttonExportPdf);
 		//grid.add(hbbuttonExportPdf, 1, 17);
-		
+		*/
 		buttonExportPdf.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
@@ -139,6 +142,7 @@ public class ResultScene {
 		
 		bp.setCenter(resultScenePaginate.paginate());
 		resultScene = new Scene(bp, 1000, 1000, Color.BEIGE);
+		resultScene.getStylesheets().add("/home/rushi/MSDPRoject/team3/AuthorRetriever/CSS/table.css");
 		primaryStage.setScene(resultScene);
 		primaryStage.show();
 		
@@ -147,13 +151,14 @@ public class ResultScene {
             	Author author=null;
                 for (Author p : c.getList()) {
                   author=p;
+                  
                 }
              SceneStack.pushSceneToStack(resultScene);
              AuthorDispayInformationScene.displayAuthorDisplayScene(author,primaryStage);
             }
         });
 	}
-	
+		
 	private Pagination paginate(){
 		
 		Pagination pagination = new Pagination((authorList.size() / rowsPerPage + 1), 0);
