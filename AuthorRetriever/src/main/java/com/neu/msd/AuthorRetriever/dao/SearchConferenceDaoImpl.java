@@ -14,19 +14,21 @@ import com.neu.msd.AuthorRetriever.model.Conference;
 public class SearchConferenceDaoImpl implements SearchConferenceDao {
 
 	private Connection conn = DatabaseConnection.getConn();
-	
+
 	@Override
 	public List<Conference> retrieveConference(String queryString) throws SQLException {
+		System.out.println(queryString);
 		PreparedStatement stmt = conn.prepareStatement(queryString);
 		ResultSet rs = stmt.executeQuery();
-		
+		stmt.setQueryTimeout(300);
+
 		List<Conference> confs = new ArrayList<Conference>();
-		while(rs.next()){
+		while (rs.next()) {
 			Conference c = new Conference();
 			c.setConferenceId(Integer.parseInt(rs.getString(1)));
 			c.setName(rs.getString(2));
 			c.setYear(Integer.parseInt(rs.getString(5)));
-			
+
 			confs.add(c);
 		}
 		return confs;

@@ -15,7 +15,7 @@ public class ServiceInfo {
 			int endDate) {
 		super();
 		this.hasServed = hasServed;
-		this.conferenceName = conferenceName;
+		this.conferenceName = conferenceName.toLowerCase();
 		this.position = position;
 		this.options = options;
 		this.startDate = startDate;

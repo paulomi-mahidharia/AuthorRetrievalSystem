@@ -82,8 +82,8 @@ CREATE TABLE committee (
   id INT AUTO_INCREMENT PRIMARY KEY,
   conf_name varchar(200) DEFAULT NULL,
   `year` int(11) DEFAULT '0',
-  editor text,
-  `position` text
+  editor varchar(200),
+  `position` varchar(200)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 

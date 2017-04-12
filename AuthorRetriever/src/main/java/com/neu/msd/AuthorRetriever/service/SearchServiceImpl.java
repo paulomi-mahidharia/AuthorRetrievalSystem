@@ -31,7 +31,7 @@ public class SearchServiceImpl implements SearchService {
 			String paperQuery = "SELECT author_paper_mapping.Author_Id FROM author_paper_mapping INNER JOIN paper on author_paper_mapping.Paper_Id = paper.paper_id";
 			paperQuery += buildPaperQuery(paperQuery, criteria.getPaperInfo());
 			// Limiting to 100 Rows for now. 
-			String authorPaperQuery = "SELECT author.* FROM author WHERE Id IN (" + paperQuery + ")" + " LIMIT 100";
+			String authorPaperQuery = "SELECT author.* FROM author WHERE Id IN (" + paperQuery + ")";
 			paperAuthors = searchDao.searchAuthorsByCriteria(authorPaperQuery);
 		}
 

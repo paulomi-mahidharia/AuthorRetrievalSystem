@@ -1,15 +1,28 @@
 package com.neu.msd.DBLPXMLParser.config;
 
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
+
 
 public class DBConnection {
-	// Change the parameters accordingly.
-	//private static String dbUrl = "jdbc:mysql://127.0.0.1:3306/dblp?useUnicode=true&characterEncoding=utf-8";
-	private static String dbUrl = "jdbc:mysql://dblp.c1lyqqia3dks.us-east-1.rds.amazonaws.com:3306/dblp";
+	private static Properties prop = new Properties();
+	private static String dbUrl;
 
-	private static String user = "msddblp";
-	private static String password = "zxcv1234";
-
+	private static String user;
+	private static String password;
+		
+	static{
+		try {
+			prop.load(DBConnection.class.getClassLoader().getResourceAsStream("application.properties"));
+			dbUrl = prop.getProperty("aws.db.connection.url");
+			user = prop.getProperty("aws.db.username");
+			password = prop.getProperty("aws.db.password");
+			
+		} catch (IOException e) {
+			System.out.println("Unable to read Properties file");
+		}
+	}
 	public static Connection getConn() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
