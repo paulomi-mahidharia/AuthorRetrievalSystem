@@ -70,11 +70,11 @@ public class SearchSceneValidation {
 		}
 		
 		// Validate Keyword name
-		if(!keyword.getText().isEmpty()){
-			if(!isStringValid(keyword.getText())){
-				return ValidationConstants.INVALID_KEYWORD;
-			}
-		}
+//		if(!keyword.getText().isEmpty()){
+//			if(!isStringValid(keyword.getText())){
+//				return ValidationConstants.INVALID_KEYWORD;
+//			}
+//		}
 		
 		//Validate date
 		if(!fromYear.getText().isEmpty() || !toYear.getText().isEmpty()){
