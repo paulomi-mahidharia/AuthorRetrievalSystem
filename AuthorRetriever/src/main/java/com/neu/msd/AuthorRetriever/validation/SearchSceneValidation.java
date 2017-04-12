@@ -82,7 +82,7 @@ public class SearchSceneValidation {
 											fromYear.getText(), 
 											toYear.getText());
 			if(!isDateValid.equalsIgnoreCase(ValidationConstants.VALID_DATE)){
-				return ValidationConstants.INVALID_DATE;
+				return isDateValid;
 			}
 		}
 		
@@ -132,6 +132,8 @@ public class SearchSceneValidation {
 				System.out.println(isYearInValid(startDate));
 				System.out.println(isYearInValid(endDate));
 				if(startDate == 0 || endDate == 0 || isYearInValid(startDate) || isYearInValid(endDate))
+					return ValidationConstants.INVALID_DATE_RANGE;
+				else if(startDate > endDate)
 					return ValidationConstants.INVALID_DATE_RANGE;
 				else 
 					return ValidationConstants.VALID_DATE;
