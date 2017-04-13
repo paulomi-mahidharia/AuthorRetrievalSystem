@@ -27,6 +27,8 @@ public class SearchConferenceDaoImpl implements SearchConferenceDao {
 			Conference c = new Conference();
 			c.setConferenceId(Integer.parseInt(rs.getString(1)));
 			c.setName(rs.getString(2));
+			c.setTitle(rs.getString(3));
+			c.setIsbn(rs.getString(4));
 			c.setYear(Integer.parseInt(rs.getString(5)));
 
 			confs.add(c);
