@@ -33,6 +33,9 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class ResultScene {
 	
@@ -47,18 +50,6 @@ public class ResultScene {
 		System.out.println("RESULT ::: "+resultedAuthors.size());
 		authorList = resultedAuthors;
 		
-		//Pane pane = new Pane();
-		/*GridPane grid = new GridPane();
-		grid.setAlignment(Pos.TOP_LEFT);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(0, 10, 0, 10));*/
-		
-		Text scenetitle = new Text("RESULT");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
-		scenetitle.setFill(Color.FIREBRICK);
-		//grid.add(scenetitle, 1, 0);
-		
 		TableColumn editColumn = new TableColumn("AuthorInformation");
         editColumn.setCellValueFactory(new PropertyValueFactory<Author,Hyperlink>("authorKey"));
 		table.setEditable(false);
@@ -69,50 +60,21 @@ public class ResultScene {
         PropertyValueFactory<Author,Hyperlink> rmbutton = new PropertyValueFactory<Author,Hyperlink>("name");
         author.setCellValueFactory(rmbutton);
         srNo.setCellValueFactory(new PropertyValueFactory<>("authorId"));
-        //table.setItems(authorData);
-
-        //table.setItems(authorData);
+       
         table.getColumns().addAll(srNo, author, editColumn);
         
-        //grid.add(table, 1, 2);
         ColumnConstraints col1Constraints = new ColumnConstraints();
         col1Constraints.setPercentWidth(5);
         ColumnConstraints col2Constraints = new ColumnConstraints();
         col2Constraints.setPercentWidth(90);
         ColumnConstraints col3Constraints = new ColumnConstraints();
         col3Constraints.setPercentWidth(5);
-        //grid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
-        
-        Button btnBackToSearch = new Button("Search Page");
-       
-		/*HBox hbBtn = new HBox(20);
-		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().add(btnBackToSearch);
-		grid.add(hbBtn, 1, 15);*/
-		
-		/*Scene resultScene = new Scene(grid, 1000, 1000, Color.BEIGE);
-		primaryStage.setScene(resultScene);
-		primaryStage.show();*/
-		
-		
-
-		
-		btnBackToSearch.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-    			primaryStage.setScene(SceneStack.getSceneAtTopOfStack());
-    			primaryStage.show();
-			}	
-		});
-		//grid.add(hbBtn, 1, 18);
 		
 	    Button buttonExportPdf = new Button("Export PDF");
 	   
 		HBox hbbuttonExportPdf= new HBox(20);
 		hbbuttonExportPdf.setAlignment(Pos.BOTTOM_CENTER);
 		hbbuttonExportPdf.getChildren().add(buttonExportPdf);
-		//grid.add(hbbuttonExportPdf, 1, 17);
 		
 		buttonExportPdf.setOnAction(new EventHandler<ActionEvent>() {
 			
@@ -133,12 +95,12 @@ public class ResultScene {
 		
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(10, 20, 10, 20));
-		bp.setTop(btnBackToSearch);
-		bp.setLeft(buttonExportPdf);
+		
+		bp.setBottom(buttonExportPdf);
 		ResultScene resultScenePaginate=new ResultScene();
 		
 		bp.setCenter(resultScenePaginate.paginate());
-		resultScene = new Scene(bp, 1000, 1000, Color.BEIGE);
+		resultScene = new Scene(bp, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(resultScene);
 		primaryStage.show();
 		

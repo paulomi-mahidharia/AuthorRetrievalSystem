@@ -14,7 +14,7 @@ public class Main extends Application {
 			Scene loginScene = LoginScene.getLoginScene(primaryStage);
 			primaryStage.setScene(loginScene);
 			primaryStage.show();
-
+			
 			SceneStack.createSceneStack();
 		} catch(Exception e) {
 			e.printStackTrace();

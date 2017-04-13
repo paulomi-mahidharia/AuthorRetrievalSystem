@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.constants.PositionAlias;
+import com.neu.msd.AuthorRetriever.constants.SceneContants;
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
@@ -45,6 +46,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
 
@@ -58,11 +62,7 @@ public class SearchScene {
 		
 		SearchCriteria searchCriteria = new SearchCriteria();
 		
-		/*Text scenetitle = new Text("SEARCH AUTHORS");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
-		scenetitle.setFill(Color.FIREBRICK);*/
-		
-		HBox titleHbox = NavigationBar.getHeaderPane();
+		HBox titleHbox = NavigationBar.getHeaderPane(SceneContants.SEARCH, primaryStage);
 		grid2.add(titleHbox, 0, 0, 3, 1);
 		
 		CheckBox paperCheck = new CheckBox("Search based on paper information");
@@ -300,7 +300,7 @@ public class SearchScene {
 		hbBtn.getChildren().add(btn);
 		grid2.add(hbBtn, 1, 12);
 		
-		Scene searchScene = new Scene(grid2, 1000, 1000, Color.BEIGE);
+		Scene searchScene = new Scene(grid2, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(searchScene);
 		primaryStage.show();
 		
