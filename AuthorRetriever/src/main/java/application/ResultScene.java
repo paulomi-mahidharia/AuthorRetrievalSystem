@@ -122,7 +122,7 @@ public class ResultScene {
 		bp.setCenter(resultScenePaginate.paginate());
 
 		resultScene = new Scene(bp, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-		resultScene.getStylesheets().add("CSS/table.css");
+		//resultScene.getStylesheets().add("CSS/table.css");
 
 		primaryStage.setScene(resultScene);
 		primaryStage.show();
