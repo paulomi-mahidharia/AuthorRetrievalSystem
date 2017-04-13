@@ -25,6 +25,7 @@ public class SearchSimilarAuthorsDaoImpl implements SearchSimilarAuthorsDao {
 			Author a = new Author();
 			a.setAuthorId(Integer.parseInt(rs.getString(1)));
 			a.setName(rs.getString(2));
+			a.setAffiliation(rs.getString("Affiliation"));
 			authors.add(a);
 		}
 		return authors;
