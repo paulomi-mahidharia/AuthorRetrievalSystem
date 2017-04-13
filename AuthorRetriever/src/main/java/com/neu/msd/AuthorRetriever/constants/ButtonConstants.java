@@ -13,6 +13,7 @@ public class ButtonConstants {
 	public static final String OR_RADIO = "OR";
 	public static final String SEARCH_AUTHORS = "Search Authors";
 	
+	public static final String SHORTLIST_AUTHOR= "Shortlist Author";
 	public static final int SCENE_LENGTH = 1000;
 	public static final int SCENE_WIDTH = 1000;
 }

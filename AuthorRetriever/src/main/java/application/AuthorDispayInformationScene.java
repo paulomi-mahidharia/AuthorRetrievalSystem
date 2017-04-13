@@ -1,6 +1,7 @@
 package application;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.sasl.AuthorizeCallback;
@@ -13,6 +14,7 @@ import com.neu.msd.AuthorRetriever.service.AuthorInfoService;
 import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileService;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
+import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
@@ -43,10 +45,12 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEARCH;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SHORTLIST_AUTHOR;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
 public class AuthorDispayInformationScene {
+	
 	
 	private static TableView table = null;
 	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage) throws SQLException{
@@ -95,15 +99,35 @@ public class AuthorDispayInformationScene {
         Button btnSimilarAuthors = new Button(SEARCH_SIMILAR_AUTHOR);
         btnSimilarAuthors.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
+        
+        Button btnShortListAuthor = new Button(SHORTLIST_AUTHOR);
+        btnShortListAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		
+        
+        
+        Button btnaddSelectedAuthor =new Button(SHORTLIST_AUTHOR);
+        btnaddSelectedAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         HBox hbBtn = new HBox(20);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().addAll(btnResetSearch, btnSimilarAuthors);
+		hbBtn.getChildren().addAll(btnResetSearch, btnSimilarAuthors,btnShortListAuthor);
 		
 		grid.add(hbBtn, 1, 15);
 		
 		Scene authorDispalyScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(authorDispalyScene);
 		primaryStage.show();
+		
+		btnShortListAuthor.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				UserServiceImpl userServiceImpl=new UserServiceImpl();
+				List<Author> selectedAuthorList=new ArrayList<>();
+				selectedAuthorList.add(selectedAuthor);
+				userServiceImpl.addSelectedAuthors(selectedAuthorList);
+				
+			}	
+		});
 		
 		btnResetSearch.setOnAction(new EventHandler<ActionEvent>() {
 
