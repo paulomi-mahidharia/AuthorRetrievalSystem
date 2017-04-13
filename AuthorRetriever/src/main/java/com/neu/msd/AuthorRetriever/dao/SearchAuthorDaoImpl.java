@@ -25,6 +25,7 @@ public class SearchAuthorDaoImpl implements SearchAuthorDao{
 			Author a = new Author();
 			a.setAuthorId(Integer.parseInt(rs.getString(1)));
 			a.setName(rs.getString(2));
+			a.setAffiliation(rs.getString(3));
 			authors.add(a);
 		}
 		return authors;
