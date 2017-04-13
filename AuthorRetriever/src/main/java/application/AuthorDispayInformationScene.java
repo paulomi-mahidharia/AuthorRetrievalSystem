@@ -14,6 +14,7 @@ import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileService;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
+import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.collections.FXCollections;
@@ -36,6 +37,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEARCH;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;;
+
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
 public class AuthorDispayInformationScene {
 	
@@ -47,11 +54,11 @@ public class AuthorDispayInformationScene {
 		grid.setAlignment(Pos.TOP_LEFT);
 		grid.setHgap(10);
 		grid.setVgap(10);
-		grid.setPadding(new Insets(0, 10, 0, 10));
-		Text scenetitle = new Text("Author Profile");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
-		scenetitle.setFill(Color.FIREBRICK);
-		grid.add(scenetitle, 1, 0);
+		grid.setPadding(new Insets(25, 25, 25, 25));
+		
+		HBox headerPane = NavigationBar.getHeaderPane(AUTHOR, primaryStage);
+		headerPane.setSpacing(250);		
+		grid.add(headerPane, 1, 0);
 		AuthorInfoService authorInfoService=new AuthorInfoServiceImpl();
 		List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(selectedAuthor.getAuthorId());
 		List<Conference>conferences=authorInfoService.getAuthorConferenceServed(selectedAuthor.getAuthorId());
@@ -81,25 +88,23 @@ public class AuthorDispayInformationScene {
         col3Constraints.setPercentWidth(5);
         grid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
         
-        Button btn = new Button("Restart Search");
-        btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		HBox hbBtn = new HBox(20);
+        Button btnResetSearch = new Button(RESTART_SEARCH);
+        btnResetSearch.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
+        Button btnSimilarAuthors = new Button(SEARCH_SIMILAR_AUTHOR);
+        btnSimilarAuthors.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		
+        HBox hbBtn = new HBox(20);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().add(btn);
+		hbBtn.getChildren().addAll(btnResetSearch, btnSimilarAuthors);
 		
 		grid.add(hbBtn, 1, 15);
-		Button btn1 = new Button("Search Similar Author");
-        btn1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		HBox hbBtn1 = new HBox(20);
-		hbBtn1.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn1.getChildren().add(btn1);
-		grid.add(hbBtn1, 1, 17);
 		
-		Scene authorDispalyScene = new Scene(grid, 1000, 1000, Color.BEIGE);
+		Scene authorDispalyScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(authorDispalyScene);
 		primaryStage.show();
 		
-		btn.setOnAction(new EventHandler<ActionEvent>() {
+		btnResetSearch.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -108,7 +113,7 @@ public class AuthorDispayInformationScene {
 			}	
 		});
 		
-		btn1.setOnAction(new EventHandler<ActionEvent>() {
+		btnSimilarAuthors.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {

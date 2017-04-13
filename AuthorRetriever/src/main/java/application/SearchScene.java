@@ -49,6 +49,9 @@ import javafx.scene.layout.HBox;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
@@ -170,14 +173,14 @@ public class SearchScene {
 		//Add union condition
 		final ToggleGroup unionGroup = new ToggleGroup();
 		
-		RadioButton radioButtonAnd = new RadioButton("AND");
+		RadioButton radioButtonAnd = new RadioButton(AND_RADIO);
 		radioButtonAnd.setToggleGroup(unionGroup);
-		radioButtonAnd.setUserData("AND");
+		radioButtonAnd.setUserData(AND_RADIO);
 		radioButtonAnd.setSelected(true);
 		grid2.add(radioButtonAnd, 0, 7);
 		
-		RadioButton radioButtonOr = new RadioButton("OR");
-		radioButtonOr.setUserData("OR");
+		RadioButton radioButtonOr = new RadioButton(OR_RADIO);
+		radioButtonOr.setUserData(OR_RADIO);
 		radioButtonOr.setToggleGroup(unionGroup);
 		grid2.add(radioButtonOr, 1, 7);
 		
@@ -295,7 +298,7 @@ public class SearchScene {
 		positionComboBox.setValue(positions.get(0));
 		grid2.add(positionComboBox, 1, 11);
 		
-		Button btn = new Button("Search Authors");
+		Button btn = new Button(SEARCH_AUTHORS);
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().add(btn);
@@ -367,35 +370,6 @@ public class SearchScene {
             		
         		searchCriteria.setPaperInfo(paperInfo);
         		searchCriteria.setServiceInfo(serviceInfo);
-/*<<<<<<< HEAD
-
-        		String isValid = SearchSceneValidation.validateSearchCriteria(searchCriteria);
-        		System.out.println(isValid);
-        		
-        		if(isValid.equalsIgnoreCase(ValidationConstants.VALID_CRITERIA)){
-        			SearchService searchService = new SearchServiceImpl();
-            		List<Author> authors = new ArrayList<Author>();
-    				try {
-    					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-    				//	System.out.println(authors.size());
-    					Scene resultScene = ResultScene.getResultScene(authors,primaryStage);
-    					primaryStage.setScene(resultScene);
-    					primaryStage.show();
-    				} catch (SQLException e1) {
-    					// TODO Auto-generated catch block
-    					//e1.printStackTrace();
-    				}
-        		}else{
-        			//Display Error Message
-        			Alert alert = new Alert(AlertType.ERROR);
-        			alert.setTitle("Error");
-        			alert.setHeaderText("Oops, you got soemthing wrong!");
-        			alert.setContentText(isValid);
-
-        			alert.showAndWait();
-        		}
-
-=======*/
         		
     			SearchService searchService = new SearchServiceImpl();
         		List<Author> authors = new ArrayList<Author>();
@@ -419,7 +393,6 @@ public class SearchScene {
 											ValidationConstants.SQL_FAILURE);
 					return;
 				}
-//>>>>>>> 36586b4949af3723bad68cfc523906eb86932d6e
         	}
 		});
 	}
