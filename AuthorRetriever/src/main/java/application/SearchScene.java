@@ -106,30 +106,22 @@ public class SearchScene {
 		confName.setPromptText("Conference name");
 		
 		final ObservableList<String> strings = FXCollections.observableArrayList();
-		 strings.add("OOPSLA");
-		 strings.add("ACM");
+		strings.add("OOPSLA");
+		strings.add("ACM");
 
 		 // Create the CheckComboBox with the data 
-		 final CheckComboBox<String> checkComboBox = new CheckComboBox<String>(strings);
-
-		 grid2.add(checkComboBox, 2, 4);
-		 // and listen to the relevant events (e.g. when the selected indices or 
-		 // selected items change).
+		final CheckComboBox<String> checkComboBox = new CheckComboBox<String>(strings);
+		grid2.add(checkComboBox, 2, 4);
 		 
-		 checkComboBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+		checkComboBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
 
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
 				// TODO Auto-generated method stub
 				System.out.println(checkComboBox.getCheckModel().getCheckedItems());
 			}
+		});
 
-			
-		
-		 });
-		
-		
-		
 		Label yearRange = new Label("Year range:");
 		grid2.add(yearRange, 0, 5);
 		
@@ -350,8 +342,11 @@ public class SearchScene {
             		return;
             	}else{
             		if(paperCheck.isSelected()){
+            			
+            			String conferenceSelection = checkComboBox.getCheckModel().getCheckedItems().toString();
+            			
             			String isPaperInfoValid = SearchSceneValidation.validatePaperInfo(numberOfPapersField, 
-													confName,
+            										conferenceSelection.substring(1, conferenceSelection.length() - 1).trim(),
 													yearRangeComboBox,
 													fromYear,
 													toYear,
@@ -364,7 +359,7 @@ public class SearchScene {
             				//set paper info bean
             				paperInfo = setPaperInformation(numberOfPapersField, 
 															publishComboBox,
-															confName,
+															conferenceSelection.substring(1, conferenceSelection.length() - 1).trim(),
 															yearRangeComboBox,
 															fromYear,
 															toYear,
@@ -425,7 +420,7 @@ public class SearchScene {
 		
 	public static Paper setPaperInformation(TextField numberOfPapersField,
 											ComboBox publishComboBox,
-											TextField confName,
+											String confName,
 											ComboBox yearRangeComboBox,
 											TextField fromYear,
 											TextField toYear,
@@ -446,7 +441,7 @@ public class SearchScene {
 		}
 		
 		//Set conference name
-		paperInfo.setConferenceName(confName.getText());
+		paperInfo.setConferenceName(confName);
 		
 		//Set date options
 		paperInfo.setOptions(yearRangeComboBox.getValue().toString());
