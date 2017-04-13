@@ -40,6 +40,8 @@ import javafx.stage.Stage;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEARCH;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
 public class AuthorDispayInformationScene {
@@ -86,25 +88,23 @@ public class AuthorDispayInformationScene {
         col3Constraints.setPercentWidth(5);
         grid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
         
-        Button btn = new Button("Restart Search");
-        btn.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		HBox hbBtn = new HBox(20);
+        Button btnResetSearch = new Button(RESTART_SEARCH);
+        btnResetSearch.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
+        Button btnSimilarAuthors = new Button(SEARCH_SIMILAR_AUTHOR);
+        btnSimilarAuthors.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+		
+        HBox hbBtn = new HBox(20);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().add(btn);
+		hbBtn.getChildren().addAll(btnResetSearch, btnSimilarAuthors);
 		
 		grid.add(hbBtn, 1, 15);
-		Button btn1 = new Button("Search Similar Author");
-        btn1.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		HBox hbBtn1 = new HBox(20);
-		hbBtn1.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn1.getChildren().add(btn1);
-		grid.add(hbBtn1, 1, 17);
 		
 		Scene authorDispalyScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(authorDispalyScene);
 		primaryStage.show();
 		
-		btn.setOnAction(new EventHandler<ActionEvent>() {
+		btnResetSearch.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
@@ -113,7 +113,7 @@ public class AuthorDispayInformationScene {
 			}	
 		});
 		
-		btn1.setOnAction(new EventHandler<ActionEvent>() {
+		btnSimilarAuthors.setOnAction(new EventHandler<ActionEvent>() {
 			
 			@Override
 			public void handle(ActionEvent event) {
