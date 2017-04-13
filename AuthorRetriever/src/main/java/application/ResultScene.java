@@ -1,6 +1,7 @@
 package application;
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
@@ -154,7 +155,12 @@ public class ResultScene {
                   
                 }
              SceneStack.pushSceneToStack(resultScene);
-             AuthorDispayInformationScene.displayAuthorDisplayScene(author,primaryStage);
+             try {
+				AuthorDispayInformationScene.displayAuthorDisplayScene(author,primaryStage);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             }
         });
 	}

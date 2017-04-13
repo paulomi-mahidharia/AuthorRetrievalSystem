@@ -8,6 +8,7 @@ import javax.security.sasl.AuthorizeCallback;
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.AuthorPaper;
+import com.neu.msd.AuthorRetriever.model.Conference;
 import com.neu.msd.AuthorRetriever.service.AuthorInfoService;
 import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileService;
@@ -15,13 +16,17 @@ import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -35,7 +40,7 @@ import javafx.stage.Stage;
 public class AuthorDispayInformationScene {
 	
 	private static TableView table = null;
-	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage){
+	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage) throws SQLException{
 	
 		table = new TableView();
 		GridPane grid = new GridPane();
@@ -48,13 +53,11 @@ public class AuthorDispayInformationScene {
 		scenetitle.setFill(Color.FIREBRICK);
 		grid.add(scenetitle, 1, 0);
 		AuthorInfoService authorInfoService=new AuthorInfoServiceImpl();
-		try {
-			List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(selectedAuthor.getAuthorId());
-			//List<>
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(selectedAuthor.getAuthorId());
+		List<Conference>conferences=authorInfoService.getAuthorConferenceServed(selectedAuthor.getAuthorId());
+		
+		TableView createPaperInfoTable=createPaperInfoTable(paperInfo);
+		TableView createConferenceInfoTable=createConferenceInfoTable(conferences);
 		
 		Text t1 = new Text(10, 50,selectedAuthor.getName() );
 		t1.setFont(new Font(20));
@@ -64,9 +67,12 @@ public class AuthorDispayInformationScene {
        
         Text t3 = new Text(10, 50,selectedAuthor.getCountry() );
 		t3.setFont(new Font(20));
+		
         grid.add(t1, 1, 2);
         grid.add(t2, 0, 3);
         grid.add(t3, 0, 4);
+        grid.add(createPaperInfoTable, 1,6);
+        grid.add(createConferenceInfoTable, 1,9);
         ColumnConstraints col1Constraints = new ColumnConstraints();
         col1Constraints.setPercentWidth(5);
         ColumnConstraints col2Constraints = new ColumnConstraints();
@@ -127,5 +133,51 @@ public class AuthorDispayInformationScene {
 				}
 			}
 		});
+	}
+	private static TableView createConferenceInfoTable(List<Conference> conferences) {
+		// TODO Auto-generated method stub
+		
+		TableView table = new TableView<>();
+		System.out.println(conferences.size());
+		ObservableList<Conference> confInfoData = FXCollections.observableArrayList(conferences);
+        TableColumn conferenceId= new TableColumn("Conference Id");
+        TableColumn year = new TableColumn("Year");
+        TableColumn name = new TableColumn("Name");
+        TableColumn title = new TableColumn("Title");
+        
+        
+        conferenceId.setCellValueFactory(new PropertyValueFactory<>("conferenceId"));
+        year.setCellValueFactory(new PropertyValueFactory<>("year"));
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        title.setCellValueFactory(new PropertyValueFactory<>("title"));
+        
+        
+        table.getColumns().addAll(conferenceId, year, name,title);
+        
+        table.setItems(confInfoData);
+		
+        return table;
+	}
+	private static TableView createPaperInfoTable(List<AuthorPaper> paperInfo) {
+		TableView table = new TableView<>();
+		
+		ObservableList<AuthorPaper> paperInfoData = FXCollections.observableArrayList(paperInfo);
+        TableColumn paperId = new TableColumn("Paper Id");
+        TableColumn confName = new TableColumn("Conferance Title");
+        TableColumn paperTitle = new TableColumn("Paper Title");
+        TableColumn year = new TableColumn("Year");
+        TableColumn url = new TableColumn("URL");
+        
+        paperId.setCellValueFactory(new PropertyValueFactory<>("paperId"));
+        confName.setCellValueFactory(new PropertyValueFactory<>("confName"));
+        paperTitle.setCellValueFactory(new PropertyValueFactory<>("paperTitle"));
+        year.setCellValueFactory(new PropertyValueFactory<>("Year"));
+        url.setCellValueFactory(new PropertyValueFactory<>("url"));
+        
+        table.getColumns().addAll(paperId, confName, paperTitle,year,url);
+        
+        table.setItems(paperInfoData);
+		
+        return table;
 	}
 }
