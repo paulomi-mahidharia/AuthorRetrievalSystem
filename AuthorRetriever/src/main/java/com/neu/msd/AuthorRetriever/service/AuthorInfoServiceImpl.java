@@ -50,7 +50,8 @@ public class AuthorInfoServiceImpl implements AuthorInfoService {
 		
 		List<Conference> authorConfServed = new ArrayList<Conference>();
 		
-		String queryString = "SELECT * FROM conference WHERE id IN (SELECT confid FROM conference_editor_mapping where editorid = "+authorId+")";
+		String queryString = "SELECT * FROM conference WHERE conf_id IN (SELECT confid FROM conference_editor_mapping where editorid = "+authorId+")";
+
 		
 		authorConfServed = searchConfDao.retrieveConference(queryString);
 		return authorConfServed;
