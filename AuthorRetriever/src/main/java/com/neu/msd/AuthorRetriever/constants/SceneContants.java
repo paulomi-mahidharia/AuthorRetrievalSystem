@@ -17,5 +17,5 @@ public class SceneContants {
 	
 	//public static final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();	
 	public static final double SCENE_LENGTH = 1000;
-	public static final double SCENE_WIDTH = 1000;
+	public static final double SCENE_WIDTH = 700;
 }
