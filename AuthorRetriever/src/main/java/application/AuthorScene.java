@@ -45,7 +45,7 @@ import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEAR
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
-public class AuthorDispayInformationScene {
+public class AuthorScene {
 	
 	private static TableView table = null;
 	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage) throws SQLException{
@@ -158,7 +158,7 @@ public class AuthorDispayInformationScene {
         
         
         table.getColumns().addAll(conferenceId, year, name,title);
-        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setItems(confInfoData);
 		
         return table;
@@ -180,6 +180,7 @@ public class AuthorDispayInformationScene {
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
         
         table.getColumns().addAll(paperId, confName, paperTitle,year,url);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         table.setItems(paperInfoData);
 		
