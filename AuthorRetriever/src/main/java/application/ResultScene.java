@@ -47,7 +47,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 public class ResultScene {
 	
 	private static TableView table = null;
-	private final static int rowsPerPage = 15;
+	private final static int rowsPerPage = 20;
 	private static List<Author>authorList=null;
 	private static Scene resultScene = null;
 	
@@ -122,7 +122,8 @@ public class ResultScene {
 		bp.setCenter(resultScenePaginate.paginate());
 
 		resultScene = new Scene(bp, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-		resultScene.getStylesheets().add("CSS/table.css");
+		//resultScene.getStylesheets().add("CSS/table.css");
+		resultScene.getStylesheets().add(ResultScene.class.getClassLoader().getResource("table.css").toString());
 
 		primaryStage.setScene(resultScene);
 		primaryStage.show();
