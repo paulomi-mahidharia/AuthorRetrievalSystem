@@ -1,9 +1,5 @@
 package com.neu.msd.AuthorRetriever.constants;
 
-import javafx.geometry.Rectangle2D;
-import javafx.stage.Screen;
-import javafx.scene.Scene;
-
 public class SceneContants {
 	
 	public static final String SEARCH = "search";
@@ -18,4 +14,5 @@ public class SceneContants {
 	//public static final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();	
 	public static final double SCENE_LENGTH = 1000;
 	public static final double SCENE_WIDTH = 720;
+
 }

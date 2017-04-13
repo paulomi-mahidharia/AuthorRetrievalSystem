@@ -21,16 +21,19 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+
+@SuppressWarnings({"restriction"})
 public class RegistrationScene {
+	
 	public static void  getRegisterScene(Stage primaryStage){
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
-		
-		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
+				
 		Text scenetitle = new Text("Registration Page!");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(scenetitle, 0, 0, 2, 1);
@@ -95,7 +98,7 @@ public class RegistrationScene {
             }
         });
         
-        Scene registerScene = new Scene(grid, 1000, 1000, Color.BEIGE);
+        Scene registerScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(registerScene);
 		primaryStage.show();
 		

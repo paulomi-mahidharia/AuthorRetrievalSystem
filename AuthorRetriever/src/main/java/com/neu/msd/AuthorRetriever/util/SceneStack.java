@@ -19,12 +19,8 @@ public final class SceneStack {
 		System.out.println("STACK SIZE:::: "+sceneStack.size());
 	}
 	
-	public static void popSceneToStack(){
-		sceneStack.pop();
-	}
-	
 	public static Scene getSceneAtTopOfStack(){
-		return sceneStack.peek();
+		return sceneStack.pop();
 	}	
 	
 	public static void flushSceneStack(){
