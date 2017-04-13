@@ -17,6 +17,7 @@ import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -145,13 +146,13 @@ public class AuthorScene {
 		TableView table = new TableView<>();
 		System.out.println(conferences.size());
 		ObservableList<Conference> confInfoData = FXCollections.observableArrayList(conferences);
-        TableColumn conferenceId= new TableColumn("Conference Id");
+		TableColumn<Conference,Number> conferenceId = new TableColumn("#");
         TableColumn year = new TableColumn("Year");
         TableColumn name = new TableColumn("Name");
         TableColumn title = new TableColumn("Title");
         
-        
-        conferenceId.setCellValueFactory(new PropertyValueFactory<>("conferenceId"));
+        conferenceId.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
+      
         year.setCellValueFactory(new PropertyValueFactory<>("year"));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         title.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -167,13 +168,13 @@ public class AuthorScene {
 		TableView table = new TableView<>();
 		
 		ObservableList<AuthorPaper> paperInfoData = FXCollections.observableArrayList(paperInfo);
-        TableColumn paperId = new TableColumn("Paper Id");
+		TableColumn<AuthorPaper,Number> paperId = new TableColumn("#");
         TableColumn confName = new TableColumn("Conferance Title");
         TableColumn paperTitle = new TableColumn("Paper Title");
         TableColumn year = new TableColumn("Year");
         TableColumn url = new TableColumn("URL");
         
-        paperId.setCellValueFactory(new PropertyValueFactory<>("paperId"));
+        paperId.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
         confName.setCellValueFactory(new PropertyValueFactory<>("confName"));
         paperTitle.setCellValueFactory(new PropertyValueFactory<>("paperTitle"));
         year.setCellValueFactory(new PropertyValueFactory<>("Year"));
