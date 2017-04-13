@@ -60,6 +60,13 @@ insert ignore into conference(conf_name, `year`, title, book_title, isbn, url)
 	FROM proceeding
     WHERE	proceeding_key like 'conf%';
 
+ALTER TABLE conference 
+DROP COLUMN `url`,
+DROP COLUMN `book_title`,
+CHANGE COLUMN `year` `year` INT(10) NULL DEFAULT '0' AFTER `isbn`,
+CHANGE COLUMN `conf_id` `ID` INT(11) NOT NULL AUTO_INCREMENT ,
+CHANGE COLUMN `conf_name` `Name` VARCHAR(30) NULL DEFAULT NULL ;
+
     
 insert ignore into journal(journal_name, `year`, title, book_title, isbn, url)
 	select	SPLIT_STR(proceeding_key, '/', 2) as journal_name,
