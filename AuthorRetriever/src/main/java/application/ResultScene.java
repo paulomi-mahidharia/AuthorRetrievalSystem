@@ -6,6 +6,7 @@ import java.util.List;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.service.ExportResult;
 import com.neu.msd.AuthorRetriever.service.ExportResultPdfImpl;
+import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.collections.FXCollections;
@@ -33,6 +34,7 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 
@@ -95,7 +97,10 @@ public class ResultScene {
 		
 		BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(10, 20, 10, 20));
-		
+		HBox headerPane = NavigationBar.getHeaderPane(RESULT, primaryStage);
+		headerPane.setPadding(new Insets(0, 0, 15, 0));
+		headerPane.setSpacing(375);
+		bp.setTop(headerPane);
 		bp.setBottom(buttonExportPdf);
 		ResultScene resultScenePaginate=new ResultScene();
 		
