@@ -23,6 +23,7 @@ import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
+import com.neu.msd.AuthorRetriever.util.ConferenceUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
@@ -105,12 +106,13 @@ public class SearchScene {
 		TextField confName = new TextField();
 		confName.setPromptText("Conference name");
 		
-		final ObservableList<String> strings = FXCollections.observableArrayList();
-		strings.add("OOPSLA");
-		strings.add("ACM");
+		final ObservableList<String> conferenceList = FXCollections.observableArrayList();
+		ConferenceUtil.getConferences().forEach((conference) -> {
+			conferenceList.add(conference);
+		});
 
 		 // Create the CheckComboBox with the data 
-		final CheckComboBox<String> checkComboBox = new CheckComboBox<String>(strings);
+		final CheckComboBox<String> checkComboBox = new CheckComboBox<String>(conferenceList);
 		grid2.add(checkComboBox, 2, 4);
 		 
 		checkComboBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
