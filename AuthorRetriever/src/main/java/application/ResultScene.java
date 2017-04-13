@@ -38,7 +38,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.util.Callback;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.*;
-
+import javafx.beans.property.*;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
@@ -59,7 +59,7 @@ public class ResultScene {
         
 		table.setEditable(false);
 		ObservableList<Author> authorData = FXCollections.observableArrayList(authorList);
-        TableColumn srNo = new TableColumn("Sr. No.");
+        TableColumn<Author,Number> srNo = new TableColumn("#");
         TableColumn author = new TableColumn("Author");
         //TableColumn editColumn = new TableColumn("AuthorInformation");
         //editColumn.setCellValueFactory(new PropertyValueFactory<Author,Hyperlink>("authorKey"));
@@ -67,12 +67,13 @@ public class ResultScene {
         PropertyValueFactory<Author,Hyperlink> rmbutton = new PropertyValueFactory<Author,Hyperlink>("name");
         author.setCellValueFactory(rmbutton);
         srNo.setCellValueFactory(new PropertyValueFactory<>("authorId"));
-
+        srNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
+      
         TableColumn authorColumn = new TableColumn("AuthorInfo");
-        
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("affiliation"));
         //table.setItems(authorData);
         table.getColumns().addAll(srNo, author, authorColumn);
-        
+       
         ColumnConstraints col1Constraints = new ColumnConstraints();
         col1Constraints.setPercentWidth(5);
         ColumnConstraints col2Constraints = new ColumnConstraints();
