@@ -1,12 +1,20 @@
 package application;
 
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.controlsfx.control.CheckComboBox;
+
 import com.neu.msd.AuthorRetriever.constants.PositionAlias;
-import com.neu.msd.AuthorRetriever.constants.SceneContants;
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
@@ -22,6 +30,7 @@ import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -37,22 +46,14 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.BorderPane;
-
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import javafx.collections.ListChangeListener.Change;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
@@ -103,7 +104,31 @@ public class SearchScene {
 		
 		TextField confName = new TextField();
 		confName.setPromptText("Conference name");
-		grid2.add(confName, 2, 4);
+		
+		final ObservableList<String> strings = FXCollections.observableArrayList();
+		 strings.add("OOPSLA");
+		 strings.add("ACM");
+
+		 // Create the CheckComboBox with the data 
+		 final CheckComboBox<String> checkComboBox = new CheckComboBox<String>(strings);
+
+		 grid2.add(checkComboBox, 2, 4);
+		 // and listen to the relevant events (e.g. when the selected indices or 
+		 // selected items change).
+		 
+		 checkComboBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
+				// TODO Auto-generated method stub
+				System.out.println(checkComboBox.getCheckModel().getCheckedItems());
+			}
+
+			
+		
+		 });
+		
+		
 		
 		Label yearRange = new Label("Year range:");
 		grid2.add(yearRange, 0, 5);
