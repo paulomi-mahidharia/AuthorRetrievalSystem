@@ -45,6 +45,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.BorderPane;
 
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
@@ -66,8 +67,8 @@ public class SearchScene {
 		
 		SearchCriteria searchCriteria = new SearchCriteria();
 		
-		HBox titleHbox = NavigationBar.getHeaderPane(SEARCH, primaryStage);
-		grid2.add(titleHbox, 0, 0, 3, 1);
+		BorderPane titleHbox = NavigationBar.getHeaderPane(SEARCH, primaryStage);
+		grid2.add(titleHbox, 0, 0, 4, 1);
 		
 		CheckBox paperCheck = new CheckBox("Search based on paper information");
 		paperCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));

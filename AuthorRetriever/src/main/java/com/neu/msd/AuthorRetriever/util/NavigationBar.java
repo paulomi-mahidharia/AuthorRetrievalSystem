@@ -1,10 +1,15 @@
 package com.neu.msd.AuthorRetriever.util;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT_TITLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_TITLE;
+
 import application.LoginScene;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -12,22 +17,18 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_TITLE;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT_TITLE;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
+import javafx.scene.layout.BorderPane;
 
 @SuppressWarnings("restriction")
 public final class NavigationBar {
 	
-	public static HBox getHeaderPane(String view, Stage primaryStage){
+	public static BorderPane getHeaderPane(String view, Stage primaryStage){
 		
-		HBox hbox = new HBox();
+		//HBox hbox = new HBox();
 		
-		hbox.setSpacing(300);
+		//hbox.setSpacing(300);
+		
+		BorderPane bp = new BorderPane();
 		
 		Button btnBack = new Button("Back");
 		
@@ -58,8 +59,11 @@ public final class NavigationBar {
 		if(view.equals(SEARCH))
 			btnBack.setDisable(true);
 			
-		hbox.getChildren().addAll(btnBack, scenetitle, btnLogout);
-		return hbox;
+		bp.setLeft(btnBack);
+		bp.setCenter(scenetitle);
+		bp.setRight(btnLogout);
+		//hbox.getChildren().addAll(btnBack, scenetitle, btnLogout);
+		return bp;
 	}
 
 	private static Text getSceneTitle(String view) {

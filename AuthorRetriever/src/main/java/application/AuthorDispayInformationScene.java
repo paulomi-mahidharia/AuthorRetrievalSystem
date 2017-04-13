@@ -36,6 +36,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
 
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
@@ -56,8 +57,7 @@ public class AuthorDispayInformationScene {
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
 		
-		HBox headerPane = NavigationBar.getHeaderPane(AUTHOR, primaryStage);
-		headerPane.setSpacing(250);		
+		BorderPane headerPane = NavigationBar.getHeaderPane(AUTHOR, primaryStage);
 		grid.add(headerPane, 1, 0);
 		AuthorInfoService authorInfoService=new AuthorInfoServiceImpl();
 		List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(selectedAuthor.getAuthorId());

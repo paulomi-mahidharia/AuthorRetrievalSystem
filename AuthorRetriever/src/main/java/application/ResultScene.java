@@ -112,10 +112,9 @@ public class ResultScene {
 		});
 		
 		BorderPane bp = new BorderPane();
-		bp.setPadding(new Insets(10, 20, 10, 20));
-		HBox headerPane = NavigationBar.getHeaderPane(RESULT, primaryStage);
+		bp.setPadding(new Insets(25, 25, 25, 25));
+		BorderPane headerPane = NavigationBar.getHeaderPane(RESULT, primaryStage);
 		headerPane.setPadding(new Insets(0, 0, 15, 0));
-		headerPane.setSpacing(375);
 		bp.setTop(headerPane);
 		bp.setBottom(buttonExportPdf);
 		ResultScene resultScenePaginate=new ResultScene();
