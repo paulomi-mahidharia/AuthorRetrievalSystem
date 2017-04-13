@@ -14,6 +14,7 @@ import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
+import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 
@@ -42,6 +43,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.layout.HBox;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
@@ -56,10 +58,12 @@ public class SearchScene {
 		
 		SearchCriteria searchCriteria = new SearchCriteria();
 		
-		Text scenetitle = new Text("SEARCH AUTHORS");
+		/*Text scenetitle = new Text("SEARCH AUTHORS");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
-		scenetitle.setFill(Color.FIREBRICK);
-		grid2.add(scenetitle, 0, 0);
+		scenetitle.setFill(Color.FIREBRICK);*/
+		
+		HBox titleHbox = NavigationBar.getHeaderPane();
+		grid2.add(titleHbox, 0, 0, 3, 1);
 		
 		CheckBox paperCheck = new CheckBox("Search based on paper information");
 		paperCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
