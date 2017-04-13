@@ -1,5 +1,6 @@
 package application;
 
+import com.neu.msd.AuthorRetriever.model.User;
 import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 
@@ -20,21 +21,17 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
-
-
-@SuppressWarnings({"restriction"})
-public class LoginScene {
-	
-	public static void displayLoginScene(Stage primaryStage){
+public class RegistrationScene {
+	public static void  getRegisterScene(Stage primaryStage){
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
-				
-		Text scenetitle = new Text("Welcome!");
+		
+		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		
+		Text scenetitle = new Text("Registration Page!");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(scenetitle, 0, 0, 2, 1);
 
@@ -52,26 +49,21 @@ public class LoginScene {
 		pwBox.setPromptText("Enter password");
 		grid.add(pwBox, 1, 2);
 		
-		Button btn = new Button("Sign in");
-		Button btnRegister = new Button("Register");
+		Label reEnterpw = new Label("Re-Enter Password:");
+		grid.add(reEnterpw, 0, 3);
+
+		PasswordField renterpwBox = new PasswordField();
+		renterpwBox.setPromptText("Re-Enter password");
+		grid.add(renterpwBox, 1, 3);
+
+		Button btn = new Button("Register");
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().addAll(btn,btnRegister);
+		hbBtn.getChildren().add(btn);
 		grid.add(hbBtn, 1, 4);
 		
 		final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
-       
-        btnRegister.setOnAction(new EventHandler<ActionEvent>() {
-       	 
-            @Override
-            public void handle(ActionEvent e) {
-            	System.out.println("Yo!!!");
-                RegistrationScene.getRegisterScene(primaryStage) ;		
-            	
-            }
-        });
-        
         
         btn.setOnAction(new EventHandler<ActionEvent>() {
         	 
@@ -80,21 +72,32 @@ public class LoginScene {
                 
             	String username = userTextField.getText();
             	String password = pwBox.getText();
-            	
+            	String renterpassword=renterpwBox.getText();
             	UserService user = new UserServiceImpl();
-            	Boolean isLoginSuccessful = user.login(username, password);
-            	System.out.println(isLoginSuccessful);
-            	if(isLoginSuccessful){
-    		        SearchScene.displaySearchScene(primaryStage); 		
-            	}else{
+            	
+            	
+            	
+            	
+            	if (password.equals(renterpassword)){
+            		User userObject= new User(username,password);
+            		Boolean isLoginSuccessful = user.registerUser(userObject);
+            		if(isLoginSuccessful){
+            			SearchScene.displaySearchScene(primaryStage); 		
+            		}else{
+            			actiontarget.setFill(Color.FIREBRICK);
+            			actiontarget.setText("Invalid credentials!");
+            		}
+            	}
+            	else{
             		actiontarget.setFill(Color.FIREBRICK);
-	                actiontarget.setText("Invalid credentials!");
+        			actiontarget.setText("Password and Renter Password  do not match!");
             	}
             }
         });
         
-        Scene scene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Scene registerScene = new Scene(grid, 1000, 1000, Color.BEIGE);
+		primaryStage.setScene(registerScene);
+		primaryStage.show();
+		
 	}
 }

@@ -16,7 +16,7 @@ public class CsRankingsParser {
 	public static void main(String[] args) throws SQLException {
 		
 		// Please update the path for your Faculty Affiliation CSV file here.
-		String filepath = "/Users/aswingopalan/Desktop/MSDCode/faculty.csv";
+		String filepath = "faculty.csv";
 		
 		List<String> linesFromFile = loadLinesFromFile(filepath);
 		// Convert the list to an Array of Strings.

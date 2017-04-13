@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.model.User;
 
 public class UserDaoImpl implements UserDao {
 
@@ -59,5 +60,23 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		return authorList;
+	}
+
+	@Override
+	public int registerUser(String queryString,User user) {
+		// TODO Auto-generated method stub
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = conn.prepareStatement(queryString);
+			preparedStatement.setString(1, user.getUsername());
+			preparedStatement.setString(2, user.getPassword());
+			preparedStatement .executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return 1;
 	}
 }

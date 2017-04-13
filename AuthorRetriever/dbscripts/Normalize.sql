@@ -149,6 +149,9 @@ ON paper (paper_key);
 CREATE INDEX paper_key_index
 ON author_paper_mapping (paper_key);
 
+CREATE INDEX paper_id_index
+ON author_paper_mapping (paper_id);
+
 -- Author paper mapping update with the correct paper id
 update author_paper_mapping apm
 join paper p on apm.paper_key = p.paper_key

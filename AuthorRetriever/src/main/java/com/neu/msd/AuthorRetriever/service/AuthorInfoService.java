@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.AuthorPaper;
+import com.neu.msd.AuthorRetriever.model.Conference;
 
 /**
  * This service declares the functions related to an author
@@ -21,5 +22,7 @@ public interface AuthorInfoService {
 	public Author getAuthorProfile(int authorId);
 	
 	public List<AuthorPaper> getAuthorPapers(int authorId) throws SQLException;
+	
+	public List<Conference> getAuthorConferenceServed(int authorId) throws SQLException;
 	
 }

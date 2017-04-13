@@ -3,6 +3,7 @@ package com.neu.msd.AuthorRetriever.service;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.model.User;
 
 public interface UserService {
 	/**
@@ -19,5 +20,8 @@ public interface UserService {
 	public void addSelectedAuthors(List<Author> authors);
 	
 	public List<Author> getAllAuthorsForUser();
+	
+	public boolean registerUser(User user);
+	
 
 }

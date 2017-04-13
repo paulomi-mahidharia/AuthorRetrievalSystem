@@ -1,11 +1,11 @@
 package com.neu.msd.AuthorRetriever.service;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.neu.msd.AuthorRetriever.dao.SearchSimilarAuthorsDao;
 import com.neu.msd.AuthorRetriever.dao.SearchSimilarAuthorsDaoImpl;
@@ -27,9 +27,20 @@ public class SearchSimilarProfileServiceImpl implements SearchSimilarProfileServ
 		String query2EditorQuery = "SELECT editorId FROM conference_editor_mapping WHERE confId IN (" + query2Editor + ")";
 		String query2AuthorQuery = java.text.MessageFormat.format("SELECT Author_Id FROM editor where Id IN (" + query2EditorQuery + ")" +  " AND editor.Author_Id <> {0}",Long.toString(author.getAuthorId()));
 		
-		String finalQuery = "SELECT * FROM author where author.id IN (" + query1AuthorQuery + " UNION " + query2AuthorQuery +")";
+		//String finalQuery = "SELECT * FROM author where author.id IN (" + query1AuthorQuery + " UNION " + query2AuthorQuery +")";
 		
-		return searchdao.searchSimilarAuthors(finalQuery);
+		String paperQuery = "SELECT * FROM author where author.id IN (" + query1AuthorQuery+")";
+		String editorQuery = "SELECT * FROM author where author.id IN (" + query2AuthorQuery+")";
+		
+		List<Author> l1 = searchdao.searchSimilarAuthors(paperQuery);
+		List<Author> l2 = searchdao.searchSimilarAuthors(editorQuery);
+		
+		Set<Author> finalList = new HashSet<Author>();
+		finalList.addAll(l1);
+		finalList.addAll(l2);
+		
+		
+		return new ArrayList<Author>(finalList);
 
 	}
 

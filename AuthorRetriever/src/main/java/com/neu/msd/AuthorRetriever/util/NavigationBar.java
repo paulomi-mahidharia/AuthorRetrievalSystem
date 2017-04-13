@@ -34,15 +34,8 @@ public final class NavigationBar {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				
-				if(view.equals(SEARCH)){
-					Scene loginScene = LoginScene.getLoginScene(primaryStage);
-					primaryStage.setScene(loginScene);
-					primaryStage.show();
-				}else{
-					primaryStage.setScene(SceneStack.getSceneAtTopOfStack());
-					primaryStage.show();
-				}
+				primaryStage.setScene(SceneStack.getSceneAtTopOfStack());
+				primaryStage.show();	
 			}
 		});
 		
@@ -55,21 +48,14 @@ public final class NavigationBar {
 			@Override
 			public void handle(ActionEvent event) {
 				// TODO Auto-generated method stub
-				Scene loginScene = LoginScene.getLoginScene(primaryStage);
-				primaryStage.setScene(loginScene);
-				primaryStage.show();
+				LoginScene.displayLoginScene(primaryStage);
+				SceneStack.flushSceneStack();
 			}
 		});
 		
-		if(view.equals(SEARCH)){
-			//return getHBoxForSearchScene();
+		if(view.equals(SEARCH))
 			btnBack.setDisable(true);
-			//hbox.getChildren().addAll(btnBack, scenetitle, btnLogout);
-		}else{
-			//hbox.getChildren().addAll(btnBack, scenetitle, btnLogout);
-			//return getHBoxForOtherScenes();
-		}
-		
+			
 		hbox.getChildren().addAll(btnBack, scenetitle, btnLogout);
 		return hbox;
 	}
