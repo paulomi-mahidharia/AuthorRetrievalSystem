@@ -11,10 +11,10 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Scene loginScene = LoginScene.getLoginScene(primaryStage);
-			primaryStage.setScene(loginScene);
-			primaryStage.show();
-
+			LoginScene.displayLoginScene(primaryStage);
+			//primaryStage.setScene(loginScene);
+			//primaryStage.show();
+			
 			SceneStack.createSceneStack();
 		} catch(Exception e) {
 			e.printStackTrace();

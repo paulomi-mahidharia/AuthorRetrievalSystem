@@ -20,18 +20,20 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+
+
 @SuppressWarnings({"restriction"})
 public class LoginScene {
 	
-	public static Scene getLoginScene(Stage primaryStage){
+	public static void displayLoginScene(Stage primaryStage){
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);
 		grid.setVgap(10);
 		grid.setPadding(new Insets(25, 25, 25, 25));
-		Scene scene = new Scene(grid,1000,1000, Color.BEIGE);
-		//scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
+				
 		Text scenetitle = new Text("Welcome!");
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		grid.add(scenetitle, 0, 0, 2, 1);
@@ -91,6 +93,8 @@ public class LoginScene {
             }
         });
         
-        return scene;
+        Scene scene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
+        primaryStage.setScene(scene);
+        primaryStage.show();
 	}
 }
