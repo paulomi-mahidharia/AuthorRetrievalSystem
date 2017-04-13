@@ -15,8 +15,10 @@ import javafx.stage.Stage;
 
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT_TITLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
 
 @SuppressWarnings("restriction")
 public final class NavigationBar {
@@ -73,6 +75,10 @@ public final class NavigationBar {
 		
 		case RESULT:
 			scenetitle = new Text(RESULT_TITLE);
+			break;
+			
+		case AUTHOR:
+			scenetitle = new Text(AUTHOR_TITLE);
 			break;
 		}
 		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));

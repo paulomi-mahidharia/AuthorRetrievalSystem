@@ -14,6 +14,7 @@ import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileService;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
+import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.collections.FXCollections;
@@ -36,6 +37,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
 public class AuthorDispayInformationScene {
 	
@@ -47,11 +52,11 @@ public class AuthorDispayInformationScene {
 		grid.setAlignment(Pos.TOP_LEFT);
 		grid.setHgap(10);
 		grid.setVgap(10);
-		grid.setPadding(new Insets(0, 10, 0, 10));
-		Text scenetitle = new Text("Author Profile");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
-		scenetitle.setFill(Color.FIREBRICK);
-		grid.add(scenetitle, 1, 0);
+		grid.setPadding(new Insets(25, 25, 25, 25));
+		
+		HBox headerPane = NavigationBar.getHeaderPane(AUTHOR, primaryStage);
+		headerPane.setSpacing(250);		
+		grid.add(headerPane, 1, 0);
 		AuthorInfoService authorInfoService=new AuthorInfoServiceImpl();
 		List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(selectedAuthor.getAuthorId());
 		List<Conference>conferences=authorInfoService.getAuthorConferenceServed(selectedAuthor.getAuthorId());
@@ -95,7 +100,7 @@ public class AuthorDispayInformationScene {
 		hbBtn1.getChildren().add(btn1);
 		grid.add(hbBtn1, 1, 17);
 		
-		Scene authorDispalyScene = new Scene(grid, 1000, 1000, Color.BEIGE);
+		Scene authorDispalyScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(authorDispalyScene);
 		primaryStage.show();
 		
