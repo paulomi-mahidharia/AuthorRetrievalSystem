@@ -159,7 +159,7 @@ public class AuthorScene {
         
         
         table.getColumns().addAll(conferenceId, year, name,title);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setItems(confInfoData);
 		
         return table;
@@ -181,7 +181,7 @@ public class AuthorScene {
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
         
         table.getColumns().addAll(paperId, confName, paperTitle,year,url);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        //table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         table.setItems(paperInfoData);
 		

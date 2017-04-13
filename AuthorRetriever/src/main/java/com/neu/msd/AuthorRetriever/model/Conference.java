@@ -7,6 +7,7 @@ public class Conference {
 	private String conferenceKey;
 	private String name;
 	private String title;
+	private String isbn;
 	
 	public int getConferenceId() {
 		return conferenceId;
@@ -37,6 +38,13 @@ public class Conference {
 	}
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	public String getIsbn() {
+		return isbn;
+	}
+	public void setIsbn(String isbn) {
+		this.isbn = isbn;
 	}
 	
 }
