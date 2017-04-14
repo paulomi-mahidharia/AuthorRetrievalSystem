@@ -80,8 +80,12 @@ public class SearchServiceImpl implements SearchService {
 		if(paper.getConferenceName() !=null && !paper.getConferenceName().isEmpty()){
 			StringBuilder confNameString = new StringBuilder();
 			String[] confNames = paper.getConferenceName().split(",");
-			for(String x: confNames){
-				confNameString.append("'"+x.trim()+"'");
+			for(int i = 0; i< confNames.length; i++){
+				confNameString.append("'"+confNames[i].trim()+"'");
+				if(i != confNames.length - 1){
+					confNameString.append(",");
+				}
+				
 			}
 			conditions.add(PublicationUtil.publicationQuery("paper", confNameString.toString(), paper.isPublished()));
 		}
