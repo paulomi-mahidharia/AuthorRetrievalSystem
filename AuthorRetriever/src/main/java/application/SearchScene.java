@@ -120,7 +120,7 @@ public class SearchScene {
 			@Override
 			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
 				// TODO Auto-generated method stub
-				System.out.println(checkComboBox.getCheckModel().getCheckedItems());
+				System.out.println("checkComboBox"+checkComboBox.getCheckModel().getCheckedItems());
 			}
 		});
 
@@ -245,9 +245,20 @@ public class SearchScene {
 			}
 		});
 		
-		TextField confNameServedIn = new TextField();
-		confNameServedIn.setPromptText("Conference name");
-		grid2.add(confNameServedIn, 2, 9);
+		/*TextField confNameServedIn = new TextField();
+		confNameServedIn.setPromptText("Conference name");*/
+		final CheckComboBox<String> checkConfServedBox = new CheckComboBox<String>(conferenceList);
+		 
+		checkConfServedBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
+				// TODO Auto-generated method stub
+				System.out.println("checkConfServedBox"+checkConfServedBox.getCheckModel().getCheckedItems());
+			}
+		});
+		
+		grid2.add(checkConfServedBox, 2, 9);
 		
 		Label yearRangeServed = new Label("Year range:");
 		grid2.add(yearRangeServed, 0, 10);
@@ -371,7 +382,10 @@ public class SearchScene {
             		}
             		
             		if(serviceCheck.isSelected()){
-            			String isServiceInfoValid = SearchSceneValidation.validateServiceInformation(confNameServedIn,
+            			
+            			String conferenceServedSelection = checkConfServedBox.getCheckModel().getCheckedItems().toString();
+
+            			String isServiceInfoValid = SearchSceneValidation.validateServiceInformation(conferenceServedSelection.substring(1, conferenceServedSelection.length() - 1),
 														yearRangeServedComboBox,
 														fromYearServed,
 														toYearServed);
@@ -382,7 +396,7 @@ public class SearchScene {
             			}else{
             				//set paper info bean
             				serviceInfo = setServiceInformation(serveComboBox,
-        														confNameServedIn,
+            													conferenceServedSelection.substring(1, conferenceServedSelection.length() - 1),
         														positionComboBox,
 																yearRangeServedComboBox,
 																fromYearServed,
@@ -470,7 +484,7 @@ public class SearchScene {
 	}	
 	
 	public static ServiceInfo setServiceInformation(ComboBox serveComboBox,
-													TextField confNameServedIn,
+													String confNameServedIn,
 													ComboBox positionComboBox,
 													ComboBox yearRangeServedComboBox,
 													TextField fromYearServed,
@@ -486,7 +500,7 @@ public class SearchScene {
 		}
 		
 		//Set conference name
-		serviceInfo.setConferenceName(confNameServedIn.getText());
+		serviceInfo.setConferenceName(confNameServedIn);
 		
 		//set options
 		serviceInfo.setOptions(yearRangeServedComboBox.getValue().toString());

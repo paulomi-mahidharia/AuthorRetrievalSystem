@@ -63,11 +63,11 @@ public class SearchSceneValidation {
 		}
 		
 		// Validate conference name
-		if(!confName.isEmpty()){
+		/*if(!confName.isEmpty()){
 			if(!isStringValid(confName)){
 				return ValidationConstants.INVALID_CONFERENCE_NAME;
 			}
-		}
+		}*/
 		
 		// Validate Keyword name
 //		if(!keyword.getText().isEmpty()){
@@ -89,17 +89,17 @@ public class SearchSceneValidation {
 		return ValidationConstants.VALID_PAPER_CRITERIA;
 	}
 	
-	public static String validateServiceInformation(TextField confNameServedIn, 
+	public static String validateServiceInformation(String confNameServedIn, 
 													ComboBox yearRangeServedComboBox, 
 													TextField fromYearServed, 
 													TextField toYearServed) {
 		
 		// Validate conference name
-		if(!confNameServedIn.getText().isEmpty()){
-			if(!isStringValid(confNameServedIn.getText())){
+		/*if(!confNameServedIn.isEmpty()){
+			if(!isStringValid(confNameServedIn)){
 				return ValidationConstants.INVALID_CONFERENCE_NAME;
 			}
-		}
+		}*/
 		
 		//Validate date
 		if(!fromYearServed.getText().isEmpty() || !toYearServed.getText().isEmpty()){
