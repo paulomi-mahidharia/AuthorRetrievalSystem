@@ -26,7 +26,8 @@ public class UserServiceImpl implements UserService {
 		loggedInUser = userDao.login(username, password, queryString);
 		return (loggedInUser != 0);
 	}
-
+	
+	
 	public void addSelectedAuthors(List<Author> authors) {
 		// TODO Auto-generated method stub
 		try {
@@ -39,7 +40,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public List<Author> getAllAuthorsForUser() {
-		String queryString = "select UserId, Password from UserCredentials where username=?";
+		String queryString = "select author.* from author where id in (select Author_Id from selected_authors where user_Id = ?)";
 		return userDao.getAuthorsForUser(loggedInUser, queryString);
 	}
 
@@ -58,5 +59,14 @@ public class UserServiceImpl implements UserService {
 			return (loggedInUser != 0);
 		}
 		return false;
+	}
+
+	@Override
+	public boolean deleteSelectedAuthor(int authorId) {
+		// TODO Auto-generated method stub
+		String queryString="Delete from selected_authors where author_Id= ? and user_id = ?";
+		
+		return userDao.deleteSelectedAuthor(loggedInUser, authorId, queryString);
+		
 	}
 }

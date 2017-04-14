@@ -23,5 +23,7 @@ public interface UserService {
 	
 	public boolean registerUser(User user);
 	
+	public boolean deleteSelectedAuthor(int authorId);
+	
 
 }

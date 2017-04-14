@@ -14,6 +14,7 @@ import com.neu.msd.AuthorRetriever.model.SearchCriteria;
 import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
+import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
@@ -300,14 +301,27 @@ public class SearchScene {
 		grid2.add(positionComboBox, 1, 11);
 		
 		Button btn = new Button(SEARCH_AUTHORS);
+		Button btnShortList = new Button("List ShortList Author");
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().add(btn);
+		hbBtn.getChildren().addAll(btn,btnShortList);
 		grid2.add(hbBtn, 1, 12);
+		
 		
 		Scene searchScene = new Scene(grid2, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(searchScene);
 		primaryStage.show();
+		
+		
+		btnShortList.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				SceneStack.pushSceneToStack(searchScene);
+				ShortListAuthor.displayShortListAuthor(primaryStage);
+			}	
+		});
+
 		
 		btn.setOnAction(new EventHandler<ActionEvent>() {
        	 

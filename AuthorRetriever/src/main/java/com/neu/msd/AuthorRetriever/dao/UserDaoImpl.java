@@ -43,10 +43,12 @@ public class UserDaoImpl implements UserDao {
 		PreparedStatement stmt;
 		List<Author> authorList = new ArrayList<Author>();
 		try {
+			System.out.println(userId);
 			stmt = conn.prepareStatement(queryString);
 			stmt.setInt(1, userId);
 
 			ResultSet rs = stmt.executeQuery();
+			
 			while (rs.next()) {
 				Author author = new Author();
 				author.setAuthorId(rs.getInt("Id"));
@@ -58,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		System.out.println(authorList.size());
 		return authorList;
 	}
 
@@ -78,5 +80,25 @@ public class UserDaoImpl implements UserDao {
 		}
 		
 		return 1;
+	}
+
+	@Override
+	public boolean deleteSelectedAuthor(int userId, int authorId,String queryString) {
+		// TODO Auto-generated method stub
+		PreparedStatement preparedStatement;
+		try {
+			preparedStatement = conn.prepareStatement(queryString);
+			preparedStatement.setInt(1,authorId);
+			preparedStatement.setInt(2,userId);
+			System.out.println(preparedStatement.toString());
+			preparedStatement.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return true;
 	}
 }
