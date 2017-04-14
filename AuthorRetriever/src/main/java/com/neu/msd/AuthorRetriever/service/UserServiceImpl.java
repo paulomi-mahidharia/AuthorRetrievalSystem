@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public List<Author> getAllAuthorsForUser() {
-		String queryString = "select UserId, Password from UserCredentials where username=?";
+		String queryString = "select UserId, Author_Id from selected_authors";
 		return userDao.getAuthorsForUser(loggedInUser, queryString);
 	}
 
