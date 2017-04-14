@@ -1,12 +1,20 @@
 package application;
 
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.controlsfx.control.CheckComboBox;
+
 import com.neu.msd.AuthorRetriever.constants.PositionAlias;
-import com.neu.msd.AuthorRetriever.constants.SceneContants;
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
@@ -15,6 +23,7 @@ import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
+import com.neu.msd.AuthorRetriever.util.ConferenceUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
@@ -22,6 +31,7 @@ import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -37,22 +47,14 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.BorderPane;
-
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import javafx.collections.ListChangeListener.Change;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
@@ -103,8 +105,25 @@ public class SearchScene {
 		
 		TextField confName = new TextField();
 		confName.setPromptText("Conference name");
-		grid2.add(confName, 2, 4);
 		
+		final ObservableList<String> conferenceList = FXCollections.observableArrayList();
+		ConferenceUtil.getConferences().forEach((conference) -> {
+			conferenceList.add(conference);
+		});
+
+		 // Create the CheckComboBox with the data 
+		final CheckComboBox<String> checkComboBox = new CheckComboBox<String>(conferenceList);
+		grid2.add(checkComboBox, 2, 4);
+		 
+		checkComboBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
+				// TODO Auto-generated method stub
+				System.out.println("checkComboBox"+checkComboBox.getCheckModel().getCheckedItems());
+			}
+		});
+
 		Label yearRange = new Label("Year range:");
 		grid2.add(yearRange, 0, 5);
 		
@@ -226,9 +245,20 @@ public class SearchScene {
 			}
 		});
 		
-		TextField confNameServedIn = new TextField();
-		confNameServedIn.setPromptText("Conference name");
-		grid2.add(confNameServedIn, 2, 9);
+		/*TextField confNameServedIn = new TextField();
+		confNameServedIn.setPromptText("Conference name");*/
+		final CheckComboBox<String> checkConfServedBox = new CheckComboBox<String>(conferenceList);
+		 
+		checkConfServedBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
+
+			@Override
+			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
+				// TODO Auto-generated method stub
+				System.out.println("checkConfServedBox"+checkConfServedBox.getCheckModel().getCheckedItems());
+			}
+		});
+		
+		grid2.add(checkConfServedBox, 2, 9);
 		
 		Label yearRangeServed = new Label("Year range:");
 		grid2.add(yearRangeServed, 0, 10);
@@ -325,8 +355,11 @@ public class SearchScene {
             		return;
             	}else{
             		if(paperCheck.isSelected()){
+            			
+            			String conferenceSelection = checkComboBox.getCheckModel().getCheckedItems().toString();
+            			
             			String isPaperInfoValid = SearchSceneValidation.validatePaperInfo(numberOfPapersField, 
-													confName,
+            										conferenceSelection.substring(1, conferenceSelection.length() - 1).trim(),
 													yearRangeComboBox,
 													fromYear,
 													toYear,
@@ -339,7 +372,7 @@ public class SearchScene {
             				//set paper info bean
             				paperInfo = setPaperInformation(numberOfPapersField, 
 															publishComboBox,
-															confName,
+															conferenceSelection.substring(1, conferenceSelection.length() - 1).trim(),
 															yearRangeComboBox,
 															fromYear,
 															toYear,
@@ -349,7 +382,10 @@ public class SearchScene {
             		}
             		
             		if(serviceCheck.isSelected()){
-            			String isServiceInfoValid = SearchSceneValidation.validateServiceInformation(confNameServedIn,
+            			
+            			String conferenceServedSelection = checkConfServedBox.getCheckModel().getCheckedItems().toString();
+
+            			String isServiceInfoValid = SearchSceneValidation.validateServiceInformation(conferenceServedSelection.substring(1, conferenceServedSelection.length() - 1),
 														yearRangeServedComboBox,
 														fromYearServed,
 														toYearServed);
@@ -360,7 +396,7 @@ public class SearchScene {
             			}else{
             				//set paper info bean
             				serviceInfo = setServiceInformation(serveComboBox,
-        														confNameServedIn,
+            													conferenceServedSelection.substring(1, conferenceServedSelection.length() - 1),
         														positionComboBox,
 																yearRangeServedComboBox,
 																fromYearServed,
@@ -400,7 +436,7 @@ public class SearchScene {
 		
 	public static Paper setPaperInformation(TextField numberOfPapersField,
 											ComboBox publishComboBox,
-											TextField confName,
+											String confName,
 											ComboBox yearRangeComboBox,
 											TextField fromYear,
 											TextField toYear,
@@ -421,7 +457,7 @@ public class SearchScene {
 		}
 		
 		//Set conference name
-		paperInfo.setConferenceName(confName.getText());
+		paperInfo.setConferenceName(confName);
 		
 		//Set date options
 		paperInfo.setOptions(yearRangeComboBox.getValue().toString());
@@ -448,7 +484,7 @@ public class SearchScene {
 	}	
 	
 	public static ServiceInfo setServiceInformation(ComboBox serveComboBox,
-													TextField confNameServedIn,
+													String confNameServedIn,
 													ComboBox positionComboBox,
 													ComboBox yearRangeServedComboBox,
 													TextField fromYearServed,
@@ -464,7 +500,7 @@ public class SearchScene {
 		}
 		
 		//Set conference name
-		serviceInfo.setConferenceName(confNameServedIn.getText());
+		serviceInfo.setConferenceName(confNameServedIn);
 		
 		//set options
 		serviceInfo.setOptions(yearRangeServedComboBox.getValue().toString());

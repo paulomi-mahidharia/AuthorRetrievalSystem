@@ -17,7 +17,7 @@ public class SearchSceneValidation {
 	}
 	
 	public static String validatePaperInfo(TextField numberOfPapersField,
-											TextField confName,
+											String confName,
 											ComboBox yearRangeComboBox,
 											TextField fromYear,
 											TextField toYear,
@@ -39,7 +39,7 @@ public class SearchSceneValidation {
 		
 		
 		// Validate date if everything else is empty
-		if(numberOfPapersField.getText().isEmpty() && keyword.getText().isEmpty() && confName.getText().isEmpty()){
+		if(numberOfPapersField.getText().isEmpty() && keyword.getText().isEmpty() && confName.isEmpty()){
 			
 				// if dates are also not present return invalid paper criteria
 				if(fromYear.getText() == "0" && toYear.getText() == "0"){
@@ -63,11 +63,11 @@ public class SearchSceneValidation {
 		}
 		
 		// Validate conference name
-		if(!confName.getText().isEmpty()){
-			if(!isStringValid(confName.getText())){
+		/*if(!confName.isEmpty()){
+			if(!isStringValid(confName)){
 				return ValidationConstants.INVALID_CONFERENCE_NAME;
 			}
-		}
+		}*/
 		
 		// Validate Keyword name
 //		if(!keyword.getText().isEmpty()){
@@ -89,17 +89,17 @@ public class SearchSceneValidation {
 		return ValidationConstants.VALID_PAPER_CRITERIA;
 	}
 	
-	public static String validateServiceInformation(TextField confNameServedIn, 
+	public static String validateServiceInformation(String confNameServedIn, 
 													ComboBox yearRangeServedComboBox, 
 													TextField fromYearServed, 
 													TextField toYearServed) {
 		
 		// Validate conference name
-		if(!confNameServedIn.getText().isEmpty()){
-			if(!isStringValid(confNameServedIn.getText())){
+		/*if(!confNameServedIn.isEmpty()){
+			if(!isStringValid(confNameServedIn)){
 				return ValidationConstants.INVALID_CONFERENCE_NAME;
 			}
-		}
+		}*/
 		
 		//Validate date
 		if(!fromYearServed.getText().isEmpty() || !toYearServed.getText().isEmpty()){

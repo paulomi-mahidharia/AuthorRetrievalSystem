@@ -78,7 +78,16 @@ public class SearchServiceImpl implements SearchService {
 		List<String> conditions = new ArrayList<String>();
 		
 		if(paper.getConferenceName() !=null && !paper.getConferenceName().isEmpty()){
-			conditions.add(PublicationUtil.publicationQuery("paper", paper.getConferenceName(), paper.isPublished()));
+			StringBuilder confNameString = new StringBuilder();
+			String[] confNames = paper.getConferenceName().split(",");
+			for(int i = 0; i< confNames.length; i++){
+				confNameString.append("'"+confNames[i].trim()+"'");
+				if(i != confNames.length - 1){
+					confNameString.append(",");
+				}
+				
+			}
+			conditions.add(PublicationUtil.publicationQuery("paper", confNameString.toString(), paper.isPublished()));
 		}
 
 		if(paper.getKeyword() !=null && !paper.getKeyword().isEmpty()){
@@ -112,7 +121,16 @@ public class SearchServiceImpl implements SearchService {
 		List<String> conditions = new ArrayList<String>();
 		
 		if(serviceInfo.getConferenceName() !=null && !serviceInfo.getConferenceName().isEmpty()){
-			conditions.add(PublicationUtil.conferenceQuery("conference", serviceInfo.getConferenceName(), serviceInfo.isHasServed()));
+			StringBuilder confNameString = new StringBuilder();
+			String[] confNames = serviceInfo.getConferenceName().split(",");
+			for(int i = 0; i< confNames.length; i++){
+				confNameString.append("'"+confNames[i].trim()+"'");
+				if(i != confNames.length - 1){
+					confNameString.append(",");
+				}
+				
+			}
+			conditions.add(PublicationUtil.conferenceQuery("conference", confNameString.toString(), serviceInfo.isHasServed()));
 		}
 		
 		/*if(serviceInfo.getPosition() !=null && !serviceInfo.getPosition().isEmpty()){

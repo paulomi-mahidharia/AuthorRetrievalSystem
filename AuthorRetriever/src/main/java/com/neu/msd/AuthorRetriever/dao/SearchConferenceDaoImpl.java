@@ -30,7 +30,22 @@ public class SearchConferenceDaoImpl implements SearchConferenceDao {
 			c.setTitle(rs.getString(3));
 			c.setIsbn(rs.getString(4));
 			c.setYear(Integer.parseInt(rs.getString(5)));
+			confs.add(c);
+		}
+		return confs;
+	}
+	
+	@Override
+	public List<Conference> retrieveDistinctConf(String queryString) throws SQLException {
+		System.out.println(queryString);
+		PreparedStatement stmt = conn.prepareStatement(queryString);
+		ResultSet rs = stmt.executeQuery();
+		stmt.setQueryTimeout(300);
 
+		List<Conference> confs = new ArrayList<Conference>();
+		while (rs.next()) {
+			Conference c = new Conference();
+			c.setName(rs.getString(1));
 			confs.add(c);
 		}
 		return confs;
