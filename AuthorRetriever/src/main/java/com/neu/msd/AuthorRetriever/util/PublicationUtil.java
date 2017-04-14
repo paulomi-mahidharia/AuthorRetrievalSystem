@@ -11,6 +11,6 @@ public class PublicationUtil {
 	public static String conferenceQuery(String tableName, String conference, boolean isPublished) {
 
 		String constraint = isPublished ? "IN" : "NOT IN";
-		return tableName + ".name " + constraint + " ('" + conference + "')";
+		return tableName + ".name " + constraint + " (" + conference + ")";
 	}
 }
