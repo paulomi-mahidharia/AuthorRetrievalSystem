@@ -14,9 +14,9 @@ public class ConferenceServiceImpl implements ConferenceService {
 	@Override
 	public List<Conference> retrieveAllConferences() throws SQLException {
 		
-		String queryString = "SELECT DISTINCT name from conference";
+		String queryString = "SELECT DISTINCT name FROM conference";
 		
-		List<Conference> conferences = searchConfDao.retrieveConference(queryString);
+		List<Conference> conferences = searchConfDao.retrieveDistinctConf(queryString);
 		
 		return conferences;
 		
