@@ -35,6 +35,25 @@ public class TestSearchAuthorService extends TestCase {
 	}
 	
 	@Test
+	public void testSearchAuthorValidCriteria2(){
+		SearchService searchService = Mockito.mock(SearchService.class);
+		searchService = new SearchServiceImpl();
+		
+		Paper paperInfo = new Paper(2, true, "ecoop", true, "between", 2000, 2011, "Towards");
+		
+		SearchCriteria searchCritria = new SearchCriteria(paperInfo, null, true, "soph");
+		List<Author> authors = null;
+		try {
+			authors = searchService.searchAuthorsByCriteria(searchCritria);
+			assertTrue(authors.size() > 0);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			assertNull(authors);
+		}
+	}
+	
+	@Test
 	public void testSearchAuthorInvalidCriteria(){
 		SearchService searchService = Mockito.mock(SearchService.class);
 		searchService = new SearchServiceImpl();

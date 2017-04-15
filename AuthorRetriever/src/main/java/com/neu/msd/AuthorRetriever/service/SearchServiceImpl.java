@@ -30,8 +30,13 @@ public class SearchServiceImpl implements SearchService {
 		if(criteria.getPaperInfo() != null){
 			String paperQuery = "SELECT author_paper_mapping.Author_Id FROM author_paper_mapping INNER JOIN paper on author_paper_mapping.Paper_Id = paper.paper_id";
 			paperQuery += buildPaperQuery(paperQuery, criteria.getPaperInfo());
-			// Limiting to 100 Rows for now. 
-			String authorPaperQuery = "SELECT author.* FROM author WHERE Id IN (" + paperQuery + ")";
+			
+			String authorNameCondition = "";
+			if(criteria.getAuthorName() !=null && !criteria.getAuthorName().isEmpty()){
+				authorNameCondition = buildAuthorNameCondition(criteria.getAuthorName());
+			}
+			
+			String authorPaperQuery = "SELECT author.* FROM author WHERE Id IN (" + paperQuery + ")" + authorNameCondition;
 			paperAuthors = searchDao.searchAuthorsByCriteria(authorPaperQuery);
 		}
 
@@ -45,11 +50,24 @@ public class SearchServiceImpl implements SearchService {
 				positionCondition = " AND " + CriteriaUtil.equalCriteriaQuery("editor", "position", criteria.getServiceInfo().getPosition());
 			}
 			
-			String authConfQuery = "SELECT author.* from author WHERE Id IN (SELECT editor.Author_Id from editor WHERE editor.id IN ("+ editorQuery +")" + positionCondition +")";
+			String authorNameCondition = "";
+			if(criteria.getAuthorName() !=null && !criteria.getAuthorName().isEmpty()){
+				authorNameCondition = buildAuthorNameCondition(criteria.getAuthorName());
+			}
+			
+			String authConfQuery = "SELECT author.* from author WHERE Id IN (SELECT editor.Author_Id from editor WHERE editor.id IN ("+ editorQuery +")" + positionCondition +")" + authorNameCondition;
 			confAuthors = searchDao.searchAuthorsByCriteria(authConfQuery);
 		}
 		
 		List<Author> authors = processLists(paperAuthors, confAuthors, criteria);
+		
+		// if only author name is provided
+		if(criteria.getPaperInfo() == null && criteria.getServiceInfo() == null 
+				&& criteria.getAuthorName() != null && !criteria.getAuthorName().isEmpty()){
+			
+			String authNameQuery = "SELECT author.* from author WHERE author.Name LIKE '%"+criteria.getAuthorName()+"%'";
+			authors = searchDao.searchAuthorsByCriteria(authNameQuery);
+		}
 		
 		//System.out.println(author_ids.toString());
 		System.out.println("DONE!");
@@ -152,5 +170,9 @@ public class SearchServiceImpl implements SearchService {
 		}
 		
 		return whereCond.toString();
+	}
+	
+	private String buildAuthorNameCondition(String authorName){
+		return " AND " + CriteriaUtil.containsCriteriaQuery("author", "Name", authorName);
 	}
 }
