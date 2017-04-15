@@ -66,6 +66,6 @@ public class SearchCriteria {
 	}
 
 	public void setAuthorName(String authorName) {
-		this.authorName = authorName.toLowerCase();
+		this.authorName = authorName;
 	}
 }
