@@ -52,6 +52,7 @@ public class UserDaoImpl implements UserDao {
 				author.setAuthorId(rs.getInt("Id"));
 				author.setName(rs.getString("Name"));
 				author.setAffiliation(rs.getString("Affiliation"));
+				author.setUrl(rs.getString("url"));
 				authorList.add(author);
 			}
 		} catch (SQLException e) {

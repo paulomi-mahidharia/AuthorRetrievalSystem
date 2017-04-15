@@ -8,12 +8,12 @@ import java.util.List;
 import com.neu.msd.DBLPXMLParser.config.DBConnection;
 import com.neu.msd.DBLPXMLParser.model.AuthorAffiliation;
 
-public class FacultyAffiliation {
+public class HandleFacultyAffiliation {
 
 	private Connection conn;
 	PreparedStatement stmt_author_faculty_affiliation, stmt_author_paper_mapping;
 
-	public FacultyAffiliation() throws SQLException {
+	public HandleFacultyAffiliation() throws SQLException {
 		conn = DBConnection.getConn();
 		conn.setAutoCommit(false);
 		stmt_author_faculty_affiliation = conn
@@ -26,9 +26,8 @@ public class FacultyAffiliation {
 			stmt_author_faculty_affiliation.setString(1, faculty.getName());
 			stmt_author_faculty_affiliation.setString(2, faculty.getAffiliation());
 			stmt_author_faculty_affiliation.addBatch();
-			stmt_author_faculty_affiliation.executeBatch();
 		}
-
+		stmt_author_faculty_affiliation.executeBatch();
 		conn.commit();
 		return true;
 	}
