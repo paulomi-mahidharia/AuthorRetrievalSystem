@@ -8,4 +8,6 @@ import com.neu.msd.AuthorRetriever.model.Conference;
 public interface SearchConferenceDao {
 	
 	public List<Conference> retrieveConference(String queryString) throws SQLException;
+
+	List<Conference> retrieveDistinctConf(String queryString) throws SQLException;
 }

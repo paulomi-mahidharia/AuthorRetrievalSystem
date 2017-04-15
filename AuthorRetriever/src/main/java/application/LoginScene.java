@@ -1,7 +1,18 @@
 package application;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.neu.msd.AuthorRetriever.service.ConferenceService;
+import com.neu.msd.AuthorRetriever.service.ConferenceServiceImpl;
 import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
+import com.neu.msd.AuthorRetriever.util.AlertUtil;
+import com.neu.msd.AuthorRetriever.util.ConferenceUtil;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,9 +30,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 
 
 @SuppressWarnings({"restriction"})
@@ -85,6 +93,19 @@ public class LoginScene {
             	Boolean isLoginSuccessful = user.login(username, password);
             	System.out.println(isLoginSuccessful);
             	if(isLoginSuccessful){
+            		List<String> conferences = new ArrayList<>();
+            		ConferenceService conferenceService = new ConferenceServiceImpl();
+            		try {
+						conferenceService.retrieveAllConferences().forEach((conference) -> {
+							conferences.add(conference.getName().toUpperCase());
+						});
+						ConferenceUtil.setConferences(conferences);
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						AlertUtil.displayAlert("Error", 
+								"Oops, you got soemthing wrong!",
+								"No conferences available");
+					}
     		        SearchScene.displaySearchScene(primaryStage); 		
             	}else{
             		actiontarget.setFill(Color.FIREBRICK);

@@ -7,40 +7,39 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
-import com.neu.msd.DBLPXMLParser.handler.HandleFacultyAffiliation;
-import com.neu.msd.DBLPXMLParser.model.AuthorAffiliation;
+import com.neu.msd.DBLPXMLParser.handler.HandleAuthorHomepages;
+import com.neu.msd.DBLPXMLParser.model.AuthorHomepage;
 
-public class CsRankingsParser {
+public class AuthorHomepagesParser {
 
 	public static void main(String[] args) {
 		
 		// Please update the path for your Faculty Affiliation CSV file here.
-		String filepath = "faculty.csv";
+		String filepath = "homepages.csv";
 		
 		List<String> linesFromFile = loadLinesFromFile(filepath);
 		// Convert the list to an Array of Strings.
 		String[] lines = linesFromFile.toArray(new String[0]);
-		List<AuthorAffiliation> authorAffiliationList = new ArrayList<AuthorAffiliation>();
+		List<AuthorHomepage> authorHomepagesList = new ArrayList<AuthorHomepage>();
 
 		for (int i = 1; i < lines.length; i++) {
-			String[] nameAffiliation = lines[i].split(",");
+			String[] nameHomepage = lines[i].split(",");
 
-			if (nameAffiliation.length == 2) {
-				AuthorAffiliation authorAffiliation = new AuthorAffiliation();
-				authorAffiliation.setName(nameAffiliation[0]);
-				authorAffiliation.setAffiliation(nameAffiliation[1]);
-				authorAffiliationList.add(authorAffiliation);
+			if (nameHomepage.length == 2) {
+				AuthorHomepage authorHomepage = new AuthorHomepage();
+				authorHomepage.setName(nameHomepage[0]);
+				authorHomepage.setHomepage(nameHomepage[1]);
+				authorHomepagesList.add(authorHomepage);
 			}
 		}
 
-		HandleFacultyAffiliation facultyAffiliation;
+		HandleAuthorHomepages authorHomepages;
 		try {
-			facultyAffiliation = new HandleFacultyAffiliation();
-			facultyAffiliation.insertRecords(authorAffiliationList);
+			authorHomepages = new HandleAuthorHomepages();
+			authorHomepages.insertRecords(authorHomepagesList);
 		} catch (SQLException e) {
-			System.out.println("Error while processing faculty affilications.");
+			System.out.println("Error processing homepages for authors.");
 			e.printStackTrace();
 		}
 		

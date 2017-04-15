@@ -59,27 +59,19 @@ public class ResultScene {
         
 		table.setEditable(false);
 		ObservableList<Author> authorData = FXCollections.observableArrayList(authorList);
-        TableColumn<Author,Number> srNo = new TableColumn("#");
+        TableColumn<Author,Number> srNo = new TableColumn("Serial No.");
         TableColumn author = new TableColumn("Author");
-        //TableColumn editColumn = new TableColumn("AuthorInformation");
-        //editColumn.setCellValueFactory(new PropertyValueFactory<Author,Hyperlink>("authorKey"));
-       
+
         PropertyValueFactory<Author,Hyperlink> rmbutton = new PropertyValueFactory<Author,Hyperlink>("name");
         author.setCellValueFactory(rmbutton);
         srNo.setCellValueFactory(new PropertyValueFactory<>("authorId"));
         srNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
       
-        TableColumn authorColumn = new TableColumn("AuthorInfo");
+        TableColumn authorColumn = new TableColumn("University");
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("affiliation"));
-        //table.setItems(authorData);
         table.getColumns().addAll(srNo, author, authorColumn);
-       
-        ColumnConstraints col1Constraints = new ColumnConstraints();
-        col1Constraints.setPercentWidth(5);
-        ColumnConstraints col2Constraints = new ColumnConstraints();
-        col2Constraints.setPercentWidth(90);
-        ColumnConstraints col3Constraints = new ColumnConstraints();
-        col3Constraints.setPercentWidth(5);
+        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         Button btnBackToSearch = new Button("Search Page");
        
@@ -123,7 +115,6 @@ public class ResultScene {
 		bp.setCenter(resultScenePaginate.paginate());
 
 		resultScene = new Scene(bp, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-		//resultScene.getStylesheets().add("CSS/table.css");
 		resultScene.getStylesheets().add(ResultScene.class.getClassLoader().getResource("table.css").toString());
 
 		primaryStage.setScene(resultScene);
@@ -138,7 +129,7 @@ public class ResultScene {
                 }
              SceneStack.pushSceneToStack(resultScene);
              try {
-				AuthorDispayInformationScene.displayAuthorDisplayScene(author,primaryStage);
+				AuthorScene.displayAuthorDisplayScene(author,primaryStage);
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

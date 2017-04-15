@@ -11,4 +11,9 @@ public class CriteriaUtil {
 		
 		return tableName+"."+ columnName + " <> " + "'" + value + "'";
 	}
+	
+	public static String containsCriteriaQuery(String tableName, String columnName, String value){
+		
+		return tableName+"."+ columnName + " LIKE " + "'%" + value + "%'";
+	}
 }

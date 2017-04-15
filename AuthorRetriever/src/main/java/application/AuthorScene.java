@@ -49,7 +49,7 @@ import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMIL
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SHORTLIST_AUTHOR;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
-public class AuthorDispayInformationScene {
+public class AuthorScene {
 	
 	
 	private static TableView table = null;
@@ -71,18 +71,18 @@ public class AuthorDispayInformationScene {
 		TableView createPaperInfoTable=createPaperInfoTable(paperInfo);
 		TableView createConferenceInfoTable=createConferenceInfoTable(conferences);
 		
-		Text t1 = new Text(10, 50,selectedAuthor.getName() );
+		Text t1 = new Text(10, 50,selectedAuthor.getName());
 		t1.setFont(new Font(20));
        
-        Text t2 = new Text(10, 50,selectedAuthor.getDegree() );
-		t2.setFont(new Font(20));
+        Text t2 = new Text(10, 50, "Affiliated University: " +selectedAuthor.getAffiliation());
+		t2.setFont(new Font(16));
        
-        Text t3 = new Text(10, 50,selectedAuthor.getCountry() );
-		t3.setFont(new Font(20));
+        Text t3 = new Text(10, 50,selectedAuthor.getCountry());
+		t3.setFont(new Font(16));
 		
         grid.add(t1, 1, 2);
-        grid.add(t2, 0, 3);
-        grid.add(t3, 0, 4);
+        grid.add(t2, 1, 3);
+        grid.add(t3, 1, 4);
         grid.add(createPaperInfoTable, 1,6);
         grid.add(createConferenceInfoTable, 1,9);
         ColumnConstraints col1Constraints = new ColumnConstraints();
@@ -173,7 +173,7 @@ public class AuthorDispayInformationScene {
 		TableView table = new TableView<>();
 		System.out.println(conferences.size());
 		ObservableList<Conference> confInfoData = FXCollections.observableArrayList(conferences);
-		TableColumn<Conference,Number> conferenceId = new TableColumn("#");
+		TableColumn<Conference,Number> conferenceId = new TableColumn("Serial No.");
         TableColumn year = new TableColumn("Year");
         TableColumn name = new TableColumn("Name");
         TableColumn title = new TableColumn("Title");
@@ -186,7 +186,7 @@ public class AuthorDispayInformationScene {
         
         
         table.getColumns().addAll(conferenceId, year, name,title);
-        
+        //table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setItems(confInfoData);
 		
         return table;
@@ -195,7 +195,7 @@ public class AuthorDispayInformationScene {
 		TableView table = new TableView<>();
 		
 		ObservableList<AuthorPaper> paperInfoData = FXCollections.observableArrayList(paperInfo);
-		TableColumn<AuthorPaper,Number> paperId = new TableColumn("#");
+		TableColumn<AuthorPaper,Number> paperId = new TableColumn("Serial No.");
         TableColumn confName = new TableColumn("Conferance Title");
         TableColumn paperTitle = new TableColumn("Paper Title");
         TableColumn year = new TableColumn("Year");
@@ -208,6 +208,7 @@ public class AuthorDispayInformationScene {
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
         
         table.getColumns().addAll(paperId, confName, paperTitle,year,url);
+        //table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         table.setItems(paperInfoData);
 		

@@ -40,7 +40,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	public List<Author> getAllAuthorsForUser() {
+
 		String queryString = "select author.* from author where id in (select Author_Id from selected_authors where user_Id = ?)";
+
+		//String queryString = "select UserId, Author_Id from selected_authors";
+
 		return userDao.getAuthorsForUser(loggedInUser, queryString);
 	}
 
