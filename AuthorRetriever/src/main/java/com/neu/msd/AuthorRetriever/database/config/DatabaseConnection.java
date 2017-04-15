@@ -2,6 +2,7 @@ package com.neu.msd.AuthorRetriever.database.config;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 
@@ -12,6 +13,8 @@ public class DatabaseConnection {
 
 	private static String user;
 	private static String password;
+	
+	private static Connection connection;
 		
 	static{
 		try {
@@ -24,14 +27,30 @@ public class DatabaseConnection {
 			System.out.println("Unable to read Properties file");
 		}
 	}
+	
+	
 	public static Connection getConn() {
+		synchronized(DatabaseConnection.class){
+			try {
+				if (connection == null || connection.isClosed()) {
+					connectToDB();
+				}
+			} catch (SQLException e) {
+				System.out.println("Error while connecting to database server: "+ e.getMessage());
+				e.printStackTrace();
+			}
+		}
+		return connection;
+	}
+	
+	private static void connectToDB(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			return DriverManager.getConnection(dbUrl, user, password);
+			connection = DriverManager.getConnection(dbUrl, user, password);
 		} catch (Exception e) {
 			System.out.println("Error while opening a conneciton to database server: "
 								+ e.getMessage());
-			return null;
+			return;
 		}
 	}
 } 
