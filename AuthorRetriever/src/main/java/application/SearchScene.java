@@ -56,6 +56,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.collections.ListChangeListener.Change;
+import javafx.scene.layout.ColumnConstraints;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class SearchScene {
@@ -68,10 +69,21 @@ public class SearchScene {
 		grid2.setVgap(10);
 		grid2.setPadding(new Insets(25, 25, 25, 25));
 		
+	
+	     ColumnConstraints col1 = new ColumnConstraints();
+	     col1.setPercentWidth(50);
+	     ColumnConstraints col2 = new ColumnConstraints();
+	     col2.setPercentWidth(25);
+	     ColumnConstraints col3 = new ColumnConstraints();
+	     col3.setPercentWidth(20);
+	     ColumnConstraints col4 = new ColumnConstraints();
+	     col3.setPercentWidth(20);
+	     grid2.getColumnConstraints().addAll(col1,col2,col3, col4);
+		
 		SearchCriteria searchCriteria = new SearchCriteria();
 		
 		BorderPane titleHbox = NavigationBar.getHeaderPane(SEARCH, primaryStage);
-		grid2.add(titleHbox, 0, 0, 4, 1);
+		grid2.add(titleHbox, 0, 0, 20, 1);
 		
 		CheckBox paperCheck = new CheckBox("Search based on paper information");
 		paperCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -140,10 +152,15 @@ public class SearchScene {
 		
 		final TextField fromYear = new TextField();
 		fromYear.setPromptText("Year");
+		
 	    final Label betweenYearLabel = new Label("to"); 
 	    final TextField toYear = new TextField();
 	    toYear.setPromptText("Year");
+	    toYear.setDisable(true);
+	    
 	    grid2.add(fromYear, 2, 5);
+	    grid2.add(betweenYearLabel, 3, 5);
+	    grid2.add(toYear, 4, 5, 13, 1);
 	    System.out.println(yearRangeComboBox.getValue());
 	    
 	    yearRangeComboBox.setOnAction(new EventHandler<ActionEvent>() {
@@ -152,35 +169,11 @@ public class SearchScene {
 	        public void handle(ActionEvent e) {
 	        	String yearRangeSelection = yearRangeComboBox.getValue().toString();
 	            
-	            if(yearRangeSelection.equals("between")){
-	            	if(!grid2.getChildren().contains(betweenYearLabel)){
-	            		grid2.add(betweenYearLabel, 3, 5);
-		        	}
-	            	if(!grid2.getChildren().contains(toYear)){
-	            		grid2.add(toYear, 4, 5);
-	            	}
-		        }else if(yearRangeSelection.equals("before")){
-		        	if(grid2.getChildren().contains(betweenYearLabel)){
-		        		grid2.getChildren().remove(betweenYearLabel);
-		        	}
-		        	if(grid2.getChildren().contains(toYear)){
-		        		grid2.getChildren().remove(toYear);
-		        	}
-		        	if(!grid2.getChildren().contains(fromYear)){
-			        	grid2.add(fromYear, 2, 5);
-		        	}
-		        	
-		        }else if(yearRangeSelection.equals("after")){
-		        	if(grid2.getChildren().contains(betweenYearLabel)){
-		        		grid2.getChildren().remove(betweenYearLabel);
-		        	}
-		        	if(grid2.getChildren().contains(toYear)){
-		        		grid2.getChildren().remove(toYear);
-		        	}
-		        	if(!grid2.getChildren().contains(fromYear)){
-			        	grid2.add(fromYear, 2, 5);
-		        	}
-		        }
+	        	if(yearRangeSelection.equals("before") || yearRangeSelection.equals("after")){
+	        		toYear.setDisable(true);
+	        	}else{
+	        		toYear.setDisable(false);
+	        	}
 	        }
 	    });
 	    
@@ -197,13 +190,18 @@ public class SearchScene {
 		RadioButton radioButtonAnd = new RadioButton(AND_RADIO);
 		radioButtonAnd.setToggleGroup(unionGroup);
 		radioButtonAnd.setUserData(AND_RADIO);
-		radioButtonAnd.setSelected(true);
-		grid2.add(radioButtonAnd, 0, 7);
+		radioButtonAnd.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		
 		RadioButton radioButtonOr = new RadioButton(OR_RADIO);
 		radioButtonOr.setUserData(OR_RADIO);
+		radioButtonOr.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
 		radioButtonOr.setToggleGroup(unionGroup);
-		grid2.add(radioButtonOr, 1, 7);
+		
+		HBox hBoxAndOr1 = new HBox();
+		hBoxAndOr1.getChildren().addAll(radioButtonAnd, radioButtonOr);
+		hBoxAndOr1.setSpacing(30);
+		hBoxAndOr1.setAlignment(Pos.BOTTOM_CENTER);
+		grid2.add(hBoxAndOr1, 0, 8, 20, 1);
 		
 		unionGroup.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
 
@@ -224,10 +222,10 @@ public class SearchScene {
 		
 		CheckBox serviceCheck = new CheckBox("Search based on service information");
 		serviceCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-		grid2.add(serviceCheck, 0, 8);
+		grid2.add(serviceCheck, 0, 10);
 		
 		Label servedInConference = new Label("Conference served/not served in:");
-		grid2.add(servedInConference, 0, 9);
+		grid2.add(servedInConference, 0, 11);
 		
 		ObservableList<String> serveOptions = 
 			    FXCollections.observableArrayList(
@@ -236,7 +234,7 @@ public class SearchScene {
 			    );
 		ComboBox serveComboBox = new ComboBox(serveOptions);
 		serveComboBox.setValue("Served in");
-		grid2.add(serveComboBox, 1, 9);
+		grid2.add(serveComboBox, 1, 11);
 		
 		serveComboBox.setOnAction(new EventHandler<Event>() {
 			@Override
@@ -246,8 +244,6 @@ public class SearchScene {
 			}
 		});
 		
-		/*TextField confNameServedIn = new TextField();
-		confNameServedIn.setPromptText("Conference name");*/
 		final CheckComboBox<String> checkConfServedBox = new CheckComboBox<String>(conferenceList);
 		 
 		checkConfServedBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
@@ -259,10 +255,10 @@ public class SearchScene {
 			}
 		});
 		
-		grid2.add(checkConfServedBox, 2, 9);
+		grid2.add(checkConfServedBox, 2, 11);
 		
 		Label yearRangeServed = new Label("Year range:");
-		grid2.add(yearRangeServed, 0, 10);
+		grid2.add(yearRangeServed, 0, 12);
 		
 		ObservableList<String> servedYearOptions = 
 			    FXCollections.observableArrayList(
@@ -272,15 +268,20 @@ public class SearchScene {
 			    );
 		ComboBox yearRangeServedComboBox = new ComboBox(servedYearOptions);
 		yearRangeServedComboBox.setValue("before");
-		grid2.add(yearRangeServedComboBox, 1, 10);
+		grid2.add(yearRangeServedComboBox, 1, 12);
 		
 		final TextField fromYearServed = new TextField();
 		fromYearServed.setPromptText("Year");
-	    final Label betweenYearServedLabel = new Label("to"); 
-	    final TextField toYearServed = new TextField();
+		
+		final Label betweenYearServedLabel = new Label("to"); 
+	    
+		final TextField toYearServed = new TextField();
 	    toYearServed.setPromptText("Year");
-	    grid2.add(fromYearServed, 2, 10);
-	    System.out.println(yearRangeServedComboBox.getValue());
+	    toYearServed.setDisable(true);
+	    
+	    grid2.add(fromYearServed, 2, 12);
+	    grid2.add(betweenYearServedLabel, 3, 12);
+	    grid2.add(toYearServed, 4, 12, 13, 1);
 	    
 	    yearRangeServedComboBox.setOnAction(new EventHandler<ActionEvent>() {
 	    	 
@@ -288,71 +289,65 @@ public class SearchScene {
 	        public void handle(ActionEvent e) {
 	        	String yearRangeServedSelection = yearRangeServedComboBox.getValue().toString();
 	            
-	            if(yearRangeServedSelection.equals("between")){
-	            	if(!grid2.getChildren().contains(betweenYearServedLabel)){
-	            		grid2.add(betweenYearServedLabel, 3, 10);
-		        	}
-	            	if(!grid2.getChildren().contains(toYearServed)){
-	            		grid2.add(toYearServed, 4, 10);
-	            	}
-		        }else if(yearRangeServedSelection.equals("before")){
-		        	if(grid2.getChildren().contains(betweenYearServedLabel)){
-		        		grid2.getChildren().remove(betweenYearServedLabel);
-		        	}
-		        	if(grid2.getChildren().contains(toYearServed)){
-		        		grid2.getChildren().remove(toYearServed);
-		        	}
-		        	if(!grid2.getChildren().contains(fromYearServed)){
-			        	grid2.add(fromYearServed, 2, 10);
-		        	}
-		        	
-		        }else if(yearRangeServedSelection.equals("after")){
-		        	if(grid2.getChildren().contains(betweenYearServedLabel)){
-		        		grid2.getChildren().remove(betweenYearServedLabel);
-		        	}
-		        	if(grid2.getChildren().contains(toYearServed)){
-		        		grid2.getChildren().remove(toYearServed);
-		        	}
-		        	if(!grid2.getChildren().contains(fromYearServed)){
-			        	grid2.add(fromYearServed, 2, 10);
-		        	}
-		        }
+	            if(yearRangeServedSelection.equals("before") || yearRangeServedSelection.equals("after")){
+	            	toYearServed.setDisable(true);
+	            }else{
+	            	toYearServed.setDisable(false);
+	            }
 	        }
 	    });
 	    
 	    Label position = new Label("Position served as:");
-		grid2.add(position, 0, 11);
+		grid2.add(position, 0, 13);
 		
 		List<String> positions =new ArrayList<>(Arrays.asList("All", "General Chair", "Program Chair", "Conference Chair","External Review Committee"));
 		ObservableList<String> positionOptions = FXCollections.observableArrayList(positions);
 		
 		ComboBox positionComboBox = new ComboBox(positionOptions);
 		positionComboBox.setValue(positions.get(0));
-		grid2.add(positionComboBox, 1, 11);
+		grid2.add(positionComboBox, 1, 13);
+		
+		//Add union condition
+		final ToggleGroup unionGroup2 = new ToggleGroup();
+		
+		RadioButton radioButtonAnd2 = new RadioButton(AND_RADIO);
+		radioButtonAnd2.setToggleGroup(unionGroup2);
+		radioButtonAnd2.setUserData(AND_RADIO);
+		radioButtonAnd2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		
+		RadioButton radioButtonOr2 = new RadioButton(OR_RADIO);
+		radioButtonOr2.setUserData(OR_RADIO);
+		radioButtonOr2.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		radioButtonOr2.setToggleGroup(unionGroup2);
+		
+		HBox hBoxAndOr2 = new HBox();
+		hBoxAndOr2.getChildren().addAll(radioButtonAnd2, radioButtonOr2);
+		hBoxAndOr2.setSpacing(30);
+		hBoxAndOr2.setAlignment(Pos.BOTTOM_CENTER);
+		grid2.add(hBoxAndOr2, 0, 15, 20, 1);
+		
+		CheckBox authorCheck = new CheckBox("Search based on author name");
+		authorCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		grid2.add(authorCheck, 0, 17);
+		
+		Label authorNameLabel = new Label("Author Name:");
+		grid2.add(authorNameLabel, 0, 18);
+		
+		TextField authorNameValue = new TextField();
+		authorNameValue.setPromptText("Enter author name");
+		grid2.add(authorNameValue, 1, 18);
 		
 		Button btn = new Button(SEARCH_AUTHORS);
-		//Button btnShortList = new Button("List ShortList Author");
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().add(btn);
-		grid2.add(hbBtn, 1, 12);
-		
+		hbBtn.setSpacing(10);
+		grid2.add(hbBtn, 1, 25);
 		
 		Scene searchScene = new Scene(grid2, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		SceneStack.setCurrentScene(searchScene);
 		primaryStage.setScene(searchScene);
 		primaryStage.show();
-		
-		
-		/*btnShortList.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				SceneStack.pushSceneToStack(searchScene);
-				ShortListAuthor.displayShortListAuthor(primaryStage);
-			}	
-		});*/
-
 		
 		btn.setOnAction(new EventHandler<ActionEvent>() {
        	 
