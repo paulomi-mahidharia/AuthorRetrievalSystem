@@ -29,6 +29,7 @@ import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 
+import javafx.scene.control.Separator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -38,6 +39,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -308,7 +310,7 @@ public class SearchScene {
 		grid2.add(positionComboBox, 1, 13);
 		
 		//Add union condition
-		final ToggleGroup unionGroup2 = new ToggleGroup();
+		/*final ToggleGroup unionGroup2 = new ToggleGroup();
 		
 		RadioButton radioButtonAnd2 = new RadioButton(AND_RADIO);
 		radioButtonAnd2.setToggleGroup(unionGroup2);
@@ -324,7 +326,12 @@ public class SearchScene {
 		hBoxAndOr2.getChildren().addAll(radioButtonAnd2, radioButtonOr2);
 		hBoxAndOr2.setSpacing(30);
 		hBoxAndOr2.setAlignment(Pos.BOTTOM_CENTER);
-		grid2.add(hBoxAndOr2, 0, 15, 20, 1);
+		grid2.add(hBoxAndOr2, 0, 15, 20, 1);*/
+		
+		Separator separator = new Separator();
+		separator.setOrientation(Orientation.HORIZONTAL);
+		separator.setStyle("-fx-border-color: #b22222; -fx-border-width: 1 0 0 0 ;");
+		grid2.add(separator, 0, 15, 20, 1);
 		
 		CheckBox authorCheck = new CheckBox("Search based on author name");
 		authorCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
@@ -357,8 +364,9 @@ public class SearchScene {
             public void handle(ActionEvent e) {
             	Paper paperInfo = null;
             	ServiceInfo serviceInfo = null;
+            	String authorName = null;
             	
-            	String isCriteriaValid = SearchSceneValidation.validateCriteria(paperCheck, serviceCheck);
+            	String isCriteriaValid = SearchSceneValidation.validateCriteria(paperCheck, serviceCheck, authorCheck);
             	
             	if(isCriteriaValid.equalsIgnoreCase(ValidationConstants.NO_CRITERIA_SELECTED)){
             		AlertUtil.displayAlert("Error", 
@@ -415,10 +423,22 @@ public class SearchScene {
 																toYearServed);
             			}
             		}
+            		
+            		if(authorCheck.isSelected()){
+            			
+            			String isAuthorValid = SearchSceneValidation.validateAuthorCriteria(authorNameValue);
+            			if(isAuthorValid.equalsIgnoreCase(ValidationConstants.VALID_AUHTOR)){
+            				authorName = authorNameValue.getText();
+            			}else{
+            				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", isAuthorValid);
+            				return;
+            			}
+            		}
             	}
             		
         		searchCriteria.setPaperInfo(paperInfo);
         		searchCriteria.setServiceInfo(serviceInfo);
+        		searchCriteria.setAuthorName(authorName);
         		
     			SearchService searchService = new SearchServiceImpl();
         		List<Author> authors = new ArrayList<Author>();
