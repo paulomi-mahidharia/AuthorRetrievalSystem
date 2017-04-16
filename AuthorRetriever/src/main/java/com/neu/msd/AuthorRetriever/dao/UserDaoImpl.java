@@ -39,33 +39,6 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public List<Author> getAuthorsForUser(int userId, String queryString) {
-		PreparedStatement stmt;
-		List<Author> authorList = new ArrayList<Author>();
-		try {
-			System.out.println(userId);
-			stmt = conn.prepareStatement(queryString);
-			stmt.setInt(1, userId);
-
-			ResultSet rs = stmt.executeQuery();
-			
-			while (rs.next()) {
-				Author author = new Author();
-				author.setAuthorId(rs.getInt("Id"));
-				author.setName(rs.getString("Name"));
-				author.setAffiliation(rs.getString("Affiliation"));
-				author.setUrl(rs.getString("url"));
-				authorList.add(author);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println(authorList.size());
-		return authorList;
-	}
-
-	@Override
 	public int registerUser(String queryString, User user) {
 		// TODO Auto-generated method stub
 		PreparedStatement preparedStatement;
@@ -73,25 +46,6 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement = conn.prepareStatement(queryString);
 			preparedStatement.setString(1, user.getUsername());
 			preparedStatement.setString(2, user.getPassword());
-			preparedStatement .executeUpdate();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return 1;
-	}
-
-	@Override
-	public boolean deleteSelectedAuthor(int userId, int authorId,String queryString) {
-		// TODO Auto-generated method stub
-		PreparedStatement preparedStatement;
-		try {
-			preparedStatement = conn.prepareStatement(queryString);
-			preparedStatement.setInt(1,authorId);
-			preparedStatement.setInt(2,userId);
-			System.out.println(preparedStatement.toString());
 			preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -99,7 +53,6 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 		}
 		
-		
-		return true;
+		return 1;
 	}
 }

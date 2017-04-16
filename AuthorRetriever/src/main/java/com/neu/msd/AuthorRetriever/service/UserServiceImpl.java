@@ -1,12 +1,13 @@
 	package com.neu.msd.AuthorRetriever.service;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.dao.UserDao;
 import com.neu.msd.AuthorRetriever.dao.UserDaoImpl;
-import com.neu.msd.AuthorRetriever.dao.AddSelectedAuthorsDao;
-import com.neu.msd.AuthorRetriever.dao.AddSelectedAuthorsDaoImpl;
+import com.neu.msd.AuthorRetriever.dao.SelectedAuthorsDao;
+import com.neu.msd.AuthorRetriever.dao.SelectedAuthorsDaoImpl;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.User;
 
@@ -29,23 +30,26 @@ public class UserServiceImpl implements UserService {
 	
 	
 	public void addSelectedAuthors(List<Author> authors) {
-		// TODO Auto-generated method stub
+
 		try {
-			AddSelectedAuthorsDao selectedAuthorsDao = new AddSelectedAuthorsDaoImpl();
+			SelectedAuthorsDao selectedAuthorsDao = new SelectedAuthorsDaoImpl();
 			selectedAuthorsDao.addSelectedAuthors(loggedInUser, authors);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
 	public List<Author> getAllAuthorsForUser() {
+		SelectedAuthorsDao selectedAuthorsDao;
+		List<Author> selectedAuthors = new ArrayList<Author>();
+		try{
+			selectedAuthorsDao = new SelectedAuthorsDaoImpl();
+			selectedAuthors = selectedAuthorsDao.getSelectedAuthorsForUser(loggedInUser);
+		}catch(SQLException e){
+			System.out.println("Unable to fetch selected authors for user "+ loggedInUser);
+		}
 
-		String queryString = "select author.* from author where id in (select Author_Id from selected_authors where user_Id = ?)";
-
-		//String queryString = "select UserId, Author_Id from selected_authors";
-
-		return userDao.getAuthorsForUser(loggedInUser, queryString);
+		return selectedAuthors;
 	}
 
 	@Override
@@ -67,10 +71,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean deleteSelectedAuthor(int authorId) {
-		// TODO Auto-generated method stub
-		String queryString="Delete from selected_authors where author_Id= ? and user_id = ?";
-		
-		return userDao.deleteSelectedAuthor(loggedInUser, authorId, queryString);
+		boolean status;
+		try {
+			SelectedAuthorsDao selectedAuthorsDao = new SelectedAuthorsDaoImpl();
+			status = selectedAuthorsDao.deleteSelectedAuthors(loggedInUser, authorId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return status;
 		
 	}
 }

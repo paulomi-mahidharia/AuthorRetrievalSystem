@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
 
-public interface AddSelectedAuthorsDao {
+public interface SelectedAuthorsDao {
 
 	/**
 	 * add authors selected by the user to a list 
@@ -13,6 +13,21 @@ public interface AddSelectedAuthorsDao {
 	 * @return Nothing
 	 */
 	public void addSelectedAuthors(int userId, List<Author> authors) throws SQLException;
+
+	/**
+	 * @param userId
+	 * @return
+	 * @throws SQLException
+	 */
+	List<Author> getSelectedAuthorsForUser(int userId) throws SQLException;
+
+	/**
+	 * @param userId
+	 * @param authorId
+	 * @return
+	 * @throws SQLException
+	 */
+	boolean deleteSelectedAuthors(int userId, int authorId) throws SQLException;
 
 	
 }
