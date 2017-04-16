@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
 						return rs.getInt("UserID");
 					}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 
@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int registerUser(String queryString, User user) {
-		// TODO Auto-generated method stub
+		
 		PreparedStatement preparedStatement;
 		try {
 			preparedStatement = conn.prepareStatement(queryString);
@@ -49,7 +49,6 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.executeUpdate();
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
