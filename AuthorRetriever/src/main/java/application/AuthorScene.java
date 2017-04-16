@@ -79,13 +79,16 @@ public class AuthorScene {
 		TableView createConferenceInfoTable=createConferenceInfoTable(conferences);
 		
 		Text t1 = new Text(10, 50,selectedAuthor.getName());
-		t1.setFont(new Font(20));
+		t1.setFont(new Font(24));
        
         Text t2 = new Text(10, 50, "Affiliated University: " +selectedAuthor.getAffiliation());
 		t2.setFont(new Font(16));
-		 
+		
+		Text t3 = new Text(10, 50, "Homepage URL: ");
+		t3.setFont(new Font(16));
 		
         final Hyperlink hpl = new Hyperlink(selectedAuthor.getUrl());
+        hpl.setFont(new Font(16));
         hpl.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent e) {
@@ -99,12 +102,14 @@ public class AuthorScene {
             }
         });
         
-        /*Text t3 = new Text(10, 50, "URL: "+ selectedAuthor.getUrl());
-		t3.setFont(new Font(16));*/
+        HBox authorURLHbox = new HBox();
+        authorURLHbox.getChildren().addAll(t3, hpl);
+        authorURLHbox.setSpacing(10);
+        authorURLHbox.setAlignment(Pos.CENTER_LEFT);
 		
         grid.add(t1, 1, 2);
         grid.add(t2, 1, 3);
-        grid.add(hpl, 1, 4);
+        grid.add(authorURLHbox, 1, 4);
         grid.add(createPaperInfoTable, 1,6);
         grid.add(createConferenceInfoTable, 1,9);
         ColumnConstraints col1Constraints = new ColumnConstraints();
