@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.security.sasl.AuthorizeCallback;
 
+import org.controlsfx.control.HyperlinkLabel;
+
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.AuthorPaper;
@@ -41,6 +43,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 import javafx.application.HostServices;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.scene.control.Hyperlink;
 
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
@@ -52,7 +57,8 @@ import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SHORTLIST_AU
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
 public class AuthorScene {
 	
-	
+	private static WebView browser = null;
+    private static WebEngine webEngine = null;
 	private static TableView table = null;
 	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage) throws SQLException{
 	
@@ -78,12 +84,27 @@ public class AuthorScene {
         Text t2 = new Text(10, 50, "Affiliated University: " +selectedAuthor.getAffiliation());
 		t2.setFont(new Font(16));
 		 
-        Text t3 = new Text(10, 50, "URL: "+ selectedAuthor.getUrl());
-		t3.setFont(new Font(16));
+		
+        final Hyperlink hpl = new Hyperlink(selectedAuthor.getUrl());
+        hpl.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+            	browser = new WebView();
+            	webEngine = browser.getEngine();
+                webEngine.load(selectedAuthor.getUrl());
+                Stage stageForURL = new Stage();
+                Scene bro = new Scene(browser, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
+                stageForURL.setScene(bro);
+                stageForURL.show();
+            }
+        });
+        
+        /*Text t3 = new Text(10, 50, "URL: "+ selectedAuthor.getUrl());
+		t3.setFont(new Font(16));*/
 		
         grid.add(t1, 1, 2);
         grid.add(t2, 1, 3);
-        grid.add(t3, 1, 4);
+        grid.add(hpl, 1, 4);
         grid.add(createPaperInfoTable, 1,6);
         grid.add(createConferenceInfoTable, 1,9);
         ColumnConstraints col1Constraints = new ColumnConstraints();
