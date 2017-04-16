@@ -5,6 +5,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_REMOVE;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_PROFILE;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ERROR_RETRIEVING_AUTHOR;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -100,7 +101,8 @@ public class ShortListAuthor {
 						AuthorScene.displayAuthorDisplayScene(selectedAuthor, primaryStage);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
+								ERROR_RETRIEVING_AUTHOR);
 					}
 				}else{
 					AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 

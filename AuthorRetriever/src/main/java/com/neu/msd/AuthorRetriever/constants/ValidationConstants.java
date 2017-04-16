@@ -23,4 +23,7 @@ public class ValidationConstants {
 	
 	public static final String NO_SELECTED_AUTHOR_REMOVE = "Please select an author from the table to remove.";
 	public static final String NO_SELECTED_AUTHOR_PROFILE = "Please select an author from the table to view profile";
+	
+	public static final String ERROR_RETRIEVING_AUTHOR = "An error occur while retrieving author information. Please check your internet connection or try again later.";
+
 }
