@@ -13,6 +13,7 @@ import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.ConferenceUtil;
+import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -36,6 +37,7 @@ import javafx.stage.Stage;
 public class LoginScene {
 	
 	public static void displayLoginScene(Stage primaryStage){
+		
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
 		grid.setHgap(10);

@@ -9,6 +9,15 @@ import javafx.scene.Scene;
 public final class SceneStack {
 	
 	public static Stack<Scene> sceneStack = null;
+	public static Scene currentScene = null;
+
+	public static Scene getCurrentScene() {
+		return currentScene;
+	}
+
+	public static void setCurrentScene(Scene currentScene) {
+		SceneStack.currentScene = currentScene;
+	}
 
 	public static void createSceneStack(){
 		sceneStack = new Stack<>();

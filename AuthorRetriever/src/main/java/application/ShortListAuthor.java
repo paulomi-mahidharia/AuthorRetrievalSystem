@@ -3,12 +3,11 @@ package application;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
-import com.neu.msd.AuthorRetriever.model.Conference;
 import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
@@ -20,56 +19,69 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+@SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class ShortListAuthor {
-	static List<Author> shortlistAuthor=null;
+	
+	private static List<Author> shortlistAuthor = null;
 	private static Scene shortListScene = null;
+	private static TableView<Author> table = null;
+	
 	public static void displayShortListAuthor(Stage primaryStage){
-		TableView<Author> table = new TableView<>();
-		UserServiceImpl userServiceImpl=new UserServiceImpl();
-		List<Author>shortlistAuthor=userServiceImpl.getAllAuthorsForUser();
+		
+		table = new TableView<>();
+		UserServiceImpl userServiceImpl = new UserServiceImpl();
+		shortlistAuthor = userServiceImpl.getAllAuthorsForUser();
 		System.out.println(shortlistAuthor.size());
+		
 		ObservableList<Author> authorInfoData = FXCollections.observableArrayList(shortlistAuthor);
-		TableColumn<Author,Number> authorId = new TableColumn("#");
-        TableColumn name = new TableColumn("name");
-        TableColumn authorInfo = new TableColumn("AuthorInfo");
-        
-        
+		TableColumn<Author,Number> authorId = new TableColumn("Serial No.");
+        TableColumn name = new TableColumn("Author Name");
+        TableColumn authorInfo = new TableColumn("University");
+       
         authorId.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
       
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         authorInfo.setCellValueFactory(new PropertyValueFactory<>("affiliation"));
-       
-        
         
         table.getColumns().addAll(authorId, name, authorInfo);
-        
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setItems(authorInfoData);
 		
         
-        Button buttonSearch = new Button("Remove Author");
+        Button btnRemoveShortlistedAuthor = new Button("Remove Selected Author");
+        HBox hbox = new HBox();
+        hbox.getChildren().add(btnRemoveShortlistedAuthor);
+        hbox.setAlignment(Pos.BOTTOM_CENTER);
+        hbox.setPadding(new Insets(15, 15, 15, 15));
         
-        buttonSearch.setOnAction(new EventHandler<ActionEvent>() {
+        btnRemoveShortlistedAuthor.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
-				UserService userService=new UserServiceImpl();
-				Author author=table.getSelectionModel().getSelectedItem();
-				System.out.println(author.getAuthorId());
-				userService.deleteSelectedAuthor(author.getAuthorId());
-				table.getItems().remove(author);
-								
+				UserService userService = new UserServiceImpl();
+				Author selectedAuthor = table.getSelectionModel().getSelectedItem();
+				
+				if(selectedAuthor != null){
+					System.out.println(selectedAuthor.getAuthorId());
+					userService.deleteSelectedAuthor(selectedAuthor.getAuthorId());
+					table.getItems().remove(selectedAuthor);
+				}else{
+					AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
+							NO_SELECTED_AUTHOR);
+				}			
 			}	
 		});
-
         
         BorderPane bp = new BorderPane();
 		bp.setPadding(new Insets(25, 25, 25, 25));
@@ -77,17 +89,11 @@ public class ShortListAuthor {
 		BorderPane headerPane = NavigationBar.getHeaderPane(RESULT, primaryStage);
 		headerPane.setPadding(new Insets(0, 0, 15, 0));
 		bp.setTop(headerPane);
-		bp.setBottom(buttonSearch);
+		bp.setBottom(hbox);
 		bp.setCenter(table);
 	
 		shortListScene = new Scene(bp, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-		
-		
-
 		primaryStage.setScene(shortListScene);
 		primaryStage.show();
-
-		
 	}
-
 }

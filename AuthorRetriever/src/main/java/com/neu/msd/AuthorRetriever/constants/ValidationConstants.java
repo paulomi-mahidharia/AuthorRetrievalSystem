@@ -20,4 +20,6 @@ public class ValidationConstants {
 	
 	public static final String SQL_FAILURE = "There was problem while retrieving authors. Please try again later.";
 	public static final String NO_AUTHORS_FOUND = "No authors found for given search criteria";
+	
+	public static final String NO_SELECTED_AUTHOR = "Please select an author from the table that you wish to remove.";
 }
