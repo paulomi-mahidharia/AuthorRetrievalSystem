@@ -1,5 +1,6 @@
 package com.neu.msd.AuthorRetriever.util;
 
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
@@ -8,6 +9,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_TITLE;
 
 import application.LoginScene;
+import application.ShortListAuthor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -24,14 +26,9 @@ public final class NavigationBar {
 	
 	public static BorderPane getHeaderPane(String view, Stage primaryStage){
 		
-		//HBox hbox = new HBox();
-		
-		//hbox.setSpacing(300);
-		
 		BorderPane bp = new BorderPane();
 		
 		Button btnBack = new Button("Back");
-		
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -44,8 +41,19 @@ public final class NavigationBar {
 		
 		Text scenetitle = getSceneTitle(view);
 		
-		Button btnLogout = new Button("Logout");
+		Button btn = new Button(SEARCH_AUTHORS);
+		Button btnShortList = new Button("ShortListed Authors");
 		
+		btnShortList.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				SceneStack.pushSceneToStack(SceneStack.getCurrentScene());
+				ShortListAuthor.displayShortListAuthor(primaryStage);
+			}	
+		});
+		
+		Button btnLogout = new Button("Logout");
 		btnLogout.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -56,13 +64,17 @@ public final class NavigationBar {
 			}
 		});
 		
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(btnShortList, btnLogout);
+		hbox.setSpacing(10);
+		
 		if(view.equals(SEARCH))
 			btnBack.setDisable(true);
 			
 		bp.setLeft(btnBack);
 		bp.setCenter(scenetitle);
-		bp.setRight(btnLogout);
-		//hbox.getChildren().addAll(btnBack, scenetitle, btnLogout);
+		bp.setRight(hbox);
+		
 		return bp;
 	}
 

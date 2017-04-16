@@ -114,6 +114,7 @@ public class AuthorScene {
 		grid.add(hbBtn, 1, 15);
 		
 		Scene authorDispalyScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
+		SceneStack.setCurrentScene(authorDispalyScene);
 		primaryStage.setScene(authorDispalyScene);
 		primaryStage.show();
 		
