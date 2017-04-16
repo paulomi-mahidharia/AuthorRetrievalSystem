@@ -118,6 +118,7 @@ public class LoginScene {
         
         Scene scene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.show();
 	}
 }
