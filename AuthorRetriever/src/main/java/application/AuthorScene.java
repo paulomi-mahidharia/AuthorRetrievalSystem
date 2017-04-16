@@ -40,6 +40,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
+import javafx.application.HostServices;
 
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
@@ -76,8 +77,8 @@ public class AuthorScene {
        
         Text t2 = new Text(10, 50, "Affiliated University: " +selectedAuthor.getAffiliation());
 		t2.setFont(new Font(16));
-       
-        Text t3 = new Text(10, 50,selectedAuthor.getCountry());
+		 
+        Text t3 = new Text(10, 50, "URL: "+ selectedAuthor.getUrl());
 		t3.setFont(new Font(16));
 		
         grid.add(t1, 1, 2);
@@ -94,19 +95,22 @@ public class AuthorScene {
         grid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
         
         Button btnResetSearch = new Button(RESTART_SEARCH);
+        btnResetSearch.setStyle("-fx-border-color: #b22222");
         btnResetSearch.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
         Button btnSimilarAuthors = new Button(SEARCH_SIMILAR_AUTHOR);
+        btnSimilarAuthors.setStyle("-fx-border-color: #b22222");
         btnSimilarAuthors.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
         
         Button btnShortListAuthor = new Button(SHORTLIST_AUTHOR);
+        btnShortListAuthor.setStyle("-fx-border-color: #b22222");
         btnShortListAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
-        
-        
         Button btnaddSelectedAuthor =new Button(SHORTLIST_AUTHOR);
+        btnaddSelectedAuthor.setStyle("-fx-border-color: #b22222");
         btnaddSelectedAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
         HBox hbBtn = new HBox(20);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().addAll(btnResetSearch, btnSimilarAuthors,btnShortListAuthor);

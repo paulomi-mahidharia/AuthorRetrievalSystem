@@ -338,6 +338,8 @@ public class SearchScene {
 		grid2.add(authorNameValue, 1, 18);
 		
 		Button btn = new Button(SEARCH_AUTHORS);
+		btn.setStyle("-fx-border-color: #b22222");
+		
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().add(btn);
