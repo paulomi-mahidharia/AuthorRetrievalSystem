@@ -6,6 +6,9 @@ public class SearchCriteria {
 	private boolean union;
 	private String authorName;
 	
+	public SearchCriteria(String authorName) {
+		this.authorName = authorName;
+	}
 	
 	public SearchCriteria(Paper paperInfo) {
 		this.paperInfo = paperInfo;

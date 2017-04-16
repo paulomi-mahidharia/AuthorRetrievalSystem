@@ -28,7 +28,6 @@ public class TestSearchAuthorService extends TestCase {
 			authors = searchService.searchAuthorsByCriteria(searchCritria);
 			assertTrue(authors.size() > 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			assertNull(authors);
 		}
@@ -47,9 +46,23 @@ public class TestSearchAuthorService extends TestCase {
 			authors = searchService.searchAuthorsByCriteria(searchCritria);
 			assertTrue(authors.size() > 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			assertNull(authors);
+		}
+	}
+	
+	@Test
+	public void testSearchAuthorByAuthorName(){
+		SearchService searchService = Mockito.mock(SearchService.class);
+		searchService = new SearchServiceImpl();
+		
+		SearchCriteria searchCriteria = new SearchCriteria("Frank Tip");
+		List<Author> authors = null;
+		try {
+			authors = searchService.searchAuthorsByCriteria(searchCriteria);
+			assertEquals(authors.size(), 1);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			assertTrue(false);
 		}
 	}
 	
@@ -67,8 +80,7 @@ public class TestSearchAuthorService extends TestCase {
 			System.out.println("AL : "+authors.size());
 			assertEquals(authors.size(), 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			assertNull(authors);
+			assertTrue(false);
 		}
 	}
 	
@@ -84,8 +96,7 @@ public class TestSearchAuthorService extends TestCase {
 			authors = searchService.searchAuthorsByCriteria(searchCritria);
 			assertEquals(authors.size(), 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			assertNull(authors);
+			assertTrue(false);
 		}
 	}
 	
@@ -104,8 +115,7 @@ public class TestSearchAuthorService extends TestCase {
 			System.out.println("AL : "+authors.size());
 			assertTrue(authors.size() > 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			assertNull(authors);
+			assertTrue(false);
 		}
 	}
 	
@@ -124,8 +134,27 @@ public class TestSearchAuthorService extends TestCase {
 			authors = searchService.searchAuthorsByCriteria(searchCritria);
 			assertTrue(authors.size() > 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			assertNull(authors);
+			assertTrue(false);
+		}
+	}
+	
+	@Test
+	public void testSearchAuthorOnlyServiceInfoCriteriaWithAuthorName(){
+		// paper criteria null
+
+		SearchService searchService = Mockito.mock(SearchService.class);
+		searchService = new SearchServiceImpl();
+		
+		ServiceInfo serviceInfo = new ServiceInfo(true, "oopsla", null, "before", 2016, 2016);
+		SearchCriteria searchCritria = new SearchCriteria(serviceInfo);
+		searchCritria.setAuthorName("Frank Tip");
+
+		List<Author> authors = null;
+		try {
+			authors = searchService.searchAuthorsByCriteria(searchCritria);
+			assertTrue(authors.size() > 0);
+		} catch (SQLException e) {
+			assertTrue(false);
 		}
 	}
 	
@@ -145,8 +174,7 @@ public class TestSearchAuthorService extends TestCase {
 			authors = searchService.searchAuthorsByCriteria(searchCritria);
 			assertTrue(authors.size() > 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			assertNull(authors);
+			assertTrue(false);
 		}
 	}
 	
@@ -165,8 +193,7 @@ public class TestSearchAuthorService extends TestCase {
 			authors = searchService.searchAuthorsByCriteria(searchCritria);
 			assertTrue(authors.size() > 0);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			assertNull(authors);
+			assertTrue(false);
 		}
 	}
 }
