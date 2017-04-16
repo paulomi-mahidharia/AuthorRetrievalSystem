@@ -25,5 +25,8 @@ public class ValidationConstants {
 	public static final String NO_SELECTED_AUTHOR_PROFILE = "Please select an author from the table to view profile";
 	
 	public static final String ERROR_RETRIEVING_AUTHOR = "An error occur while retrieving author information. Please check your internet connection or try again later.";
+	public static final String EMPTY_AUTHOR = "Author name cannot be empty or null";
+	public static final String INVALID_AUTHOR = "Invalid author name";
+	public static final String VALID_AUHTOR = "Valid author name";
 
 }

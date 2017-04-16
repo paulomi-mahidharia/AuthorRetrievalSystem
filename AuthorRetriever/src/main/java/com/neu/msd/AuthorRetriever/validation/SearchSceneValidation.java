@@ -2,6 +2,8 @@ package com.neu.msd.AuthorRetriever.validation;
 
 import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 
+import antlr.StringUtils;
+import ch.qos.logback.classic.pattern.Util;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -9,8 +11,8 @@ import javafx.scene.control.TextField;
 @SuppressWarnings({ "rawtypes", "restriction" })
 public class SearchSceneValidation {
 	
-	public static String validateCriteria(CheckBox paperCheck, CheckBox serviceCheck){
-		if(paperCheck.isSelected() || serviceCheck.isSelected())
+	public static String validateCriteria(CheckBox paperCheck, CheckBox serviceCheck, CheckBox authorCheck){
+		if(paperCheck.isSelected() || serviceCheck.isSelected() || authorCheck.isSelected())
 			return ValidationConstants.VALID_CRITERIA;
 		else
 			return ValidationConstants.NO_CRITERIA_SELECTED;
@@ -62,13 +64,6 @@ public class SearchSceneValidation {
 			}
 		}
 		
-		// Validate conference name
-		/*if(!confName.isEmpty()){
-			if(!isStringValid(confName)){
-				return ValidationConstants.INVALID_CONFERENCE_NAME;
-			}
-		}*/
-		
 		// Validate Keyword name
 //		if(!keyword.getText().isEmpty()){
 //			if(!isStringValid(keyword.getText())){
@@ -93,14 +88,6 @@ public class SearchSceneValidation {
 													ComboBox yearRangeServedComboBox, 
 													TextField fromYearServed, 
 													TextField toYearServed) {
-		
-		// Validate conference name
-		/*if(!confNameServedIn.isEmpty()){
-			if(!isStringValid(confNameServedIn)){
-				return ValidationConstants.INVALID_CONFERENCE_NAME;
-			}
-		}*/
-		
 		//Validate date
 		if(!fromYearServed.getText().isEmpty() || !toYearServed.getText().isEmpty()){
 			String isDateValid = isDateValid(yearRangeServedComboBox.getValue().toString(), 
@@ -112,6 +99,23 @@ public class SearchSceneValidation {
 		}
 		
 		return ValidationConstants.VALID_SERVICE_CRITERIA;
+	}
+	
+	public static String validateAuthorCriteria(TextField authorNameValue) {
+		
+		String author = authorNameValue.getText();
+		if(author.isEmpty()){
+			return ValidationConstants.EMPTY_AUTHOR;
+		}
+		if(author.length() < 1 || author.length() > 50){
+			return ValidationConstants.INVALID_AUTHOR;
+		}
+		if(org.apache.commons.lang.StringUtils.isNumeric(author)){
+			return ValidationConstants.INVALID_AUTHOR;
+		}
+		
+		return ValidationConstants.VALID_AUHTOR;
+		
 	}
 	
 	public static String isDateValid(String dateOption, String start, String end){

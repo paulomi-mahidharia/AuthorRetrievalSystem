@@ -52,19 +52,22 @@ public class ShortListAuthor {
 		TableColumn<Author,Number> authorId = new TableColumn("Serial No.");
         TableColumn name = new TableColumn("Author Name");
         TableColumn authorInfo = new TableColumn("University");
+        TableColumn authorURL = new TableColumn("URL");
        
         authorId.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
-      
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         authorInfo.setCellValueFactory(new PropertyValueFactory<>("affiliation"));
+        authorURL.setCellValueFactory(new PropertyValueFactory<>("url"));
         
-        table.getColumns().addAll(authorId, name, authorInfo);
+        table.getColumns().addAll(authorId, name, authorInfo, authorURL);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         table.setItems(authorInfoData);
 		
         
         Button btnRemoveShortlistedAuthor = new Button("Remove Selected Author");
+        btnRemoveShortlistedAuthor.setStyle("-fx-border-color: #b22222");
         Button btnViewShortlistedAuthor = new Button("View Selected Author Profile");
+        btnViewShortlistedAuthor.setStyle("-fx-border-color: #b22222");
         HBox hbox = new HBox();
         hbox.getChildren().addAll(btnRemoveShortlistedAuthor, btnViewShortlistedAuthor);
         hbox.setAlignment(Pos.BOTTOM_CENTER);

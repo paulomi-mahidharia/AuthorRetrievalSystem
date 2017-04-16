@@ -29,6 +29,7 @@ public final class NavigationBar {
 		BorderPane bp = new BorderPane();
 		
 		Button btnBack = new Button("Back");
+		btnBack.setStyle("-fx-border-color: #b22222");
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -42,7 +43,10 @@ public final class NavigationBar {
 		Text scenetitle = getSceneTitle(view);
 		
 		Button btn = new Button(SEARCH_AUTHORS);
+		btn.setStyle("-fx-border-color: #b22222");
+		
 		Button btnShortList = new Button("ShortListed Authors");
+		btnShortList.setStyle("-fx-border-color: #b22222");
 		
 		btnShortList.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -54,6 +58,8 @@ public final class NavigationBar {
 		});
 		
 		Button btnLogout = new Button("Logout");
+		btnLogout.setStyle("-fx-border-color: #b22222");
+		
 		btnLogout.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

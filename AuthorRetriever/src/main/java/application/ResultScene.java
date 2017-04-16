@@ -50,7 +50,7 @@ public class ResultScene {
 		System.out.println("RESULT ::: "+resultedAuthors.size());
 		authorList = resultedAuthors;
         
-		table.setEditable(false);
+		table.setEditable(true);
 		ObservableList<Author> authorData = FXCollections.observableArrayList(authorList);
         TableColumn<Author,Number> srNo = new TableColumn("Serial No.");
         TableColumn author = new TableColumn("Author");
@@ -62,11 +62,16 @@ public class ResultScene {
       
         TableColumn authorColumn = new TableColumn("University");
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("affiliation"));
-        table.getColumns().addAll(srNo, author, authorColumn);
+        
+        TableColumn authorUrlColumn = new TableColumn("URL");
+        authorUrlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
+        
+        table.getColumns().addAll(srNo, author, authorColumn, authorUrlColumn);
         
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         Button btnBackToSearch = new Button("Search Page");
+        btnBackToSearch.setStyle("-fx-border-color: #b22222");
        
 		btnBackToSearch.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -79,6 +84,7 @@ public class ResultScene {
 
 		
 	    Button buttonExportPdf = new Button("Export PDF");
+	    buttonExportPdf.setStyle("-fx-border-color: #b22222");
 	   
 		buttonExportPdf.setOnAction(new EventHandler<ActionEvent>() {
 			
