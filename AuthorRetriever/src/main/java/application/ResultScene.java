@@ -124,11 +124,11 @@ public class ResultScene {
              SceneStack.pushSceneToStack(resultScene);
              try {
 				AuthorScene.displayAuthorDisplayScene(author,primaryStage);
-			} catch (SQLException e) {
+             } catch (SQLException e) {
 				// TODO Auto-generated catch block
 				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
 						ERROR_RETRIEVING_AUTHOR);
-			}
+                }
             }
         });
 	}

@@ -18,11 +18,15 @@ import com.neu.msd.AuthorRetriever.service.TestUserService;
 @RunWith(Suite.class)
 
 @SuiteClasses({ 
+<<<<<<< HEAD
    TestSearchAuthorDao.class, TestSearchConferenceDao.class, 
    TestSearchPaperDao.class, TestUserDao.class,
    TestAuthorInfoService.class, TestSearchAuthorService.class, 
    TestSearchSimilarProfileService.class, TestUserService.class,
    TestResultService.class
+=======
+   UserTest.class, ResultTest.class,SearchTest.class
+>>>>>>> 527780e7be8c5f2bd5d6f1108f869725165d3735
 })
 
 public class AppTestSuit {

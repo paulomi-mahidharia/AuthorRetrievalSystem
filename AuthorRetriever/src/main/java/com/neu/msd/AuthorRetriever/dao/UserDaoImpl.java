@@ -66,7 +66,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int registerUser(String queryString,User user) {
+	public int registerUser(String queryString, User user) {
 		// TODO Auto-generated method stub
 		PreparedStatement preparedStatement;
 		try {
