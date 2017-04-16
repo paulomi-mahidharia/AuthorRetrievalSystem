@@ -12,6 +12,7 @@ public interface UserDao {
 	public List<Author> getAuthorsForUser(int userId, String queryString);
 	
 	public int registerUser(String queryString,User user);
-	
+
 	public boolean deleteSelectedAuthor(int userId, int authorId,String queryString);
+
 }
