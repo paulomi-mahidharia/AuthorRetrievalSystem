@@ -3,8 +3,10 @@ package application;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
-import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_REMOVE;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_PROFILE;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
@@ -12,6 +14,7 @@ import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
+import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -60,10 +63,12 @@ public class ShortListAuthor {
 		
         
         Button btnRemoveShortlistedAuthor = new Button("Remove Selected Author");
+        Button btnViewShortlistedAuthor = new Button("View Selected Author Profile");
         HBox hbox = new HBox();
-        hbox.getChildren().add(btnRemoveShortlistedAuthor);
+        hbox.getChildren().addAll(btnRemoveShortlistedAuthor, btnViewShortlistedAuthor);
         hbox.setAlignment(Pos.BOTTOM_CENTER);
         hbox.setPadding(new Insets(15, 15, 15, 15));
+        hbox.setSpacing(10);
         
         btnRemoveShortlistedAuthor.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -78,8 +83,29 @@ public class ShortListAuthor {
 					table.getItems().remove(selectedAuthor);
 				}else{
 					AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
-							NO_SELECTED_AUTHOR);
+							NO_SELECTED_AUTHOR_REMOVE);
 				}			
+			}	
+		});
+        
+        btnViewShortlistedAuthor.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				Author selectedAuthor = table.getSelectionModel().getSelectedItem();
+				
+				if(selectedAuthor != null){
+					try {
+						SceneStack.pushSceneToStack(shortListScene);
+						AuthorScene.displayAuthorDisplayScene(selectedAuthor, primaryStage);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}else{
+					AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
+							NO_SELECTED_AUTHOR_PROFILE);
+				}	
 			}	
 		});
         
