@@ -54,4 +54,18 @@ public class TestSearchConferenceDao extends TestCase {
 		}
 		assertEquals(0, confs.size());
 	}
+	
+	@Test
+	public void testRetrieveDistinctConf(){
+		String queryString = "SELECT DISTINCT name FROM conference";
+		SearchConferenceDao searchConfDao = new SearchConferenceDaoImpl();
+		List<Conference> confs = new ArrayList<Conference>();
+		try{
+			confs = searchConfDao.retrieveConference(queryString);
+		}catch(SQLException e){
+			assertTrue(false);
+		}
+		assertTrue(confs.size() > 0);
+		assertEquals(12, confs.size()); // for now there are only 12 distinct confs
+	}
 }

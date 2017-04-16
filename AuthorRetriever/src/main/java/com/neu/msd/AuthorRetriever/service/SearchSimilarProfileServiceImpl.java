@@ -3,6 +3,7 @@ package com.neu.msd.AuthorRetriever.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +12,7 @@ import com.neu.msd.AuthorRetriever.dao.SearchSimilarAuthorsDao;
 import com.neu.msd.AuthorRetriever.dao.SearchSimilarAuthorsDaoImpl;
 import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.util.CriteriaUtil;
 
 public class SearchSimilarProfileServiceImpl implements SearchSimilarProfileService {
 
@@ -39,8 +41,9 @@ public class SearchSimilarProfileServiceImpl implements SearchSimilarProfileServ
 		finalList.addAll(l1);
 		finalList.addAll(l2);
 		
-		
-		return new ArrayList<Author>(finalList);
+		List<Author> authorList = new ArrayList<Author>(finalList);
+		Collections.sort(authorList);
+		return authorList;
 
 	}
 

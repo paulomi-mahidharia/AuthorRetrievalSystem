@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Inproceeding;
 
-public class Author {
+public class Author implements Comparable<Author> {
 
 	private int authorId;
 	private String authorKey;
@@ -135,8 +135,19 @@ public class Author {
 
 	@Override
 	public boolean equals(Object obj) {
-		Author a = (Author) obj;
+		Author a;
+		try{
+			a = (Author) obj;
+		}catch(Exception e){
+			System.out.println("Error in casting object o to Author");
+			return false;
+		}
 		return this.authorId == a.getAuthorId();
+	}
+
+	@Override
+	public int compareTo(Author o) {
+		return getName().compareTo(o.getName());
 	}
 
 }

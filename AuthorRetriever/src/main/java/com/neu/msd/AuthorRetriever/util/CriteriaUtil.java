@@ -16,4 +16,9 @@ public class CriteriaUtil {
 		
 		return tableName+"."+ columnName + " LIKE " + "'%" + value + "%'";
 	}
+	
+	public static String orderByCriteriaQuery(String tableName, String columnName, String order){
+		
+		return "order by " + tableName+"."+ columnName + " " + order;
+	}
 }
