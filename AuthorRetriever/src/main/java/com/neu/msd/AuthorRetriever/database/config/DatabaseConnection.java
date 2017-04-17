@@ -25,7 +25,7 @@ public class DatabaseConnection {
 			
 		} catch (Exception e) {
 			System.out.println("Unable to read Properties file");
-			// Jenkins is unabel to read from properties file.
+			// Jenkins is unable to read from properties file.
 			// provide aws creds
 			dbUrl = "jdbc:mysql://dblp.c1lyqqia3dks.us-east-1.rds.amazonaws.com:3306/dblp_new";
 			user = "msddblp";
