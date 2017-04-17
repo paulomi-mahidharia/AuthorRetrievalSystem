@@ -27,7 +27,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_AUTHOR_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_PAPER_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_SERVICE_INFO;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEPARATOR_STYLE;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEPARATOR_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERVED_OPTIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.TO_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.YEAR_RANGE;
