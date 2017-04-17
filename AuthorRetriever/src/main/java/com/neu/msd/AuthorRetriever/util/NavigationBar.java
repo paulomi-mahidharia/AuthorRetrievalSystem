@@ -1,6 +1,8 @@
 package com.neu.msd.AuthorRetriever.util;
 
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
@@ -92,6 +94,10 @@ public final class NavigationBar {
 		Text scenetitle = null;
 		
 		switch(view){
+		
+		case LOGIN: 
+			scenetitle = new Text(LOGIN_TITLE);
+			break;
 		
 		case SEARCH: 
 			scenetitle = new Text(SEARCH_TITLE);

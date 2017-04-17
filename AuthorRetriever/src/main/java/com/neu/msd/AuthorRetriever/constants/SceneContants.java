@@ -15,6 +15,7 @@ public class SceneContants {
 	public static final String RESULT = "result";
 	public static final String AUTHOR = "author";
 	
+	public static final String LOGIN_TITLE = "AUTHOR RETRIEVAL SYSTEM";
 	public static final String SEARCH_TITLE = "SEARCH AUTHORS";
 	public static final String RESULT_TITLE = "RESULT";
 	public static final String AUTHOR_TITLE = "AUTHOR PROFILE";
@@ -31,6 +32,17 @@ public class SceneContants {
 	
 	public static final double PROGRESS_INDICATOR_DIMENSION = 150;
 	
+	/**
+	 * LOGIN SCENE CONTROLS
+	 */
+	public static final String USER_NAME = "Username:";
+	public static final String PROMPT_USER_NAME = "Enter username:";
+	public static final String PASSWORD = "Password:";
+	public static final String PROMPT_PASSWORD = "Enter password:";
+	
+	/**
+	 * SEARCH SCENE CONTROLS
+	 */
 	//Constants for paper criteria
 	public static final String SEARCH_PAPER_INFO = "Search based on paper information";
 	public static final String NUM_OF_PUBLICATIONS = "Number of minimum Publications:";

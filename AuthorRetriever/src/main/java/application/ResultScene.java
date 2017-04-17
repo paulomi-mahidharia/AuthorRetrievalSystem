@@ -36,8 +36,6 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
-
-
 /**
  *  The below class is used to display the list of author according to the search criteria that is specified by user
  *  The data is displayed on result page where the page displays list of authors with author information
@@ -138,7 +136,7 @@ public class ResultScene {
                 }
              SceneStack.pushSceneToStack(resultScene);
              try {
-				AuthorScene.displayAuthorDisplayScene(author,primaryStage);
+				AuthorScene.displayAuthorDisplayScene(author, primaryStage);
              } catch (SQLException e) {
 				// TODO Auto-generated catch block
 				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
