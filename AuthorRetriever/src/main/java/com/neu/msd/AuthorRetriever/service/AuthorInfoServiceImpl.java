@@ -39,7 +39,7 @@ public class AuthorInfoServiceImpl implements AuthorInfoService {
 		List<AuthorPaper> authorPapers = new ArrayList<AuthorPaper>();
 		
 		String queryString = "SELECT * FROM paper WHERE paper.paper_id IN (SELECT paper_Id FROM author_paper_mapping WHERE author_paper_mapping.Author_id = "+authorId+")";
-		
+		System.out.println(queryString);
 		authorPapers = searchPaperDao.retrievePapers(queryString);
 		
 		return authorPapers;

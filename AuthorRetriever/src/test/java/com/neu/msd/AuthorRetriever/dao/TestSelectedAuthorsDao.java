@@ -8,16 +8,16 @@ public class TestSelectedAuthorsDao extends TestCase {
 
 	@Test
 	public void testAddSelectedAuthor(){
-		
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testRetrieveSelectedAuthors(){
-		
+		assertTrue(true);
 	}
 	
 	@Test
 	public void testDeleteSelectedAuthors(){
-		
+		assertTrue(true);
 	}
 }

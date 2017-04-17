@@ -62,6 +62,8 @@ public class TestParser extends TestCase{
         selectStmt = dbConnection.prepareStatement("select * from thesis");
         rs = selectStmt.executeQuery();
         assertTrue(rs.next());
+        
+        cleanup();
     }	
 	
 	public void cleanup(){
@@ -92,7 +94,6 @@ public class TestParser extends TestCase{
 			deleteStmt = dbConnection.prepareStatement("delete from thesis");
 			deleteStmt.execute();
 			
-			dbConnection.commit();
 		}catch(SQLException e) {
 			System.out.println("Error opening connection with database");
 			e.printStackTrace();

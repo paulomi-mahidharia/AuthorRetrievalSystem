@@ -14,7 +14,7 @@ public class TestSearchAuthorDao extends TestCase {
 
 	@Test
 	public void testSearchAuthorByCriteriaValidQuery(){
-		String query = "SELECT * FROM author where author.id = 1";
+		String query = "SELECT * FROM author where author.id = 1048561";
 		SearchAuthorDao searchAuthor = new SearchAuthorDaoImpl();
 		List<Author> authors= new ArrayList<Author>();
 		try{
@@ -28,7 +28,7 @@ public class TestSearchAuthorDao extends TestCase {
 	@Test
 	public void testSearchAuthorByQueryInvalidQuery(){
 		//invalid column name
-		String query = "SELECT * FROM author where author.author_id = 1";
+		String query = "SELECT * FROM author where author.author_id = 1048561";
 		SearchAuthorDao searchAuthor = new SearchAuthorDaoImpl();
 		List<Author> authors= new ArrayList<Author>();
 		try{

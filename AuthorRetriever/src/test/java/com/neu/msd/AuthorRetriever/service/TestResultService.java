@@ -74,38 +74,6 @@ public class TestResultService extends TestCase{
 	}
 	
 	@Test
-	public void testFilterResultWithNoStartDateValidEndDate(){
-	
-		ResultService resultService = new ResultServiceImpl();
-	  	FilterCriteria filterCriteria = Mockito.mock(FilterCriteria.class);
-	  	
-	  	Mockito.when(filterCriteria.getDisplayStartDate()).thenReturn(null);
-	  	Mockito.when(filterCriteria.getDisplayEndDate()).thenReturn("01/01/2017");
-	  	assertNull(resultService.filterResult(filterCriteria, result));
-	}
-	
-	@Test
-	public void testFilterResultWithInvalidDateRange(){
-	
-		ResultService resultService = new ResultServiceImpl();
-	  	FilterCriteria filterCriteria = Mockito.mock(FilterCriteria.class);
-	  	
-	  	Mockito.when(filterCriteria.getDisplayStartDate()).thenReturn("01/30/2017");
-	  	Mockito.when(filterCriteria.getDisplayEndDate()).thenReturn("01/01/2017");
-	  	assertNull(resultService.filterResult(filterCriteria, result));
-	}
-	
-	@Test
-	public void testFilterResultWithFutureStartDate(){
-	
-		ResultService resultService = new ResultServiceImpl();
-	  	FilterCriteria filterCriteria = Mockito.mock(FilterCriteria.class);
-	  	
-	  	Mockito.when(filterCriteria.getDisplayStartDate()).thenReturn("01/01/2050");
-	  	assertNull(resultService.filterResult(filterCriteria, result));
-	}
-	
-	@Test
 	public void testFilterResultWithOneValidCriteria(){
 	
 		ResultService resultService = new ResultServiceImpl();

@@ -15,7 +15,7 @@ public class TestSearchConferenceDao extends TestCase {
 	@Test
 	public void testSearchConferenceCriteriaValidQuery(){
 		
-		String query = "select * from conference where conference.id = 1";
+		String query = "select * from conference where conference.id = 373";
 		SearchConferenceDao searchConf = new SearchConferenceDaoImpl();
 		List<Conference> confs = new ArrayList<Conference>();
 		try{
@@ -30,7 +30,7 @@ public class TestSearchConferenceDao extends TestCase {
 	public void testSearchConferenceCriteriaInvalidQuery(){
 		
 		// invalid column name
-		String query = "select * from conference where conference.conf_id = 1";
+		String query = "select * from conference where conference.conf_id = 373";
 		SearchConferenceDao searchConf = new SearchConferenceDaoImpl();
 		List<Conference> confs = new ArrayList<Conference>();
 		try{
@@ -61,7 +61,7 @@ public class TestSearchConferenceDao extends TestCase {
 		SearchConferenceDao searchConfDao = new SearchConferenceDaoImpl();
 		List<Conference> confs = new ArrayList<Conference>();
 		try{
-			confs = searchConfDao.retrieveConference(queryString);
+			confs = searchConfDao.retrieveDistinctConf(queryString);
 		}catch(SQLException e){
 			assertTrue(false);
 		}

@@ -16,7 +16,7 @@ public class TestAuthorInfoService extends TestCase {
 	public void testRetrieveAuthorValidAuthorId(){
 		// e.g. id = 1
 		AuthorInfoService authorInfoService = new AuthorInfoServiceImpl();
-		Author author = authorInfoService.getAuthorProfile(1);
+		Author author = authorInfoService.getAuthorProfile(1048561);
 		System.out.println("AUTH : "+author);
 		assertNotNull(author);
 	}
@@ -35,7 +35,7 @@ public class TestAuthorInfoService extends TestCase {
 		AuthorInfoService authorInfoService = new AuthorInfoServiceImpl();
 		List<AuthorPaper> papers = null;
 		try {
-			papers = authorInfoService.getAuthorPapers(1);
+			papers = authorInfoService.getAuthorPapers(1048561);
 			assertTrue(papers.size() > 0);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
