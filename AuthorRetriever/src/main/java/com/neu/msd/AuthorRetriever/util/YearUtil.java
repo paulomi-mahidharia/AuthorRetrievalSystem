@@ -2,6 +2,12 @@ package com.neu.msd.AuthorRetriever.util;
 
 import com.neu.msd.AuthorRetriever.model.DateOptions;
 
+
+/**
+ * YearUtil is used to set the condition for search results according to the year criteria set by user
+ * @Given:String,int,int,String
+ * @return:A String according to year criteria
+ */
 public class YearUtil {
 
 	public static String formYearQuery(String type, int start, int end, String tablename) {

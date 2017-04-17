@@ -6,6 +6,11 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 
+/**
+ * This class is use to set database connection with aws RDS or local db
+ * This class is a singleton class and implements singletons design pattern
+ *
+ */
 public class DatabaseConnection {
     	
 	private static Properties prop = new Properties();

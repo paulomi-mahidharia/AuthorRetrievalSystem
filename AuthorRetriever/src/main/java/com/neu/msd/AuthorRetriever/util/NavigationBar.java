@@ -1,6 +1,7 @@
 package com.neu.msd.AuthorRetriever.util;
 
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
@@ -23,6 +24,14 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 
+
+
+
+/**
+ *The below class is used to generate headerPane for all UI components
+ *@Given: A string and a stage object
+ *@return:A object of BorderPane
+ */
 @SuppressWarnings("restriction")
 public final class NavigationBar {
 	

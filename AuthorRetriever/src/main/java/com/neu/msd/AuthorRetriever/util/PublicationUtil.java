@@ -1,5 +1,13 @@
 package com.neu.msd.AuthorRetriever.util;
 
+
+
+/**
+ * This class is used defined publicationUtil which are use to set constraints in a query String
+ * @Given:A string,string,boolean
+ * @return:A string.
+ *
+ */
 public class PublicationUtil {
 
 	public static String publicationQuery(String tableName, String conference, boolean isPublished) {
