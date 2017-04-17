@@ -9,8 +9,8 @@ public class TestUserDao extends TestCase {
 	@Test
 	public void testValidUser(){
 		UserDao userDao = new UserDaoImpl();
-		String username= "Abhinav";
-		String password = "Password1234@";
+		String username= "test";
+		String password = "test";
 		String queryString="select userId, password from UserCredentials where username=?";
 		assertTrue(userDao.login(username, password,queryString) > 0);
 	}

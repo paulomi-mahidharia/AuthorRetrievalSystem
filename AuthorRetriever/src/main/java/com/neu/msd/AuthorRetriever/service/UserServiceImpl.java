@@ -21,12 +21,30 @@ public class UserServiceImpl implements UserService {
 		return loggedInUser;
 	}
 
+	/**
+	 * User credentials to login to the system
+	 * 
+	 * @param Name
+	 *            of the user
+	 * @param password
+	 *            of the user
+	 * @return If the user has valid credentials to access the system.
+	 */
+	
 	public boolean login(String username, String password) {
 		// TODO Auto-generated method stub
 		String queryString = "select UserId, Password from UserCredentials where username=?";
 		loggedInUser = userDao.login(username, password, queryString);
 		return (loggedInUser != 0);
 	}
+	
+	/**
+	 * 
+	 * Add all selected authors to database
+	 * @Given:A list of short listed authors
+	 * @Return:Void
+	 *
+	 */
 	
 	
 	public void addSelectedAuthors(List<Author> authors) {
@@ -39,6 +57,14 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
+	/**
+	 * Gets a list of short listed authors
+	 * @Given:Void
+	 * @return:Returns a list of author
+	 *
+	 */
+	
+	
 	public List<Author> getAllAuthorsForUser() {
 		SelectedAuthorsDao selectedAuthorsDao;
 		List<Author> selectedAuthors = new ArrayList<Author>();
@@ -52,6 +78,13 @@ public class UserServiceImpl implements UserService {
 		return selectedAuthors;
 	}
 
+	/**
+	 * Register User to system.
+	 * @Given:A user object that is used to store user credentials in DB
+	 * @return:A boolean
+	 *
+	 */
+	
 	@Override
 	public boolean registerUser(User user) {
 		// TODO Auto-generated method stub
@@ -69,6 +102,13 @@ public class UserServiceImpl implements UserService {
 		return false;
 	}
 
+	/**
+	 * Deleted Selected Author from short listed author 
+	 * @Given:A authorId which is integer
+	 * @return:A boolean
+	 *
+	 */
+	
 	@Override
 	public boolean deleteSelectedAuthor(int authorId) {
 		boolean status;

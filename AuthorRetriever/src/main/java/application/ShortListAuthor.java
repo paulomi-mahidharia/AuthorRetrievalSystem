@@ -38,6 +38,14 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+
+
+/**
+ * The page is use to display a list of short listed authors using javaFX
+ * The page has the following functionality .We can remove author export the list of author as pdf.
+ * @Given A scene that consist of list of short listed authors with primary stage in it
+ * @returns A scene that contains short listed authors
+ */
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class ShortListAuthor {
 	

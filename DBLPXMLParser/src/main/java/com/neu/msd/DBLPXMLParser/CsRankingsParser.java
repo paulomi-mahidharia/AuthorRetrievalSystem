@@ -17,7 +17,7 @@ public class CsRankingsParser {
 	public static void main(String[] args) {
 		
 		// Please update the path for your Faculty Affiliation CSV file here.
-		String filepath = "faculty.csv";
+		String filepath = args.length > 0 ? args[0] :"faculty.csv";
 		
 		List<String> linesFromFile = loadLinesFromFile(filepath);
 		// Convert the list to an Array of Strings.

@@ -13,6 +13,8 @@ public class CommitteeMembersParser {
 
 	public static void main(String[] args) {
 		
+		String filepath = args.length > 0 ? args[0] :"commitees";
+		
 		File folder = new File("committees");
 		File[] listOfFiles = folder.listFiles();
 		

@@ -30,14 +30,16 @@ import com.neu.msd.DBLPXMLParser.model.Thesis;
 
 public class Parser {
 
+	private static String DEFAULT_PATH = "dblp.xml";
+	
 	public static void main(String[] args){
 		
-		
+		String file = args.length > 0 ? args[0] : DEFAULT_PATH;
 		Long start = System.currentTimeMillis();
 		try{
 			//stax
 			XMLInputFactory xif = XMLInputFactory.newFactory();
-			FileInputStream in = new FileInputStream("dblp.xml");
+			FileInputStream in = new FileInputStream(file);
 			XMLEventReader xer = xif.createXMLEventReader(in);
 			
 			xer.next();

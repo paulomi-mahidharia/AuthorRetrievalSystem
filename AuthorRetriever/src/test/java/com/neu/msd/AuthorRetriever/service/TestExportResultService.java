@@ -8,6 +8,6 @@ public class TestExportResultService extends TestCase {
 
 	@Test
 	public void testExportService(){
-		
+		assertTrue(true);
 	}
 }

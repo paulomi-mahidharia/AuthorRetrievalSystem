@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Constants that define different scenes attributes
+ *
+ */
 public class SceneContants {
 	
 	public static final String SEARCH = "search";

@@ -1,5 +1,11 @@
 package application;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.PASSWORD_PATTERN;
+
+import java.util.regex.Pattern;
+
 import com.neu.msd.AuthorRetriever.model.User;
 import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
@@ -21,12 +27,20 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+
+/**
+ * The below class is use to register user to the system.This class is used to build a Register page using javaFx.
+ * The Registration page takes username ,password,re enter password as input
+ * @Given A Primary Stage as input 
+ * @return:A registration page that is build using JavaFx
+ * 
+ */
 
 @SuppressWarnings({"restriction"})
 public class RegistrationScene {
 	
+	
+
 	public static void  getRegisterScene(Stage primaryStage){
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.CENTER);
@@ -79,8 +93,8 @@ public class RegistrationScene {
             	UserService user = new UserServiceImpl();
             	
             	
-            	
-            	
+            	if(validate(password)){
+            	System.out.println("To!!!");
             	if (password.equals(renterpassword)){
             		User userObject= new User(username,password);
             		Boolean isLoginSuccessful = user.registerUser(userObject);
@@ -95,12 +109,37 @@ public class RegistrationScene {
             		actiontarget.setFill(Color.FIREBRICK);
         			actiontarget.setText("Password and Renter Password  do not match!");
             	}
+            }else{
+            	actiontarget.setFill(Color.FIREBRICK);
+    			actiontarget.setText("Password doesn't match Password Criteria");
+        	}
             }
-        });
+            	
+            });
         
         Scene registerScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		primaryStage.setScene(registerScene);
 		primaryStage.show();
 		
 	}
+	/**
+	 * The below method is used to match password
+	 * A password should match following criteria 
+	 * 1)Should have atleast 1 lower and upper case character[a-z][A-Z]
+	 * 2)Should have atleast 1 number[0-9]
+	 * 3)It Should have atleast one special character [!,@,#,$,%,^,&,*]
+	 * 4)Length should be between 6-20 characters
+	 * @Given A string which is a password 
+	 * @return A boolean whether it  matches the password criteria or not
+	 */
+
+
+	
+	 public static boolean validate(final String password){
+		  Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+		  java.util.regex.Matcher matcher = pattern.matcher(password);
+		  return matcher.matches();
+
+	  }
+	
 }

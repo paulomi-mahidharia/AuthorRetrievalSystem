@@ -8,6 +8,6 @@ public class TestConferenceService extends TestCase {
 
 	@Test
 	public void testRetrieveDistinctConfs(){
-		
+		assertTrue(true);
 	}
 }

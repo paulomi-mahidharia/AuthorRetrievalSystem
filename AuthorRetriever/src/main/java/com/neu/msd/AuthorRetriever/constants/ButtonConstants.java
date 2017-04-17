@@ -1,5 +1,11 @@
 package com.neu.msd.AuthorRetriever.constants;
 
+
+
+/**
+ * Constants that define buttons
+ *
+ */
 public class ButtonConstants {
 	public static final String SEARCH = "search";
 	public static final String LOGIN = "login";

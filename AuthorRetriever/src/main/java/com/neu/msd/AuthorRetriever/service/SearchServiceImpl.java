@@ -23,6 +23,13 @@ public class SearchServiceImpl implements SearchService {
 
 	private SearchAuthorDao searchDao = new SearchAuthorDaoImpl();
 	
+	/**
+	 * Search for authors based on the given search criteria
+	 * @param criteria search criteria 
+	 * @return list of authors matching the criteria
+	 * @throws SQLException 
+	 */
+	
 	@Override
 	public List<Author> searchAuthorsByCriteria(SearchCriteria criteria) throws SQLException {
 		

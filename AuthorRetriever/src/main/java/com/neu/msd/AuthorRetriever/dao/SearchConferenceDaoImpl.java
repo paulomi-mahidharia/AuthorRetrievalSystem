@@ -11,9 +11,23 @@ import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.AuthorPaper;
 import com.neu.msd.AuthorRetriever.model.Conference;
 
+/**
+ * The below class is used to define two methods 
+ * 1)Retrieve a list of conference names 
+ * 2)Retrieve a list of distinct conference name
+ *
+ */
+
 public class SearchConferenceDaoImpl implements SearchConferenceDao {
 
 	private Connection conn = DatabaseConnection.getConn();
+	
+	/**
+	 * @param A query String to retrieve conferences from database
+	 * @return A list of conference
+	 * Retrieve a list of conferences
+	 */
+
 
 	@Override
 	public List<Conference> retrieveConference(String queryString) throws SQLException {
@@ -34,6 +48,11 @@ public class SearchConferenceDaoImpl implements SearchConferenceDao {
 		}
 		return confs;
 	}
+	/**
+	 * @param A query String to retrieve conferences from database
+	 * @return A list of conference
+	 * Retrieve a list of  distinct conferences
+	 */
 	
 	@Override
 	public List<Conference> retrieveDistinctConf(String queryString) throws SQLException {
