@@ -22,4 +22,6 @@ public class ButtonConstants {
 	public static final String SHORTLIST_AUTHOR= "Shortlist Author";
 	public static final int SCENE_LENGTH = 1000;
 	public static final int SCENE_WIDTH = 1000;
+	
+	public static final String BUTTON_STYLE = "-fx-border-color: #b22222";
 }

@@ -7,6 +7,10 @@ package com.neu.msd.AuthorRetriever.constants;
  *
  */
 public class ValidationConstants {
+	
+	public static final String ALERT_ERROR = "Error";
+	public static final String ALERT_HEADER = "Oops, you got soemthing wrong!";
+	
 	public static final String VALID_CRITERIA = "The Search Criteria is valid";
 	public static final String NO_CRITERIA_SELECTED = "Please select criteria based on Paper and/or Service Information";
 	
@@ -34,6 +38,6 @@ public class ValidationConstants {
 	public static final String EMPTY_AUTHOR = "Author name cannot be empty or null";
 	public static final String INVALID_AUTHOR = "Invalid author name";
 	public static final String VALID_AUHTOR = "Valid author name";
-	public	 static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+	public static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 
 }
