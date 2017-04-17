@@ -61,7 +61,7 @@ import javafx.stage.Stage;
 public class LoginScene {
 
 	private static boolean isLoginSuccessful = false;
-	private static StackPane stackPane = null;
+	private static StackPane stackPane;
 
 	public static void displayLoginScene(Stage primaryStage) {
 

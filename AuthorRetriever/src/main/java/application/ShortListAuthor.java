@@ -1,5 +1,7 @@
 package application;
 
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.PROGRESS_COLOR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROGRESS_INDICATOR_DIMENSION;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
@@ -12,6 +14,10 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.model.AuthorPaper;
+import com.neu.msd.AuthorRetriever.model.Conference;
+import com.neu.msd.AuthorRetriever.service.AuthorInfoService;
+import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
 import com.neu.msd.AuthorRetriever.service.ExportResult;
 import com.neu.msd.AuthorRetriever.service.ExportResultPdfImpl;
 import com.neu.msd.AuthorRetriever.service.UserService;
@@ -23,17 +29,22 @@ import com.neu.msd.AuthorRetriever.util.SceneStack;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -53,8 +64,11 @@ public class ShortListAuthor {
 	private static Scene shortListScene = null;
 	private static TableView<Author> table = null;
 	
+	private static StackPane stackPane = null;
+	
 	public static void displayShortListAuthor(Stage primaryStage){
 		
+		stackPane = new StackPane();
 		table = new TableView<>();
 		UserServiceImpl userServiceImpl = new UserServiceImpl();
 		shortlistAuthor = userServiceImpl.getAllAuthorsForUser();
@@ -108,6 +122,20 @@ public class ShortListAuthor {
         hbox.setPadding(new Insets(15, 15, 15, 15));
         hbox.setSpacing(10);
         
+        BorderPane bp = new BorderPane();
+		bp.setPadding(new Insets(25, 25, 25, 25));
+		
+		BorderPane headerPane = NavigationBar.getHeaderPane(RESULT, primaryStage);
+		headerPane.setPadding(new Insets(0, 0, 15, 0));
+		bp.setTop(headerPane);
+		bp.setBottom(hbox);
+		bp.setCenter(table);
+	
+		stackPane.getChildren().add(bp);
+		shortListScene = new Scene(stackPane, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
+		primaryStage.setScene(shortListScene);
+		
+        
         btnRemoveShortlistedAuthor.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -133,14 +161,8 @@ public class ShortListAuthor {
 				Author selectedAuthor = table.getSelectionModel().getSelectedItem();
 				
 				if(selectedAuthor != null){
-					try {
-						SceneStack.pushSceneToStack(shortListScene);
-						AuthorScene.displayAuthorDisplayScene(selectedAuthor, primaryStage);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
-								ERROR_RETRIEVING_AUTHOR);
-					}
+					
+					loadAuthorInformation(selectedAuthor, primaryStage, bp);
 				}else{
 					AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
 							NO_SELECTED_AUTHOR_PROFILE);
@@ -148,17 +170,58 @@ public class ShortListAuthor {
 			}	
 		});
         
-        BorderPane bp = new BorderPane();
-		bp.setPadding(new Insets(25, 25, 25, 25));
-		
-		BorderPane headerPane = NavigationBar.getHeaderPane(RESULT, primaryStage);
-		headerPane.setPadding(new Insets(0, 0, 15, 0));
-		bp.setTop(headerPane);
-		bp.setBottom(hbox);
-		bp.setCenter(table);
-	
-		shortListScene = new Scene(bp, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-		primaryStage.setScene(shortListScene);
 		primaryStage.show();
 	}
+	
+	private static void loadAuthorInformation(Author author, Stage primaryStage, BorderPane bp){
+		ProgressIndicator indicator = new ProgressIndicator();
+		indicator.setStyle(PROGRESS_COLOR);
+		indicator.setMinSize(PROGRESS_INDICATOR_DIMENSION, PROGRESS_INDICATOR_DIMENSION);
+
+		VBox loadingPane = new VBox();
+		loadingPane.getChildren().addAll(indicator);
+		loadingPane.setAlignment(Pos.CENTER);
+		stackPane.getChildren().add(loadingPane);
+		
+		Task<Void> longTask = new Task<Void>() {
+			@Override
+			protected Void call() throws Exception {
+				
+				SceneStack.pushSceneToStack(shortListScene);
+	             try {
+	            	AuthorInfoService authorInfoService=new AuthorInfoServiceImpl();
+	         		List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(author.getAuthorId());
+	         		List<Conference>conferences=authorInfoService.getAuthorConferenceServed(author.getAuthorId());
+					
+	         		author.setPapers(paperInfo);
+	         		author.setConferences(conferences);
+	             } catch (SQLException e) {
+	            	loadingPane.setVisible(false);
+		    		bp.setDisable(false);
+					AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", 
+							ERROR_RETRIEVING_AUTHOR);
+	             }
+	             
+	             return null;
+            }
+		};
+
+		longTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+			@Override
+			public void handle(WorkerStateEvent t) {
+				loadingPane.setVisible(false);
+	    		bp.setDisable(false);
+	    		AuthorScene.displayAuthorDisplayScene(author,primaryStage);
+            }
+        });
+	    
+	    indicator.progressProperty().bind(longTask.progressProperty());
+
+	    loadingPane.setVisible(true);
+	    bp.setDisable(true);
+        
+        new Thread(longTask).start();
+	}
 }
+
+

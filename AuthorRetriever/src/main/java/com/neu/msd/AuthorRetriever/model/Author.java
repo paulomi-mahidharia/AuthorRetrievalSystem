@@ -20,6 +20,8 @@ public class Author implements Comparable<Author> {
 	private List<Article> articles;
 	private List<Thesis> thesis;
 	private List<Journal> journals;
+	private List<AuthorPaper> papers;
+	private List<Conference> conferences;
 
 	public int getAuthorId() {
 		return authorId;
@@ -148,6 +150,22 @@ public class Author implements Comparable<Author> {
 	@Override
 	public int compareTo(Author o) {
 		return getName().compareTo(o.getName());
+	}
+
+	public List<AuthorPaper> getPapers() {
+		return papers;
+	}
+
+	public void setPapers(List<AuthorPaper> papers) {
+		this.papers = papers;
+	}
+
+	public List<Conference> getConferences() {
+		return conferences;
+	}
+
+	public void setConferences(List<Conference> conferences) {
+		this.conferences = conferences;
 	}
 
 }
