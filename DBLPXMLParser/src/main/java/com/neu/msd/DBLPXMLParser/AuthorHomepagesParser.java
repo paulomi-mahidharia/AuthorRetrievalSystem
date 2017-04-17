@@ -16,7 +16,7 @@ public class AuthorHomepagesParser {
 	public static void main(String[] args) {
 		
 		// Please update the path for your Faculty Affiliation CSV file here.
-		String filepath = "homepages.csv";
+		String filepath = args.length > 0 ? args[0] : "homepages.csv";
 		
 		List<String> linesFromFile = loadLinesFromFile(filepath);
 		// Convert the list to an Array of Strings.

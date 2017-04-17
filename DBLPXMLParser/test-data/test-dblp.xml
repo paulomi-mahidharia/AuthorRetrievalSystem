@@ -1,0 +1,60 @@
+<dblp>
+	<article mdate="2011-01-11" key="journals/acta/Saxena96">
+		<author>Sanjeev Saxena</author>
+		<title>Parallel Integer Sorting and Simulation Amongst CRCW Models.</title>
+		<pages>607-619</pages>
+		<year>1996</year>
+		<volume>33</volume>
+		<journal>Acta Inf.</journal>
+		<number>7</number>
+		<url>db/journals/acta/acta33.html#Saxena96</url>
+		<ee>http://dx.doi.org/10.1007/BF03036466</ee>
+	</article>
+	
+	
+	<inproceedings mdate="2011-06-14" key="journals/lncs/Novak91">
+		<author>Hans-Joachim Novak</author>
+		<title>Integrating a Generation Component into a Natural Language Understanding System.</title>
+		<pages>659-669</pages>
+		<year>1991</year>
+		<crossref>journals/lncs/1991-546</crossref>
+		<booktitle>Text Understanding in LILOG</booktitle>
+		<url>db/journals/lncs/lncs546.html#Novak91</url>
+		<ee>http://dx.doi.org/10.1007/3-540-54594-8_85</ee>
+	</inproceedings>
+	
+	<proceedings mdate="2016-03-11" key="journals/thipeac/2009-2">
+		<editor>Per Stenstrom</editor>
+		<title>Transactions on High-Performance Embedded Architectures and Compilers II</title>
+		<volume>5470</volume>
+		<year>2009</year>
+		<ee>http://dx.doi.org/10.1007/978-3-642-00904-4</ee>
+		<isbn>978-3-642-00903-7</isbn>
+		<booktitle>Trans. HiPEAC</booktitle>
+		<series href="db/journals/lncs.html">Lecture Notes in Computer Science</series>
+		<publisher>Springer</publisher>
+		<url>db/journals/thipeac/thipeac2.html</url>
+	</proceedings>
+	
+	<phdthesis mdate="2011-03-23" key="books/daglib/0071011">
+		<author>Jie-Ming J. Wang</author>
+		<title>Visual logic - a visual source code animation system for teaching computer science at school.</title>
+		<pages>I-XI, 1-169</pages>
+		<school>TH Darmstadt</school>
+		<year>1993</year>
+	</phdthesis>
+	
+	<mastersthesis mdate="2002-01-03" key="ms/Brown92">
+		<author>Kurt P. Brown</author>
+		<title>PRPL: A Database Workload Specification Language, v1.3.</title>
+		<year>1992</year>
+		<school>Univ. of Wisconsin-Madison</school>
+	</mastersthesis>
+	
+	<www mdate="2005-10-06" key="persons/Ley2003">
+		<author>Michael Ley</author>
+		<title>ACM SIGMOD Contribution Award 2003 Acceptance Speech</title>
+		<year>2003</year>
+		<url>http://www.informatik.uni-trier.de/~ley/db/about/contributionaward03.html</url>
+	</www>
+</dblp>
