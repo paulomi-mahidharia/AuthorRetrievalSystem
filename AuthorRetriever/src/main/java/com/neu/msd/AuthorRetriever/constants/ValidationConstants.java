@@ -38,6 +38,6 @@ public class ValidationConstants {
 	public static final String EMPTY_AUTHOR = "Author name cannot be empty or null";
 	public static final String INVALID_AUTHOR = "Invalid author name";
 	public static final String VALID_AUHTOR = "Valid author name";
-	public	 static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
+	public static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 
 }
