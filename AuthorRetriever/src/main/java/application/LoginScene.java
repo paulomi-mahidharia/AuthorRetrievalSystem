@@ -6,14 +6,21 @@ import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.REGISTER;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SIGN_IN;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.FONT_TYPE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.HEADER_FONT_SIZE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PASSWORD;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROGRESS_INDICATOR_DIMENSION;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_PASSWORD;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_USER_NAME;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_GAP;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_PADDING;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.USER_NAME;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_ERROR;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_HEADER;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_CONFERENCES_AVAILABLE;
+import static com.neu.msd.AuthorRetriever.util.NavigationBar.getHeaderPane;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -38,6 +45,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -47,6 +55,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 /**
  * The below class is use to display login scene.The user can either register or
@@ -72,36 +82,39 @@ public class LoginScene {
 
 		GridPane grid = setUpGrid();
 
-		Text scenetitle = new Text("Welcome!");
-		scenetitle.setFont(Font.font(FONT_TYPE, FontWeight.NORMAL, HEADER_FONT_SIZE));
-		grid.add(scenetitle, 0, 0, 2, 1);
+		BorderPane scenetitle = getHeaderPane(LOGIN, primaryStage);
+		scenetitle.getChildren().remove(0);
+		scenetitle.getChildren().remove(1);
+		grid.add(scenetitle, 0, 0, 10, 1);
 
-		Label userName = new Label("User Name:");
-		grid.add(userName, 0, 1);
+		Label userName = new Label(USER_NAME);
+		grid.add(userName, 0, 25);
 
 		TextField userTextField = new TextField();
-		userTextField.setPromptText("Enter username");
-		grid.add(userTextField, 1, 1);
+		userTextField.setPromptText(PROMPT_USER_NAME);
+		grid.add(userTextField, 1, 25);
 
-		Label pw = new Label("Password:");
-		grid.add(pw, 0, 2);
+		Label pw = new Label(PASSWORD);
+		grid.add(pw, 0, 26);
 
 		PasswordField pwBox = new PasswordField();
-		pwBox.setPromptText("Enter password");
-		grid.add(pwBox, 1, 2);
+		pwBox.setPromptText(PROMPT_PASSWORD);
+		grid.add(pwBox, 1, 26);
 
 		Button btnSignin = new Button(SIGN_IN);
 		btnSignin.setStyle(BUTTON_STYLE);
+		showHandCursor(btnSignin);
 		Button btnRegister = new Button(REGISTER);
 		btnRegister.setStyle(BUTTON_STYLE);
+		showHandCursor(btnRegister);
 		
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().addAll(btnSignin, btnRegister);
-		grid.add(hbBtn, 1, 4);
+		grid.add(hbBtn, 1, 28);
 
 		final Text actiontarget = new Text();
-		grid.add(actiontarget, 1, 6);
+		grid.add(actiontarget, 1, 30);
 
 		stackPane.getChildren().add(grid);
 
@@ -135,7 +148,7 @@ public class LoginScene {
 	private static GridPane setUpGrid() {
 
 		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.CENTER);
+		grid.setAlignment(Pos.TOP_CENTER);
 		grid.setHgap(SCENE_GRID_GAP);
 		grid.setVgap(SCENE_GRID_GAP);
 		grid.setPadding(new Insets(SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING));

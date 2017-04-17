@@ -5,14 +5,11 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROGRESS_INDIC
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
-import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_ERROR;
-import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_HEADER;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ERROR_RETRIEVING_AUTHOR;
-import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_CONFERENCES_AVAILABLE;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.io.File;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
@@ -20,14 +17,9 @@ import com.neu.msd.AuthorRetriever.model.AuthorPaper;
 import com.neu.msd.AuthorRetriever.model.Conference;
 import com.neu.msd.AuthorRetriever.service.AuthorInfoService;
 import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
-import com.neu.msd.AuthorRetriever.service.ConferenceService;
-import com.neu.msd.AuthorRetriever.service.ConferenceServiceImpl;
 import com.neu.msd.AuthorRetriever.service.ExportResult;
 import com.neu.msd.AuthorRetriever.service.ExportResultPdfImpl;
-import com.neu.msd.AuthorRetriever.service.UserService;
-import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
-import com.neu.msd.AuthorRetriever.util.ConferenceUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 
@@ -100,10 +92,11 @@ public class ResultScene {
         authorUrlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         
         table.getColumns().addAll(srNo, author, authorColumn, authorUrlColumn);
-        
+        showHandCursor(table);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         Button btnBackToSearch = new Button("Search Page");
+        showHandCursor(btnBackToSearch);
         btnBackToSearch.setStyle("-fx-border-color: #b22222");
        
 		btnBackToSearch.setOnAction(new EventHandler<ActionEvent>() {
@@ -117,6 +110,7 @@ public class ResultScene {
 
 		
 	    Button buttonExportPdf = new Button("Export PDF");
+	    showHandCursor(buttonExportPdf);
 	    buttonExportPdf.setStyle("-fx-border-color: #b22222");
 	   
 		buttonExportPdf.setOnAction(new EventHandler<ActionEvent>() {
