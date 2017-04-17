@@ -53,6 +53,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SHORTLIST_AUTHOR;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 /**
  * Below class is use to display author details.This class is used to build UI for author information
@@ -136,19 +137,22 @@ public class AuthorScene {
         grid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
         
         Button btnResetSearch = new Button(RESTART_SEARCH);
+        showHandCursor(btnResetSearch);
         btnResetSearch.setStyle("-fx-border-color: #b22222");
         btnResetSearch.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
         Button btnSimilarAuthors = new Button(SEARCH_SIMILAR_AUTHOR);
+        showHandCursor(btnSimilarAuthors);
         btnSimilarAuthors.setStyle("-fx-border-color: #b22222");
         btnSimilarAuthors.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		
         
         Button btnShortListAuthor = new Button(SHORTLIST_AUTHOR);
+        showHandCursor(btnShortListAuthor);
         btnShortListAuthor.setStyle("-fx-border-color: #b22222");
         btnShortListAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
         Button btnaddSelectedAuthor =new Button(SHORTLIST_AUTHOR);
+        showHandCursor(btnaddSelectedAuthor);
         btnaddSelectedAuthor.setStyle("-fx-border-color: #b22222");
         btnaddSelectedAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         

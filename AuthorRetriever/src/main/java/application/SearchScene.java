@@ -40,6 +40,7 @@ import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.SQL_FAIL
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_AUHTOR;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_PAPER_CRITERIA;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_SERVICE_CRITERIA;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -311,6 +312,7 @@ public class SearchScene {
 		grid.add(authorNameValue, 1, 18);
 		
 		Button btnSearch = new Button(SEARCH_AUTHORS);
+		showHandCursor(btnSearch);
 		btnSearch.setStyle(BUTTON_STYLE);
 		
 		HBox hbBtn = new HBox(10);

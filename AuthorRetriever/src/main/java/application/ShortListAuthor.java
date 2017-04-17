@@ -6,6 +6,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_REMOVE;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_PROFILE;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ERROR_RETRIEVING_AUTHOR;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -77,12 +78,15 @@ public class ShortListAuthor {
 		
         
         Button btnRemoveShortlistedAuthor = new Button("Remove Selected Author");
+        showHandCursor(btnRemoveShortlistedAuthor);
         btnRemoveShortlistedAuthor.setStyle("-fx-border-color: #b22222");
         
         Button btnViewShortlistedAuthor = new Button("View Selected Author Profile");
+        showHandCursor(btnViewShortlistedAuthor);
         btnViewShortlistedAuthor.setStyle("-fx-border-color: #b22222");
         
         Button buttonExportPdf = new Button("Export PDF");
+        showHandCursor(buttonExportPdf);
 	    buttonExportPdf.setStyle("-fx-border-color: #b22222");
 	   
 		buttonExportPdf.setOnAction(new EventHandler<ActionEvent>() {

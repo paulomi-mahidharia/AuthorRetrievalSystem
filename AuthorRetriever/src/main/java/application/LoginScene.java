@@ -20,6 +20,7 @@ import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_ER
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_HEADER;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_CONFERENCES_AVAILABLE;
 import static com.neu.msd.AuthorRetriever.util.NavigationBar.getHeaderPane;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -102,8 +103,10 @@ public class LoginScene {
 
 		Button btnSignin = new Button(SIGN_IN);
 		btnSignin.setStyle(BUTTON_STYLE);
+		showHandCursor(btnSignin);
 		Button btnRegister = new Button(REGISTER);
 		btnRegister.setStyle(BUTTON_STYLE);
+		showHandCursor(btnRegister);
 		
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);

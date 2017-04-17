@@ -3,6 +3,7 @@ package application;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.PASSWORD_PATTERN;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.util.regex.Pattern;
 
@@ -74,6 +75,7 @@ public class RegistrationScene {
 		grid.add(renterpwBox, 1, 3);
 
 		Button btn = new Button("Register");
+		showHandCursor(btn);
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
 		hbBtn.getChildren().add(btn);

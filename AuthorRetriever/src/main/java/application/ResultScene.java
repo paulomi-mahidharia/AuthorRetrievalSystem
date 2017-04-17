@@ -4,6 +4,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ERROR_RETRIEVING_AUTHOR;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -73,11 +74,12 @@ public class ResultScene {
         TableColumn authorUrlColumn = new TableColumn("URL");
         authorUrlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         
-        table.getColumns().addAll(srNo, author, authorColumn, authorUrlColumn);
-        
+        table.getColumns().addAll(srNo, author, authorColumn, authorUrlColumn);    
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        showHandCursor(table);
         
         Button btnBackToSearch = new Button("Search Page");
+        showHandCursor(btnBackToSearch);
         btnBackToSearch.setStyle("-fx-border-color: #b22222");
        
 		btnBackToSearch.setOnAction(new EventHandler<ActionEvent>() {
@@ -91,6 +93,7 @@ public class ResultScene {
 
 		
 	    Button buttonExportPdf = new Button("Export PDF");
+	    showHandCursor(buttonExportPdf);
 	    buttonExportPdf.setStyle("-fx-border-color: #b22222");
 	   
 		buttonExportPdf.setOnAction(new EventHandler<ActionEvent>() {
