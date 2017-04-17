@@ -1,5 +1,12 @@
 package com.neu.msd.AuthorRetriever.constants;
 
+
+
+
+/**
+ * Constants that define different scenes 
+ *
+ */
 public class SceneContants {
 	
 	public static final String SEARCH = "search";

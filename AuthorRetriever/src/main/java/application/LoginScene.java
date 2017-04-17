@@ -13,7 +13,6 @@ import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.ConferenceUtil;
-import com.neu.msd.AuthorRetriever.util.SceneStack;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,6 +32,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
+/**
+ * The below class is use to display login scene.The user can either register or login into the system.This class is used 
+ * to build UI for login screen.The user has to enter user name and password to successfully login into the system.
+ * Below class calls a api service which validates user login .
+ * @Given:A stage which is a java UI component to display the login page.
+ * @return:This class doesn't return anything.
+ */
 @SuppressWarnings({"restriction"})
 public class LoginScene {
 	

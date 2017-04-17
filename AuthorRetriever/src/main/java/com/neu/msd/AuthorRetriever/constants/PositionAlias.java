@@ -1,5 +1,12 @@
 package com.neu.msd.AuthorRetriever.constants;
 
+
+
+/**
+ * Constants that are used to define  conference chair
+ * 
+ *
+ */
 public class PositionAlias {
 	
 	public static final String ALL_ALIAS = null;

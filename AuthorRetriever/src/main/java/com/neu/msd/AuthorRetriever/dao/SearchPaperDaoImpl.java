@@ -12,7 +12,18 @@ import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.AuthorPaper;
 import com.neu.msd.AuthorRetriever.model.Paper;
 
+
+/**
+ * This class is use to implement SearchPaperDao to retrieve List of Author Paper mapping objects 
+ *
+ */
 public class SearchPaperDaoImpl implements SearchPaperDao {
+
+	/**
+	 * @param A query String to retrieve a list of AuthorPaper from database
+	 * @return A list of AuthorPaper Mapping
+	 * Retrieve a list of  Author Paper mappings from database.
+	 */
 
 	private Connection conn = DatabaseConnection.getConn();
 	

@@ -18,6 +18,7 @@ public class SelectedAuthorsDaoImpl implements SelectedAuthorsDao {
 	PreparedStatement retrieveSelectedAuthors;
 	PreparedStatement removeSelectedAuthor;
 	
+	
 	public SelectedAuthorsDaoImpl() throws SQLException {
 		conn = DatabaseConnection.getConn();
 		conn.setAutoCommit(false);
@@ -29,6 +30,13 @@ public class SelectedAuthorsDaoImpl implements SelectedAuthorsDao {
 				.prepareStatement("Delete from selected_authors where author_Id= ? and user_id = ?");
 	}
 
+	/**
+	 * add authors selected by the user to a list 
+	 * @param authorId, List of authors to be inserted
+	 * @return Nothing
+	 * Add author to list of short listed author
+	 */
+	
 	@Override
 	public void addSelectedAuthors(int userId, List<Author> authors) throws SQLException {
 
@@ -43,8 +51,9 @@ public class SelectedAuthorsDaoImpl implements SelectedAuthorsDao {
 	
 	/**
 	 * @param userId
-	 * @return
+	 * @return A list of author
 	 * @throws SQLException
+	 * Returns a list of short listed authors
 	 */
 	@Override
 	public List<Author> getSelectedAuthorsForUser(int userId) throws SQLException {
@@ -69,6 +78,15 @@ public class SelectedAuthorsDaoImpl implements SelectedAuthorsDao {
 		System.out.println(authorList.size());
 		return authorList;
 	}
+	
+	/**
+	 * @param userId
+	 * @param authorId
+	 * @return Boolean specifying whether author was deleted or not 
+	 * @throws SQLException
+	 * Delete a selected author
+	 */
+	
 	
 	@Override
 	public boolean deleteSelectedAuthors(int userId, int authorId) throws SQLException {

@@ -13,6 +13,13 @@ import com.neu.msd.AuthorRetriever.model.Author;
 public class SearchSimilarAuthorsDaoImpl implements SearchSimilarAuthorsDao {
 
 	private Connection conn = DatabaseConnection.getConn();
+	
+	/**
+	 * @param A query String to retrieve a list of similar author from database
+	 * @return A list of Author from database
+	 * Retrieve a list of  similar author  from database.
+	 * @throws SQL Exception
+	 */
 
 	@Override
 	public List<Author> searchSimilarAuthors(String queryString) throws SQLException {
