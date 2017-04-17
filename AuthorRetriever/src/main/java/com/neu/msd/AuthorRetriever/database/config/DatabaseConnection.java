@@ -23,8 +23,14 @@ public class DatabaseConnection {
 			user = prop.getProperty("aws.db.username");
 			password = prop.getProperty("aws.db.password");
 			
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.out.println("Unable to read Properties file");
+			// Jenkins is unabel to read from properties file.
+			// provide aws creds
+			dbUrl = "jdbc:mysql://dblp.c1lyqqia3dks.us-east-1.rds.amazonaws.com:3306/dblp_new";
+			user = "msddblp";
+			password = "zxcv1234";
+			
 		}
 	}
 	
