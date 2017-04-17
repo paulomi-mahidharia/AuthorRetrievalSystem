@@ -3,7 +3,9 @@ package application;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.BUTTON_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.PROGRESS_COLOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEPARATOR_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_NAME;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_PUBLISHED;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_SERVED;
@@ -13,6 +15,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.KEYWORD_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.NUM_OF_PUBLICATIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_OPTIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_SERVED;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROGRESS_INDICATOR_DIMENSION;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_AUTHO_NAME;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_FROM_YEAR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_KEYWORD;
@@ -27,7 +30,6 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_AUTHOR_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_PAPER_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_SERVICE_INFO;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEPARATOR_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERVED_OPTIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.TO_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.YEAR_RANGE;
@@ -65,6 +67,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -75,6 +79,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
@@ -84,6 +89,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -92,10 +99,15 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class SearchScene {
-
-		public static void displaySearchScene(Stage primaryStage){
+	
+	private static StackPane stackPane = null;
+	private static List<Author> authors;
+	private static GridPane grid;
 		
-		GridPane grid = new GridPane();
+	public static void displaySearchScene(Stage primaryStage){
+		
+		stackPane = new StackPane();
+		grid = new GridPane();
 		SearchCriteria searchCriteria = new SearchCriteria();
 		
 		//Initiates the grid and configures it
@@ -321,8 +333,10 @@ public class SearchScene {
 		hbBtn.setSpacing(10);
 		grid.add(hbBtn, 1, 25);
 		
+		stackPane.getChildren().add(grid);
+		
 		//Displays search scene
-		Scene searchScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
+		Scene searchScene = new Scene(stackPane, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		SceneStack.setCurrentScene(searchScene);
 		primaryStage.setScene(searchScene);
 		primaryStage.show();
@@ -337,6 +351,7 @@ public class SearchScene {
             	String authorName = null;
             	
             	String isCriteriaValid = SearchSceneValidation.validateCriteria(paperCheck, serviceCheck, authorCheck);
+            	
             	
             	if(isCriteriaValid.equalsIgnoreCase(NO_CRITERIA_SELECTED)){
             		AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_CRITERIA_SELECTED);
@@ -408,26 +423,66 @@ public class SearchScene {
         		searchCriteria.setServiceInfo(serviceInfo);
         		searchCriteria.setAuthorName(authorName);
         		
-    			SearchService searchService = new SearchServiceImpl();
-        		List<Author> authors = new ArrayList<Author>();
-				try {
-					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-					
-					if(!authors.isEmpty() && authors.size() != 0){
-						SceneStack.pushSceneToStack(searchScene);
-						ResultScene.displayResultScene(authors,primaryStage);
-						
-					}else{
-						AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_AUTHORS_FOUND);
-						return;
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, SQL_FAILURE);
-					return;
-				}
-        	}
+        		
+        		searchAuthors(searchCriteria, searchScene, primaryStage);
+    			}
 		});
+		
+		primaryStage.show();
+	}
+	
+	private static void searchAuthors(SearchCriteria searchCriteria, Scene searchScene, Stage primaryStage){
+    	
+		ProgressIndicator indicator = new ProgressIndicator();
+		indicator.setStyle(PROGRESS_COLOR);
+		indicator.setMinSize(PROGRESS_INDICATOR_DIMENSION, PROGRESS_INDICATOR_DIMENSION);
+		
+		VBox loadingPane = new VBox();
+		loadingPane.getChildren().addAll(indicator);
+		loadingPane.setAlignment(Pos.CENTER);
+		stackPane.getChildren().add(loadingPane);
+		
+
+        Task longTask = new Task<Void>() {
+        	
+            @Override
+            protected Void call() throws Exception {
+            	SearchService searchService = new SearchServiceImpl();
+        		authors = new ArrayList<Author>();
+        		try {
+        			authors = searchService.searchAuthorsByCriteria(searchCriteria);
+        			
+        			
+        		} catch (SQLException e1) {
+        			grid.setDisable(false);
+                	loadingPane.setVisible(false);
+        			AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, SQL_FAILURE);
+        			return null;
+        		}
+        		return null;
+            }
+        };
+        
+        longTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent t) {
+            	grid.setDisable(false);
+            	loadingPane.setVisible(false);
+            	if(!authors.isEmpty() && authors.size() != 0){
+    				SceneStack.pushSceneToStack(searchScene);
+    				ResultScene.displayResultScene(authors, primaryStage);
+    			}else{
+    				AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_AUTHORS_FOUND);
+    				return;
+    			}
+            }
+        });
+        
+        indicator.progressProperty().bind(longTask.progressProperty());
+        loadingPane.setVisible(true);
+	    grid.setDisable(true);
+        
+        new Thread(longTask).start();
 	}
 		
 	private static GridPane setUpGrid(GridPane grid) {
@@ -437,7 +492,6 @@ public class SearchScene {
 		grid.setVgap(SCENE_GRID_GAP);
 		grid.setPadding(new Insets(SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING));
 		
-	
 		ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(50);
 		ColumnConstraints col2 = new ColumnConstraints();

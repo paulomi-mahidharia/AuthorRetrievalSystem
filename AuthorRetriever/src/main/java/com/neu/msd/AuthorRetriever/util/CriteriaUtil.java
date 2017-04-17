@@ -1,5 +1,18 @@
 package com.neu.msd.AuthorRetriever.util;
 
+
+
+/**
+ * This class is use to generate query string according to criteria 
+ * This class methods
+ * equalCriteriaQuery
+ * @Given: tableName,columnName,value
+ * @return:A String
+ * notEqualCriteriaQuery
+ * @Given:String,String,String
+ * @return:String
+ *
+ */
 public class CriteriaUtil {
 
 	public static String equalCriteriaQuery(String tableName, String columnName, String value){

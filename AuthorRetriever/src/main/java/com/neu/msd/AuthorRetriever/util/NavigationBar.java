@@ -29,6 +29,11 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+/**
+ *The below class is used to generate headerPane for all UI components
+ *@Given: A string and a stage object
+ *@return:A object of BorderPane
+ */
 public final class NavigationBar {
 	
 	public static BorderPane getHeaderPane(String view, Stage primaryStage){

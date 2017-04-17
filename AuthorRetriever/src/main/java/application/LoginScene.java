@@ -71,7 +71,7 @@ import javafx.scene.image.ImageView;
 public class LoginScene {
 
 	private static boolean isLoginSuccessful = false;
-	private static StackPane stackPane = null;
+	private static StackPane stackPane;
 
 	public static void displayLoginScene(Stage primaryStage) {
 
@@ -194,24 +194,24 @@ public class LoginScene {
 						AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_CONFERENCES_AVAILABLE);
 					}
 					loadingPane.setVisible(false);
-					SearchScene.displaySearchScene(primaryStage);
-					mainPane.setDisable(true);
-				} else {
+		    		mainPane.setDisable(false);
+			        SearchScene.displaySearchScene(primaryStage);
+			        
+		    	}else{
+		    		mainPane.setDisable(false);
+		    		loadingPane.setVisible(false);
+		    		actiontarget.setFill(Color.FIREBRICK);
+		            actiontarget.setText("Invalid credentials!");
+		    	}
+            	
+            }
+        });
+	    
+	    indicator.progressProperty().bind(longTask.progressProperty());
 
-					loadingPane.setVisible(false);
-					mainPane.setDisable(false);
-					actiontarget.setFill(Color.FIREBRICK);
-					actiontarget.setText("Invalid credentials!");
-				}
-
-			}
-		});
-
-		indicator.progressProperty().bind(longTask.progressProperty());
-
-		loadingPane.setVisible(true);
-		mainPane.setDisable(true);
-
-		new Thread(longTask).start();
-	}
+	    loadingPane.setVisible(true);
+	    mainPane.setDisable(true);
+        
+        new Thread(longTask).start();
+    }
 }

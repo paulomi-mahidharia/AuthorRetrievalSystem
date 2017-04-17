@@ -5,6 +5,15 @@ import java.util.Stack;
 import application.LoginScene;
 import javafx.scene.Scene;
 
+
+
+/**
+ * This class is used to create a stack to store previous scene that was staged
+ * @Given:Void
+ * @return:A scene object
+ * 
+ *
+ */
 @SuppressWarnings({ "restriction"})
 public final class SceneStack {
 	
