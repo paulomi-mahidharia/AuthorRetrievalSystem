@@ -18,6 +18,13 @@ public class SearchSimilarProfileServiceImpl implements SearchSimilarProfileServ
 
 	SearchSimilarAuthorsDao searchdao = new SearchSimilarAuthorsDaoImpl();
 	
+	/**
+	 * Search for authors who have a matching profile as the given author
+	 * @param author author whose matching profile is to be found
+	 * @return list of authors with matching profile
+	 * @throws SQLException 
+	 */
+	
 	@Override
 	public List<Author> searchSimilarAuthorProfiles(Author author) throws SQLException {
 		// TODO Auto-generated method stub

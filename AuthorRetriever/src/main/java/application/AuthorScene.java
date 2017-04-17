@@ -54,12 +54,27 @@ import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEAR
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SHORTLIST_AUTHOR;
 
+/**
+ * Below class is use to display author details.This class is used to build UI for author information
+ * The scene generated from this class displays on UI Author name , author university URL and the papers 
+ * he has published and the conference in which he chaired.
+ * 
+ * @Given Author object and a stage to display the UI options for user
+ * @Returns :This is a void method
+ */
+
 @SuppressWarnings({ "rawtypes", "restriction", "unused"})
 public class AuthorScene {
 	
 	private static WebView browser = null;
     private static WebEngine webEngine = null;
 	private static TableView table = null;
+	
+	/**
+	 * @Given Author OBject and UI option to display scene
+	 * @return:This is a void method  
+	 *	The below static method is use to display UI object using javaFX.This method displays author Information
+	 */
 	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage) throws SQLException{
 	
 		table = new TableView();

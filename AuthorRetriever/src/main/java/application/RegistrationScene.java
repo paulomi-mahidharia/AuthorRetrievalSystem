@@ -1,10 +1,15 @@
 package application;
 
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.PASSWORD_PATTERN;
+
+import java.util.regex.Pattern;
+
 import com.neu.msd.AuthorRetriever.model.User;
 import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 
-import ch.qos.logback.core.boolex.Matcher;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -22,13 +27,14 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
-import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.*;
 
-import java.util.regex.*;
-
-import org.apache.commons.lang.Validate;
+/**
+ * The below class is use to register user to the system.This class is used to build a Register page using javaFx.
+ * The Registration page takes username ,password,re enter password as input
+ * @Given A Primary Stage as input 
+ * @return:A registration page that is build using JavaFx
+ * 
+ */
 
 @SuppressWarnings({"restriction"})
 public class RegistrationScene {
@@ -116,6 +122,19 @@ public class RegistrationScene {
 		primaryStage.show();
 		
 	}
+	/**
+	 * The below method is used to match password
+	 * A password should match following criteria 
+	 * 1)Should have atleast 1 lower and upper case character[a-z][A-Z]
+	 * 2)Should have atleast 1 number[0-9]
+	 * 3)It Should have atleast one special character [!,@,#,$,%,^,&,*]
+	 * 4)Length should be between 6-20 characters
+	 * @Given A string which is a password 
+	 * @return A boolean whether it  matches the password criteria or not
+	 */
+
+
+	
 	 public static boolean validate(final String password){
 		  Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
 		  java.util.regex.Matcher matcher = pattern.matcher(password);

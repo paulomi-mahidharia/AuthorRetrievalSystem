@@ -14,6 +14,14 @@ import com.neu.msd.AuthorRetriever.model.User;
 public class UserDaoImpl implements UserDao {
 
 	private Connection conn = DatabaseConnection.getConn();
+	
+	/**
+	 * @param username
+	 * @param password
+	 * @param queryString
+	 * @return loginId of user
+	 * This method is used to validate user login
+	 */
 
 	public int login(String username, String password, String queryString) {
 		if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
@@ -37,6 +45,13 @@ public class UserDaoImpl implements UserDao {
 		}
 		return 0;
 	}
+
+	/**
+	 * @param queryString
+	 * @param user
+	 * @return UserId of user
+	 * This method is use to register User in system
+	 */
 
 	@Override
 	public int registerUser(String queryString, User user) {

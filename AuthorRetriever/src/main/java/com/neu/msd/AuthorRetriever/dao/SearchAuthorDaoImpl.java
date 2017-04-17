@@ -10,6 +10,12 @@ import java.util.List;
 import com.neu.msd.AuthorRetriever.database.config.DatabaseConnection;
 import com.neu.msd.AuthorRetriever.model.Author;
 
+/**
+ * @param A query String
+ * @return A list of author by user criteria 
+ * The below method returns a list of author based on criteria from database
+ *
+ */
 public class SearchAuthorDaoImpl implements SearchAuthorDao{
 
 	private Connection conn = DatabaseConnection.getConn();

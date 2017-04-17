@@ -36,6 +36,15 @@ import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+
+
+/**
+ *  The below class is used to display the list of author according to the search criteria that is specified by user
+ *  The data is displayed on result page where the page displays list of authors with author information
+ *  @Given A list of authors and a stage to display the scene
+ *  @return Returns a  javaFX scene that displays the result page.
+ */
+
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
 public class ResultScene {
 	
@@ -138,13 +147,26 @@ public class ResultScene {
             }
         });
 	}
-		
+
+	/**
+	 * Create a pagination object which divides the table into pages according to the number of records.
+	 *@returns a pagination object which is inserted in border panel
+	 */
+
+	
 	private Pagination paginate(){
 		
 		Pagination pagination = new Pagination((authorList.size() / rowsPerPage + 1), 0);
 		pagination.setPageFactory(this::createPage);
 		return pagination;
 	}
+
+
+/**
+ * Create a page with given index and return a object that can be added to pagination factory
+ *
+ */
+
 	
     private Node createPage(int pageIndex) {
 
