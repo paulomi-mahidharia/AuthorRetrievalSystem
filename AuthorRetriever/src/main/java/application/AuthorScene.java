@@ -14,6 +14,8 @@ import com.neu.msd.AuthorRetriever.model.AuthorPaper;
 import com.neu.msd.AuthorRetriever.model.Conference;
 import com.neu.msd.AuthorRetriever.service.AuthorInfoService;
 import com.neu.msd.AuthorRetriever.service.AuthorInfoServiceImpl;
+import com.neu.msd.AuthorRetriever.service.SearchService;
+import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileService;
 import com.neu.msd.AuthorRetriever.service.SearchSimilarProfileServiceImpl;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
@@ -24,6 +26,8 @@ import com.neu.msd.AuthorRetriever.util.SceneStack;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -36,6 +40,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -46,13 +52,21 @@ import javafx.application.HostServices;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.ProgressIndicator;
 
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROGRESS_INDICATOR_DIMENSION;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_ERROR;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_HEADER;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_AUTHORS_FOUND;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.SQL_FAILURE;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.PROGRESS_COLOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SHORTLIST_AUTHOR;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 /**
  * Below class is use to display author details.This class is used to build UI for author information
@@ -70,13 +84,17 @@ public class AuthorScene {
     private static WebEngine webEngine = null;
 	private static TableView table = null;
 	
+	private static StackPane stackPane;
+	private static List<Author> similarAuthors;
+	
 	/**
 	 * @Given Author OBject and UI option to display scene
 	 * @return:This is a void method  
 	 *	The below static method is use to display UI object using javaFX.This method displays author Information
 	 */
-	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage) throws SQLException{
+	public static void displayAuthorDisplayScene(Author selectedAuthor,Stage primaryStage) {
 	
+		stackPane = new StackPane();
 		table = new TableView();
 		GridPane grid = new GridPane();
 		grid.setAlignment(Pos.TOP_LEFT);
@@ -86,10 +104,9 @@ public class AuthorScene {
 		
 		BorderPane headerPane = NavigationBar.getHeaderPane(AUTHOR, primaryStage);
 		grid.add(headerPane, 1, 0);
-		AuthorInfoService authorInfoService=new AuthorInfoServiceImpl();
-		List<AuthorPaper> paperInfo=authorInfoService.getAuthorPapers(selectedAuthor.getAuthorId());
-		List<Conference>conferences=authorInfoService.getAuthorConferenceServed(selectedAuthor.getAuthorId());
 		
+		List<AuthorPaper> paperInfo = selectedAuthor.getPapers();
+		List<Conference> conferences = selectedAuthor.getConferences();
 		TableView createPaperInfoTable=createPaperInfoTable(paperInfo);
 		TableView createConferenceInfoTable=createConferenceInfoTable(conferences);
 		
@@ -102,23 +119,29 @@ public class AuthorScene {
 		Text t3 = new Text(10, 50, "Homepage URL: ");
 		t3.setFont(new Font(16));
 		
-        final Hyperlink hpl = new Hyperlink(selectedAuthor.getUrl());
-        hpl.setFont(new Font(16));
-        hpl.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-            	browser = new WebView();
-            	webEngine = browser.getEngine();
-                webEngine.load(selectedAuthor.getUrl());
-                Stage stageForURL = new Stage();
-                Scene bro = new Scene(browser, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-                stageForURL.setScene(bro);
-                stageForURL.show();
-            }
-        });
+		HBox authorURLHbox = new HBox();
+		if(selectedAuthor.getUrl().equals("None")){
+			final Text noUrl = new Text(10, 50, selectedAuthor.getUrl());
+			noUrl.setFont(new Font(16));
+			authorURLHbox.getChildren().addAll(t3, noUrl);
+		}else{
+			final Hyperlink hpl = new Hyperlink(selectedAuthor.getUrl());
+	        hpl.setFont(new Font(16));
+	        hpl.setOnAction(new EventHandler<ActionEvent>() {
+	            @Override
+	            public void handle(ActionEvent e) {
+	            	browser = new WebView();
+	            	webEngine = browser.getEngine();
+	                webEngine.load(selectedAuthor.getUrl());
+	                Stage stageForURL = new Stage();
+	                Scene bro = new Scene(browser, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
+	                stageForURL.setScene(bro);
+	                stageForURL.show();
+	            }
+	        });
+	        authorURLHbox.getChildren().addAll(t3, hpl);
+		}
         
-        HBox authorURLHbox = new HBox();
-        authorURLHbox.getChildren().addAll(t3, hpl);
         authorURLHbox.setSpacing(10);
         authorURLHbox.setAlignment(Pos.CENTER_LEFT);
 		
@@ -136,19 +159,22 @@ public class AuthorScene {
         grid.getColumnConstraints().addAll(col1Constraints, col2Constraints, col3Constraints);
         
         Button btnResetSearch = new Button(RESTART_SEARCH);
+        showHandCursor(btnResetSearch);
         btnResetSearch.setStyle("-fx-border-color: #b22222");
         btnResetSearch.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
         Button btnSimilarAuthors = new Button(SEARCH_SIMILAR_AUTHOR);
+        showHandCursor(btnSimilarAuthors);
         btnSimilarAuthors.setStyle("-fx-border-color: #b22222");
         btnSimilarAuthors.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-		
         
         Button btnShortListAuthor = new Button(SHORTLIST_AUTHOR);
+        showHandCursor(btnShortListAuthor);
         btnShortListAuthor.setStyle("-fx-border-color: #b22222");
         btnShortListAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 		
         Button btnaddSelectedAuthor =new Button(SHORTLIST_AUTHOR);
+        showHandCursor(btnaddSelectedAuthor);
         btnaddSelectedAuthor.setStyle("-fx-border-color: #b22222");
         btnaddSelectedAuthor.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
@@ -157,11 +183,12 @@ public class AuthorScene {
 		hbBtn.getChildren().addAll(btnResetSearch, btnSimilarAuthors,btnShortListAuthor);
 		
 		grid.add(hbBtn, 1, 15);
+		stackPane.getChildren().add(grid);
 		
-		Scene authorDispalyScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-		SceneStack.setCurrentScene(authorDispalyScene);
-		primaryStage.setScene(authorDispalyScene);
-		primaryStage.show();
+		Scene authorDisplayScene = new Scene(stackPane, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
+		SceneStack.setCurrentScene(authorDisplayScene);
+		primaryStage.setScene(authorDisplayScene);
+		
 		
 		btnShortListAuthor.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -191,28 +218,66 @@ public class AuthorScene {
 			
 			@Override
 			public void handle(ActionEvent event) {
-				// TODO Auto-generated method stub
-				SearchSimilarProfileService searchSimilarProfileService = new SearchSimilarProfileServiceImpl();
-				try {
-					List<Author> similarAuthors = searchSimilarProfileService.searchSimilarAuthorProfiles(selectedAuthor);
-					
-					System.out.println("similarAuthors :::" +similarAuthors.size());
-					if(!similarAuthors.isEmpty() && similarAuthors.size() != 0){
-						ResultScene.displayResultScene(similarAuthors, primaryStage);
-						SceneStack.pushSceneToStack(authorDispalyScene);
-					}else{
-						AlertUtil.displayAlert("Error", 
-								"Oops, you got soemthing wrong!", 
-								ValidationConstants.NO_AUTHORS_FOUND);
-						return;
-					}			
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				searchSimilarAuthorsTask(selectedAuthor, primaryStage, authorDisplayScene, grid);
+				
 			}
 		});
+		
+		primaryStage.show();
 	}
+	
+	@SuppressWarnings("unchecked")
+	private static void searchSimilarAuthorsTask(Author selectedAuthor, Stage primaryStage, Scene authorDisplayScene, GridPane grid){
+		ProgressIndicator indicator = new ProgressIndicator();
+		indicator.setStyle(PROGRESS_COLOR);
+		indicator.setMinSize(PROGRESS_INDICATOR_DIMENSION, PROGRESS_INDICATOR_DIMENSION);
+		
+		VBox loadingPane = new VBox();
+		loadingPane.getChildren().addAll(indicator);
+		loadingPane.setAlignment(Pos.CENTER);
+		stackPane.getChildren().add(loadingPane);
+		
+		Task longTask = new Task<Void>() {
+        	
+            @Override
+            protected Void call() throws Exception {
+            	SearchSimilarProfileService searchSimilarProfileService = new SearchSimilarProfileServiceImpl();
+				try {
+					similarAuthors = searchSimilarProfileService.searchSimilarAuthorProfiles(selectedAuthor);					
+				} catch (SQLException e) {
+					grid.setDisable(false);
+                	loadingPane.setVisible(false);
+					AlertUtil.displayAlert("Error", 
+							"Oops, you got soemthing wrong!", 
+							"Unable to retrieve similar authors!");
+				}
+				return null;
+            }
+        };
+        
+        longTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent t) {
+            	grid.setDisable(false);
+            	loadingPane.setVisible(false);
+            	if(!similarAuthors.isEmpty() && similarAuthors.size() != 0){
+            		SceneStack.pushSceneToStack(authorDisplayScene);
+    				ResultScene.displayResultScene(similarAuthors, primaryStage);
+    			}else{
+    				AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_AUTHORS_FOUND);
+    				return;
+    			}
+            }
+        });
+        
+        indicator.progressProperty().bind(longTask.progressProperty());
+        loadingPane.setVisible(true);
+	    grid.setDisable(true);
+        
+        new Thread(longTask).start();
+	}
+	
 	private static TableView createConferenceInfoTable(List<Conference> conferences) {
 		// TODO Auto-generated method stub
 		
@@ -253,7 +318,7 @@ public class AuthorScene {
         year.setCellValueFactory(new PropertyValueFactory<>("Year"));
         url.setCellValueFactory(new PropertyValueFactory<>("url"));
         
-        table.getColumns().addAll(paperId, confName, paperTitle,year,url);
+        table.getColumns().addAll(paperId, confName, paperTitle, year, url);
         //table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
         table.setItems(paperInfoData);

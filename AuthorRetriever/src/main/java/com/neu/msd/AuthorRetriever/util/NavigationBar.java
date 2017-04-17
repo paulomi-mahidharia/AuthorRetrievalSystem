@@ -1,29 +1,39 @@
 package com.neu.msd.AuthorRetriever.util;
 
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.FONT_TYPE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_TITLE;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.FONT_TYPE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.TITLE_FONT_SIZE;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import application.LoginScene;
 import application.ShortListAuthor;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.scene.layout.BorderPane;
 
-@SuppressWarnings("restriction")
+/**
+ *The below class is used to generate headerPane for all UI components
+ *@Given: A string and a stage object
+ *@return:A object of BorderPane
+ */
 public final class NavigationBar {
 	
 	public static BorderPane getHeaderPane(String view, Stage primaryStage){
@@ -31,6 +41,7 @@ public final class NavigationBar {
 		BorderPane bp = new BorderPane();
 		
 		Button btnBack = new Button("Back");
+		showHandCursor(btnBack);
 		btnBack.setStyle("-fx-border-color: #b22222");
 		btnBack.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -44,10 +55,33 @@ public final class NavigationBar {
 		
 		Text scenetitle = getSceneTitle(view);
 		
-		Button btn = new Button(SEARCH_AUTHORS);
-		btn.setStyle("-fx-border-color: #b22222");
+		Image info = new Image("file:info.png");
+		ImageView infoIcon = new ImageView(info);
+		infoIcon.setFitHeight(35);
+		infoIcon.setFitWidth(35);
+		infoIcon.setVisible(false);
+		
+		if(view.equalsIgnoreCase(SEARCH)) infoIcon.setVisible(true);
+		
+		showHandCursor(infoIcon);
+		infoIcon.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+
+		     @Override
+		     public void handle(MouseEvent event) {
+		    	//Disable current step
+					Stage dialog = new Stage();
+
+					// populate dialog with controls.
+					dialog.setScene(SearchToolTip.getSearchToolTip());
+					dialog.setResizable(false);
+					dialog.initOwner(primaryStage);
+					dialog.initModality(Modality.APPLICATION_MODAL); 
+					dialog.showAndWait();
+		     }
+		});
 		
 		Button btnShortList = new Button("ShortListed Authors");
+		showHandCursor(btnShortList);
 		btnShortList.setStyle("-fx-border-color: #b22222");
 		
 		btnShortList.setOnAction(new EventHandler<ActionEvent>() {
@@ -60,6 +94,7 @@ public final class NavigationBar {
 		});
 		
 		Button btnLogout = new Button("Logout");
+		showHandCursor(btnLogout);
 		btnLogout.setStyle("-fx-border-color: #b22222");
 		
 		btnLogout.setOnAction(new EventHandler<ActionEvent>() {
@@ -73,7 +108,7 @@ public final class NavigationBar {
 		});
 		
 		HBox hbox = new HBox();
-		hbox.getChildren().addAll(btnShortList, btnLogout);
+		hbox.getChildren().addAll(infoIcon, btnShortList, btnLogout);
 		hbox.setSpacing(10);
 		
 		if(view.equals(SEARCH))
@@ -93,7 +128,12 @@ public final class NavigationBar {
 		
 		switch(view){
 		
+		case LOGIN: 
+			scenetitle = new Text(LOGIN_TITLE);
+			break;
+		
 		case SEARCH: 
+			
 			scenetitle = new Text(SEARCH_TITLE);
 			break;
 		

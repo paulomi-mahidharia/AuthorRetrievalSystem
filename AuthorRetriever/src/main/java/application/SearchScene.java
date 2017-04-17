@@ -5,6 +5,7 @@ import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.BUTTON_STYLE
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.PROGRESS_COLOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEPARATOR_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_NAME;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_PUBLISHED;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_SERVED;
@@ -29,7 +30,6 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_AUTHOR_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_PAPER_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_SERVICE_INFO;
-import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEPARATOR_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERVED_OPTIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.TO_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.YEAR_RANGE;
@@ -42,6 +42,7 @@ import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.SQL_FAIL
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_AUHTOR;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_PAPER_CRITERIA;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_SERVICE_CRITERIA;
+import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -54,8 +55,6 @@ import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
 import com.neu.msd.AuthorRetriever.model.SearchCriteria;
 import com.neu.msd.AuthorRetriever.model.ServiceInfo;
-import com.neu.msd.AuthorRetriever.service.ConferenceService;
-import com.neu.msd.AuthorRetriever.service.ConferenceServiceImpl;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
@@ -103,12 +102,12 @@ public class SearchScene {
 	
 	private static StackPane stackPane = null;
 	private static List<Author> authors;
-	private static GridPane grid = new GridPane();
+	private static GridPane grid;
 		
 	public static void displaySearchScene(Stage primaryStage){
 		
 		stackPane = new StackPane();
-		//GridPane grid = new GridPane();
+		grid = new GridPane();
 		SearchCriteria searchCriteria = new SearchCriteria();
 		
 		//Initiates the grid and configures it
@@ -325,6 +324,7 @@ public class SearchScene {
 		grid.add(authorNameValue, 1, 18);
 		
 		Button btnSearch = new Button(SEARCH_AUTHORS);
+		showHandCursor(btnSearch);
 		btnSearch.setStyle(BUTTON_STYLE);
 		
 		HBox hbBtn = new HBox(10);
@@ -425,25 +425,7 @@ public class SearchScene {
         		
         		
         		searchAuthors(searchCriteria, searchScene, primaryStage);
-    			/*SearchService searchService = new SearchServiceImpl();
-        		List<Author> authors = new ArrayList<Author>();
-				try {
-					authors = searchService.searchAuthorsByCriteria(searchCriteria);
-					
-					if(!authors.isEmpty() && authors.size() != 0){
-						SceneStack.pushSceneToStack(searchScene);
-						ResultScene.displayResultScene(authors,primaryStage);
-						
-					}else{
-						AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_AUTHORS_FOUND);
-						return;
-					}
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, SQL_FAILURE);
-					return;
-				}
-        	*/}
+    			}
 		});
 		
 		primaryStage.show();
@@ -472,7 +454,8 @@ public class SearchScene {
         			
         			
         		} catch (SQLException e1) {
-        			// TODO Auto-generated catch block
+        			grid.setDisable(false);
+                	loadingPane.setVisible(false);
         			AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, SQL_FAILURE);
         			return null;
         		}
