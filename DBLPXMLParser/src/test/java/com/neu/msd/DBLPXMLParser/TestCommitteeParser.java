@@ -32,6 +32,8 @@ public class TestCommitteeParser extends TestCase {
         ResultSet rs = selectStmt.executeQuery();
         assertTrue(rs.next());
         
+        cleanup();
+        
     }	
 	
 	public void cleanup(){
@@ -40,7 +42,6 @@ public class TestCommitteeParser extends TestCase {
 			PreparedStatement deleteStmt = dbConnection.prepareStatement("delete from committee");
 			deleteStmt.execute();
 			
-			dbConnection.commit();
 			dbConnection.close();
 		}catch(SQLException e) {
 			System.out.println("Error deleting test records");

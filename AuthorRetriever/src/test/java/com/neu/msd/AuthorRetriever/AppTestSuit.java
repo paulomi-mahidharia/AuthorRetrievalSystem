@@ -24,7 +24,6 @@ import com.neu.msd.AuthorRetriever.service.TestUserService;
    TestSearchSimilarProfileService.class, TestUserService.class,
    TestResultService.class
 })
-
 public class AppTestSuit {
 }
 
