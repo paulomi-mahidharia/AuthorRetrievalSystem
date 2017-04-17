@@ -29,6 +29,8 @@ public class SceneContants {
 	public static final double SCENE_GRID_GAP = 10;
 	public static final double SCENE_GRID_PADDING = 25;
 	
+	public static final double PROGRESS_INDICATOR_DIMENSION = 150;
+	
 	//Constants for paper criteria
 	public static final String SEARCH_PAPER_INFO = "Search based on paper information";
 	public static final String NUM_OF_PUBLICATIONS = "Number of minimum Publications:";
@@ -54,12 +56,4 @@ public class SceneContants {
 	public static final String SEARCH_AUTHOR_INFO = "Search based on author name";
 	public static final String AUTHOR_NAME = "Author Name:";
 	public static final String PROMPT_AUTHO_NAME = "Enter author name";
-	
-	public static final String SEPARATOR_STYLE = "-fx-border-color: #b22222; -fx-border-width: 1 0 0 0 ;";
-	
-	
-
-	
-	
-
 }
