@@ -143,6 +143,7 @@ public class LoginScene {
 	    longTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
             @Override
             public void handle(WorkerStateEvent t) {
+            	
             	if(isLoginSuccessful){
 		    		List<String> conferences = new ArrayList<>();
 		    		ConferenceService conferenceService = new ConferenceServiceImpl();
@@ -158,12 +159,12 @@ public class LoginScene {
 								"No conferences available");
 					}
 		    		updatePane.setVisible(false);
+		    		mainPane.setDisable(false);
 			        SearchScene.displaySearchScene(primaryStage);
-			        mainPane.setDisable(true);
+			        
 		    	}else{
-
+		    		mainPane.setDisable(false);
 		    		updatePane.setVisible(false);
-		    		mainPane.setDisable(true);
 		    		actiontarget.setFill(Color.FIREBRICK);
 		            actiontarget.setText("Invalid credentials!");
 		    	}
