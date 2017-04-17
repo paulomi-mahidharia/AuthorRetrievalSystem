@@ -31,7 +31,7 @@ public class SceneContants {
 	public static final String PROMPT_NUM_OF_PUBLICATIONS = "Number of papers/articles";
 	public static final String CONFERENCE_PUBLISHED = "Conference published/not published for:";
 	public static final List<String> PUBLISH_OPTIONS = new ArrayList<>(Arrays.asList( "Published in", "Not published in"));
-	public static final String PAPER_YEAR_RANGE = "Year range:";
+	public static final String YEAR_RANGE = "Year range:";
 	public static final List<String> YEAR_RANGE_OPTIONS = new ArrayList<>(Arrays.asList("before", "between", "after"));
 	public static final String PROMPT_FROM_YEAR = "From year";
 	public static final String TO_LABEL = "to";
@@ -45,6 +45,13 @@ public class SceneContants {
 	public static final List<String> SERVED_OPTIONS = new ArrayList<>(Arrays.asList( "Served in", "Not served in"));
 	public static final String POSITION_SERVED = "Position served as:";
 	public static final List<String> POSITION_OPTIONS = new ArrayList<>(Arrays.asList("All", "General Chair", "Program Chair", "Conference Chair","External Review Committee"));
+	
+	//Constants for author criteria
+	public static final String SEARCH_AUTHOR_INFO = "Search based on author name";
+	public static final String AUTHOR_NAME = "Author Name:";
+	public static final String PROMPT_AUTHO_NAME = "Enter author name";
+	
+	public static final String SEPARATOR_STYLE = "-fx-border-color: #b22222; -fx-border-width: 1 0 0 0 ;";
 	
 	
 

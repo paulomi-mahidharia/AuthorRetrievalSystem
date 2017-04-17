@@ -1,47 +1,70 @@
 package application;
 
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.BUTTON_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_NAME;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_PUBLISHED;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_SERVED;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.FONT_TYPE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.HEADER_FONT_SIZE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.KEYWORD_LABEL;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.NUM_OF_PUBLICATIONS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_OPTIONS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_SERVED;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_AUTHO_NAME;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_FROM_YEAR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_KEYWORD;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_NUM_OF_PUBLICATIONS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_TO_YEAR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PUBLISH_OPTIONS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_GAP;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_PADDING;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.NUM_OF_PUBLICATIONS;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_NUM_OF_PUBLICATIONS;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_PUBLISHED;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.PUBLISH_OPTIONS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_AUTHOR_INFO;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_PAPER_INFO;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_SERVICE_INFO;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEPARATOR_STYLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERVED_OPTIONS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.TO_LABEL;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.YEAR_RANGE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.YEAR_RANGE_OPTIONS;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_ERROR;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ALERT_HEADER;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_AUTHORS_FOUND;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_CRITERIA_SELECTED;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.SQL_FAILURE;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_AUHTOR;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_PAPER_CRITERIA;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.VALID_SERVICE_CRITERIA;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.controlsfx.control.CheckComboBox;
 
 import com.neu.msd.AuthorRetriever.constants.PositionAlias;
-import com.neu.msd.AuthorRetriever.constants.ValidationConstants;
 import com.neu.msd.AuthorRetriever.model.Author;
 import com.neu.msd.AuthorRetriever.model.Paper;
 import com.neu.msd.AuthorRetriever.model.SearchCriteria;
 import com.neu.msd.AuthorRetriever.model.ServiceInfo;
 import com.neu.msd.AuthorRetriever.service.SearchService;
 import com.neu.msd.AuthorRetriever.service.SearchServiceImpl;
-import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
 import com.neu.msd.AuthorRetriever.util.ConferenceUtil;
 import com.neu.msd.AuthorRetriever.util.NavigationBar;
 import com.neu.msd.AuthorRetriever.util.SceneStack;
 import com.neu.msd.AuthorRetriever.validation.SearchSceneValidation;
 
-import javafx.scene.control.Separator;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
@@ -52,35 +75,18 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.collections.ListChangeListener.Change;
-import javafx.scene.layout.ColumnConstraints;
-
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_GAP;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_PADDING;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_PAPER_INFO;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.FONT_TYPE;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.HEADER_FONT_SIZE;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.PAPER_YEAR_RANGE;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_FROM_YEAR;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.TO_LABEL;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_TO_YEAR;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.KEYWORD_LABEL;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_KEYWORD;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_SERVICE_INFO;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_SERVED;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERVED_OPTIONS;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_SERVED;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_OPTIONS;
 
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -136,7 +142,7 @@ public class SearchScene {
 		grid.add(conferenceNamesComboBox, 2, 4);
 
 		//Row for selecting date options
-		Label yearRange = new Label(PAPER_YEAR_RANGE);
+		Label yearRange = new Label(YEAR_RANGE);
 		grid.add(yearRange, 0, 5);
 		
 		ObservableList<String> paperInfoYearOptions = FXCollections.observableArrayList(YEAR_RANGE_OPTIONS);
@@ -171,6 +177,7 @@ public class SearchScene {
 	        }
 	    });
 	    
+	    //Row for selecting title or keyword
 	    Label titleKeyword = new Label(KEYWORD_LABEL);
 		grid.add(titleKeyword, 0, 6);
 		
@@ -201,7 +208,6 @@ public class SearchScene {
 
 			@Override
 			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
-				// TODO Auto-generated method stub
 
 				if (unionGroup.getSelectedToggle() != null) {
 					if(unionGroup.getSelectedToggle().getUserData().toString().equals(radioButtonOr.getText())){
@@ -219,10 +225,12 @@ public class SearchScene {
 		 * SET SERVICE INFORMATION CRITERIA SECTION
 		 */
 		
+		//CheckBox to select/unselect service information criteria
 		CheckBox serviceCheck = new CheckBox(SEARCH_SERVICE_INFO);
 		serviceCheck.setFont(Font.font(FONT_TYPE, FontWeight.NORMAL, HEADER_FONT_SIZE));
 		grid.add(serviceCheck, 0, 10);
 		
+		//Row for selecting conferences served/not served in
 		Label servedInConference = new Label(CONFERENCE_SERVED);
 		grid.add(servedInConference, 0, 11);
 		
@@ -231,47 +239,25 @@ public class SearchScene {
 		serveComboBox.setValue(serveOptions.get(0));
 		grid.add(serveComboBox, 1, 11);
 		
-		serveComboBox.setOnAction(new EventHandler<Event>() {
-			@Override
-			public void handle(Event event) {
-				// TODO Auto-generated method stub
-	        	String serveComboSelection = serveComboBox.getValue().toString();
-			}
-		});
-		
 		final CheckComboBox<String> checkConfServedBox = new CheckComboBox<String>(conferenceNamesList);
-		 
-		checkConfServedBox.getCheckModel().getCheckedItems().addListener(new ListChangeListener<String>() {
-
-			@Override
-			public void onChanged(javafx.collections.ListChangeListener.Change<? extends String> c) {
-				// TODO Auto-generated method stub
-				System.out.println("checkConfServedBox"+checkConfServedBox.getCheckModel().getCheckedItems());
-			}
-		});
-		
 		grid.add(checkConfServedBox, 2, 11);
 		
-		Label yearRangeServed = new Label("Year range:");
+		//Row for selecting date options
+		Label yearRangeServed = new Label(YEAR_RANGE);
 		grid.add(yearRangeServed, 0, 12);
 		
-		ObservableList<String> servedYearOptions = 
-			    FXCollections.observableArrayList(
-			        "between",
-			        "before",
-			        "after"
-			    );
+		ObservableList<String> servedYearOptions = FXCollections.observableArrayList(YEAR_RANGE_OPTIONS);
 		ComboBox yearRangeServedComboBox = new ComboBox(servedYearOptions);
-		yearRangeServedComboBox.setValue("before");
+		yearRangeServedComboBox.setValue(servedYearOptions.get(0));
 		grid.add(yearRangeServedComboBox, 1, 12);
 		
 		final TextField fromYearServed = new TextField();
-		fromYearServed.setPromptText("Year");
+		fromYearServed.setPromptText(PROMPT_FROM_YEAR);
 		
-		final Label betweenYearServedLabel = new Label("to"); 
+		final Label betweenYearServedLabel = new Label(TO_LABEL); 
 	    
 		final TextField toYearServed = new TextField();
-	    toYearServed.setPromptText("Year");
+	    toYearServed.setPromptText(PROMPT_TO_YEAR);
 	    toYearServed.setDisable(true);
 	    
 	    grid.add(fromYearServed, 2, 12);
@@ -284,7 +270,7 @@ public class SearchScene {
 	        public void handle(ActionEvent e) {
 	        	String yearRangeServedSelection = yearRangeServedComboBox.getValue().toString();
 	            
-	            if(yearRangeServedSelection.equals("before") || yearRangeServedSelection.equals("after")){
+	            if(yearRangeServedSelection.equals(servedYearOptions.get(0)) || yearRangeServedSelection.equals(servedYearOptions.get(2))){
 	            	toYearServed.setDisable(true);
 	            }else{
 	            	toYearServed.setDisable(false);
@@ -292,6 +278,7 @@ public class SearchScene {
 	        }
 	    });
 	    
+	    //Row for selecting position served as
 	    Label position = new Label(POSITION_SERVED);
 		grid.add(position, 0, 13);
 		
@@ -303,35 +290,43 @@ public class SearchScene {
 		
 		Separator separator = new Separator();
 		separator.setOrientation(Orientation.HORIZONTAL);
-		separator.setStyle("-fx-border-color: #b22222; -fx-border-width: 1 0 0 0 ;");
+		separator.setStyle(SEPARATOR_STYLE);
 		grid.add(separator, 0, 15, 20, 1);
 		
-		CheckBox authorCheck = new CheckBox("Search based on author name");
-		authorCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		/**
+		 * SET AUTHOR INFORMATION CRITERIA SECTION
+		 */
+		
+		//CheckBox to select/unselect aithor information criteria
+		CheckBox authorCheck = new CheckBox(SEARCH_AUTHOR_INFO);
+		authorCheck.setFont(Font.font(FONT_TYPE, FontWeight.NORMAL, HEADER_FONT_SIZE));
 		grid.add(authorCheck, 0, 17);
 		
-		Label authorNameLabel = new Label("Author Name:");
+		//Row for getting author name
+		Label authorNameLabel = new Label(AUTHOR_NAME);
 		grid.add(authorNameLabel, 0, 18);
 		
 		TextField authorNameValue = new TextField();
-		authorNameValue.setPromptText("Enter author name");
+		authorNameValue.setPromptText(PROMPT_AUTHO_NAME);
 		grid.add(authorNameValue, 1, 18);
 		
-		Button btn = new Button(SEARCH_AUTHORS);
-		btn.setStyle("-fx-border-color: #b22222");
+		Button btnSearch = new Button(SEARCH_AUTHORS);
+		btnSearch.setStyle(BUTTON_STYLE);
 		
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().add(btn);
+		hbBtn.getChildren().add(btnSearch);
 		hbBtn.setSpacing(10);
 		grid.add(hbBtn, 1, 25);
 		
+		//Displays search scene
 		Scene searchScene = new Scene(grid, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
 		SceneStack.setCurrentScene(searchScene);
 		primaryStage.setScene(searchScene);
 		primaryStage.show();
 		
-		btn.setOnAction(new EventHandler<ActionEvent>() {
+		//Click event on SEARCH button
+		btnSearch.setOnAction(new EventHandler<ActionEvent>() {
        	 
             @Override
             public void handle(ActionEvent e) {
@@ -341,10 +336,8 @@ public class SearchScene {
             	
             	String isCriteriaValid = SearchSceneValidation.validateCriteria(paperCheck, serviceCheck, authorCheck);
             	
-            	if(isCriteriaValid.equalsIgnoreCase(ValidationConstants.NO_CRITERIA_SELECTED)){
-            		AlertUtil.displayAlert("Error", 
-            								"Oops, you got soemthing wrong!", 
-        									ValidationConstants.NO_CRITERIA_SELECTED);
+            	if(isCriteriaValid.equalsIgnoreCase(NO_CRITERIA_SELECTED)){
+            		AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_CRITERIA_SELECTED);
             		return;
             	}else{
             		if(paperCheck.isSelected()){
@@ -358,8 +351,8 @@ public class SearchScene {
 													toYear,
 													titleKeywordValue);
             			
-            			if(!isPaperInfoValid.equalsIgnoreCase(ValidationConstants.VALID_PAPER_CRITERIA)){
-            				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", isPaperInfoValid);
+            			if(!isPaperInfoValid.equalsIgnoreCase(VALID_PAPER_CRITERIA)){
+            				AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, isPaperInfoValid);
             				return;
             			}else{
             				//set paper info bean
@@ -383,8 +376,8 @@ public class SearchScene {
 														fromYearServed,
 														toYearServed);
             			
-            			if(!isServiceInfoValid.equalsIgnoreCase(ValidationConstants.VALID_SERVICE_CRITERIA)){
-            				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", isServiceInfoValid);
+            			if(!isServiceInfoValid.equalsIgnoreCase(VALID_SERVICE_CRITERIA)){
+            				AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, isServiceInfoValid);
             				return;
             			}else{
             				//set paper info bean
@@ -400,10 +393,10 @@ public class SearchScene {
             		if(authorCheck.isSelected()){
             			
             			String isAuthorValid = SearchSceneValidation.validateAuthorCriteria(authorNameValue);
-            			if(isAuthorValid.equalsIgnoreCase(ValidationConstants.VALID_AUHTOR)){
+            			if(isAuthorValid.equalsIgnoreCase(VALID_AUHTOR)){
             				authorName = authorNameValue.getText();
             			}else{
-            				AlertUtil.displayAlert("Error", "Oops, you got soemthing wrong!", isAuthorValid);
+            				AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, isAuthorValid);
             				return;
             			}
             		}
@@ -423,16 +416,12 @@ public class SearchScene {
 						ResultScene.displayResultScene(authors,primaryStage);
 						
 					}else{
-						AlertUtil.displayAlert("Error", 
-								"Oops, you got soemthing wrong!", 
-								ValidationConstants.NO_AUTHORS_FOUND);
+						AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_AUTHORS_FOUND);
 						return;
 					}
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
-					AlertUtil.displayAlert("Error", 
-											"Oops, you got soemthing wrong!", 
-											ValidationConstants.SQL_FAILURE);
+					AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, SQL_FAILURE);
 					return;
 				}
         	}
@@ -476,7 +465,7 @@ public class SearchScene {
 		}
 		
 		//Set published or not published
-		if(publishComboBox.getValue().equals("Published in")){
+		if(publishComboBox.getValue().equals(PUBLISH_OPTIONS.get(0))){
 			paperInfo.setPublished(true);
 		}else{
 			paperInfo.setPublished(false);
@@ -490,13 +479,13 @@ public class SearchScene {
 		
 		//Set start date and/or end date
 		if(!fromYear.getText().isEmpty() || !toYear.getText().isEmpty())
-			if(yearRangeComboBox.getValue().equals("between")){
+			if(yearRangeComboBox.getValue().equals(YEAR_RANGE_OPTIONS.get(1))){
 				if(!fromYear.getText().isEmpty()) 
 					paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
 				if(!toYear.getText().isEmpty()) 
 					paperInfo.setEndDate(Integer.parseInt(toYear.getText()));
-			}else if(yearRangeComboBox.getValue().equals("before") 
-					|| yearRangeComboBox.getValue().equals("after")){
+			}else if(yearRangeComboBox.getValue().equals(YEAR_RANGE_OPTIONS.get(0)) 
+					|| yearRangeComboBox.getValue().equals(YEAR_RANGE_OPTIONS.get(2))){
 				if(!fromYear.getText().isEmpty()) {
 					paperInfo.setStartDate(Integer.parseInt(fromYear.getText()));
 					paperInfo.setEndDate(Integer.parseInt(fromYear.getText()));
@@ -519,7 +508,7 @@ public class SearchScene {
 		ServiceInfo serviceInfo = new ServiceInfo();
 		
 		//Set has served of not
-		if(serveComboBox.getValue().toString().equalsIgnoreCase("Served in")){
+		if(serveComboBox.getValue().toString().equalsIgnoreCase(SERVED_OPTIONS.get(0))){
     		serviceInfo.setHasServed(true);
 		}else{
 			serviceInfo.setHasServed(false);
@@ -534,6 +523,7 @@ public class SearchScene {
 		//Set position
 		String position = positionComboBox.getValue().toString();
 		switch(position){
+		
 			case "All": serviceInfo.setPosition(PositionAlias.ALL_ALIAS);
 				break;
 			case "General Chair": serviceInfo.setPosition(PositionAlias.GENERAL_CHAIR_ALIAS);
@@ -549,21 +539,18 @@ public class SearchScene {
 		
 		//Set start date and/or end date
 		if(!fromYearServed.getText().isEmpty() || !toYearServed.getText().isEmpty()){
-			if(yearRangeServedComboBox.getValue().equals("between")){
+			if(yearRangeServedComboBox.getValue().equals(YEAR_RANGE_OPTIONS.get(1))){
 				serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
 				serviceInfo.setEndDate(Integer.parseInt(toYearServed.getText()));
-			}else if(yearRangeServedComboBox.getValue().equals("before") 
-					|| yearRangeServedComboBox.getValue().equals("after")){
+			}else if(yearRangeServedComboBox.getValue().equals(YEAR_RANGE_OPTIONS.get(0)) 
+					|| yearRangeServedComboBox.getValue().equals(YEAR_RANGE_OPTIONS.get(2))){
 				if(!fromYearServed.getText().isEmpty()) {
 					serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
 					serviceInfo.setEndDate(Integer.parseInt(fromYearServed.getText()));
 				}
-				//serviceInfo.setStartDate(Integer.parseInt(fromYearServed.getText()));
-				//serviceInfo.setStartDate(Integer.parseInt(toYearServed.getText()));
 			}
 		}
 		
 		return serviceInfo;
 	}
-	
 }
