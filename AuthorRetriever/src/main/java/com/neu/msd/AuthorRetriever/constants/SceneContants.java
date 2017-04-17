@@ -25,6 +25,7 @@ public class SceneContants {
 	public static final double SCENE_GRID_GAP = 10;
 	public static final double SCENE_GRID_PADDING = 25;
 	
+	//Constants for paper criteria
 	public static final String SEARCH_PAPER_INFO = "Search based on paper information";
 	public static final String NUM_OF_PUBLICATIONS = "Number of minimum Publications:";
 	public static final String PROMPT_NUM_OF_PUBLICATIONS = "Number of papers/articles";
@@ -37,5 +38,17 @@ public class SceneContants {
 	public static final String PROMPT_TO_YEAR = "To year";
 	public static final String KEYWORD_LABEL = "Keyword or Title:";
 	public static final String PROMPT_KEYWORD = "Enter keyword or title";
+	
+	//Constants for service criteria
+	public static final String SEARCH_SERVICE_INFO = "Search based on service information";
+	public static final String CONFERENCE_SERVED = "Conference served/not served in:";
+	public static final List<String> SERVED_OPTIONS = new ArrayList<>(Arrays.asList( "Served in", "Not served in"));
+	public static final String POSITION_SERVED = "Position served as:";
+	public static final List<String> POSITION_OPTIONS = new ArrayList<>(Arrays.asList("All", "General Chair", "Program Chair", "Conference Chair","External Review Committee"));
+	
+	
+
+	
+	
 
 }

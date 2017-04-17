@@ -76,6 +76,12 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.TO_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_TO_YEAR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.KEYWORD_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_KEYWORD;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_SERVICE_INFO;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_SERVED;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERVED_OPTIONS;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_SERVED;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_OPTIONS;
+
 
 @SuppressWarnings({ "rawtypes", "unchecked" })
 public class SearchScene {
@@ -213,20 +219,16 @@ public class SearchScene {
 		 * SET SERVICE INFORMATION CRITERIA SECTION
 		 */
 		
-		CheckBox serviceCheck = new CheckBox("Search based on service information");
-		serviceCheck.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
+		CheckBox serviceCheck = new CheckBox(SEARCH_SERVICE_INFO);
+		serviceCheck.setFont(Font.font(FONT_TYPE, FontWeight.NORMAL, HEADER_FONT_SIZE));
 		grid.add(serviceCheck, 0, 10);
 		
-		Label servedInConference = new Label("Conference served/not served in:");
+		Label servedInConference = new Label(CONFERENCE_SERVED);
 		grid.add(servedInConference, 0, 11);
 		
-		ObservableList<String> serveOptions = 
-			    FXCollections.observableArrayList(
-			        "Served in",
-			        "Not served in"
-			    );
+		ObservableList<String> serveOptions = FXCollections.observableArrayList(SERVED_OPTIONS);
 		ComboBox serveComboBox = new ComboBox(serveOptions);
-		serveComboBox.setValue("Served in");
+		serveComboBox.setValue(serveOptions.get(0));
 		grid.add(serveComboBox, 1, 11);
 		
 		serveComboBox.setOnAction(new EventHandler<Event>() {
@@ -290,14 +292,13 @@ public class SearchScene {
 	        }
 	    });
 	    
-	    Label position = new Label("Position served as:");
+	    Label position = new Label(POSITION_SERVED);
 		grid.add(position, 0, 13);
 		
-		List<String> positions =new ArrayList<>(Arrays.asList("All", "General Chair", "Program Chair", "Conference Chair","External Review Committee"));
-		ObservableList<String> positionOptions = FXCollections.observableArrayList(positions);
+		ObservableList<String> positionOptions = FXCollections.observableArrayList(POSITION_OPTIONS);
 		
 		ComboBox positionComboBox = new ComboBox(positionOptions);
-		positionComboBox.setValue(positions.get(0));
+		positionComboBox.setValue(positionOptions.get(0));
 		grid.add(positionComboBox, 1, 13);
 		
 		Separator separator = new Separator();
