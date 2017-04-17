@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 @SuppressWarnings({"restriction"})
 public class Main extends Application {
+	
 	@Override
 	public void start(Stage primaryStage) {
 		try {
