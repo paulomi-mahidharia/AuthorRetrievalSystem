@@ -3,6 +3,7 @@ package application;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.AND_RADIO;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.BUTTON_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.OR_RADIO;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.PROGRESS_COLOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_AUTHORS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_NAME;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_PUBLISHED;
@@ -13,6 +14,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.KEYWORD_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.NUM_OF_PUBLICATIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_OPTIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.POSITION_SERVED;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROGRESS_INDICATOR_DIMENSION;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_AUTHO_NAME;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_FROM_YEAR;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.PROMPT_KEYWORD;
@@ -27,7 +29,7 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_AUTHOR_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_PAPER_INFO;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_SERVICE_INFO;
-import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEPARATOR_STYLE;
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEPARATOR_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERVED_OPTIONS;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.TO_LABEL;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.YEAR_RANGE;
@@ -450,12 +452,13 @@ public class SearchScene {
 	private static void searchAuthors(SearchCriteria searchCriteria, Scene searchScene, Stage primaryStage){
     	
 		ProgressIndicator indicator = new ProgressIndicator();
-		indicator.setMinSize(150, 150);
-		VBox updatePane = new VBox();
-        updatePane.setPadding(new Insets(10));
-        updatePane.getChildren().addAll(indicator);
-        updatePane.setAlignment(Pos.CENTER);
-        stackPane.getChildren().add(updatePane);
+		indicator.setStyle(PROGRESS_COLOR);
+		indicator.setMinSize(PROGRESS_INDICATOR_DIMENSION, PROGRESS_INDICATOR_DIMENSION);
+		
+		VBox loadingPane = new VBox();
+		loadingPane.getChildren().addAll(indicator);
+		loadingPane.setAlignment(Pos.CENTER);
+		stackPane.getChildren().add(loadingPane);
 		
 
         Task longTask = new Task<Void>() {
@@ -481,7 +484,7 @@ public class SearchScene {
             @Override
             public void handle(WorkerStateEvent t) {
             	grid.setDisable(false);
-            	updatePane.setVisible(false);
+            	loadingPane.setVisible(false);
             	if(!authors.isEmpty() && authors.size() != 0){
     				SceneStack.pushSceneToStack(searchScene);
     				ResultScene.displayResultScene(authors, primaryStage);
@@ -491,27 +494,9 @@ public class SearchScene {
     			}
             }
         });
-		/*SearchService searchService = new SearchServiceImpl();
-		List<Author> authors = new ArrayList<Author>();
-		try {
-			authors = searchService.searchAuthorsByCriteria(searchCriteria);
-			
-			if(!authors.isEmpty() && authors.size() != 0){
-				SceneStack.pushSceneToStack(searchScene);
-				ResultScene.displayResultScene(authors,primaryStage);
-				
-			}else{
-				AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, NO_AUTHORS_FOUND);
-				return;
-			}
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			AlertUtil.displayAlert(ALERT_ERROR, ALERT_HEADER, SQL_FAILURE);
-			return;
-		}*/
         
         indicator.progressProperty().bind(longTask.progressProperty());
-        updatePane.setVisible(true);
+        loadingPane.setVisible(true);
 	    grid.setDisable(true);
         
         new Thread(longTask).start();
@@ -524,7 +509,6 @@ public class SearchScene {
 		grid.setVgap(SCENE_GRID_GAP);
 		grid.setPadding(new Insets(SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING));
 		
-	
 		ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(50);
 		ColumnConstraints col2 = new ColumnConstraints();

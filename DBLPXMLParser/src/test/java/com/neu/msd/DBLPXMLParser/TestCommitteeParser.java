@@ -12,42 +12,43 @@ import com.neu.msd.DBLPXMLParser.config.DBConnection;
 import junit.framework.TestCase;
 
 public class TestCommitteeParser extends TestCase {
-    
+
 	private static Connection dbConnection;
 	private static String FILE_PATH = "test-data/test-committee";
-	
-	public void setup() throws SQLException{
-		
+	private ParserBase parser;
+
+	public void setup() throws SQLException {
 		dbConnection = DBConnection.getConn();
-		String[] args = {FILE_PATH};
-		CommitteeMembersParser.main(args);
 	}
-	
+
 	@Test
-    public void testParser() throws SQLException{
-		
+	public void testParser() throws SQLException {
+
 		setup();
-        
+
+		StandardParserFactory factory = new StandardParserFactory();
+		parser = factory.makeCommitteeParser(FILE_PATH);
+		parser.executeParser();
+
 		PreparedStatement selectStmt = dbConnection.prepareStatement("select * from committee");
-        ResultSet rs = selectStmt.executeQuery();
-        assertTrue(rs.next());
-        
-        cleanup();
-        
-    }	
-	
-	public void cleanup(){
+		ResultSet rs = selectStmt.executeQuery();
+		assertTrue(rs.next());
+
+		cleanup();
+
+	}
+
+	public void cleanup() {
 		try {
 
 			PreparedStatement deleteStmt = dbConnection.prepareStatement("delete from committee");
 			deleteStmt.execute();
-			
+
 			dbConnection.close();
-		}catch(SQLException e) {
+		} catch (SQLException e) {
 			System.out.println("Error deleting test records");
 			e.printStackTrace();
 		}
-		
-		
+
 	}
 }

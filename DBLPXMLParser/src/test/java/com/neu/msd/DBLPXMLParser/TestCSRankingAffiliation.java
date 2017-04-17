@@ -15,12 +15,10 @@ public class TestCSRankingAffiliation extends TestCase {
     
 	private static Connection dbConnection;
 	private static String FILE_PATH = "test-data/test-faculty.csv";
+	private ParserBase parser;
 	
 	public void setup() throws SQLException{
-		
 		dbConnection = DBConnection.getConn();
-		String[] args = {FILE_PATH};
-		CsRankingsParser.main(args);
 	}
 	
 	@Test
@@ -28,6 +26,10 @@ public class TestCSRankingAffiliation extends TestCase {
 		
 		setup();
         
+		StandardParserFactory factory = new StandardParserFactory();
+		parser = factory.makeCsRankingsParser(FILE_PATH);
+		parser.executeParser();
+		
 		PreparedStatement selectStmt = dbConnection.prepareStatement("select * from author_faculty_affiliation");
         ResultSet rs = selectStmt.executeQuery();
         assertTrue(rs.next());

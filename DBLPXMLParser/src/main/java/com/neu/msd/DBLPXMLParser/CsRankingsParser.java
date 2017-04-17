@@ -12,13 +12,32 @@ import java.util.logging.Logger;
 import com.neu.msd.DBLPXMLParser.handler.HandleFacultyAffiliation;
 import com.neu.msd.DBLPXMLParser.model.AuthorAffiliation;
 
-public class CsRankingsParser {
+public class CsRankingsParser extends ParserBase {
 
-	public static void main(String[] args) {
-		
+	private String filePath;
+
+	public CsRankingsParser(String path) {
+		filePath = path;
+	}
+
+	// Loader routine that picks up the file from the specified path
+	public static List<String> loadLinesFromFile(String path) {
+		Path Filepath = Paths.get(path);
+		try {
+			List<String> lines = Files.readAllLines(Filepath);
+			return lines;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<String>();
+	}
+
+	@Override
+	public void executeParser() {
 		// Please update the path for your Faculty Affiliation CSV file here.
-		String filepath = args.length > 0 ? args[0] :"faculty.csv";
-		
+		String filepath = (!filePath.isEmpty() && !filePath.equals(null)) ? filePath : "faculty.csv";
+
 		List<String> linesFromFile = loadLinesFromFile(filepath);
 		// Convert the list to an Array of Strings.
 		String[] lines = linesFromFile.toArray(new String[0]);
@@ -43,20 +62,6 @@ public class CsRankingsParser {
 			System.out.println("Error while processing faculty affilications.");
 			e.printStackTrace();
 		}
-		
 
-	}
-
-	// Loader routine that picks up the file from the specified path
-	public static List<String> loadLinesFromFile(String path) {
-		Path Filepath = Paths.get(path);
-		try {
-			List<String> lines = Files.readAllLines(Filepath);
-			return lines;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<String>();
 	}
 }
