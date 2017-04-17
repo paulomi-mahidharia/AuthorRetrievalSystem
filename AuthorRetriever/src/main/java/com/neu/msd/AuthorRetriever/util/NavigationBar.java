@@ -22,6 +22,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.layout.BorderPane;
 
@@ -46,8 +47,26 @@ public final class NavigationBar {
 		
 		Text scenetitle = getSceneTitle(view);
 		
-		Button btn = new Button(SEARCH_AUTHORS);
-		btn.setStyle("-fx-border-color: #b22222");
+		Button btnSearchInfo = new Button("INFO");
+		btnSearchInfo.setStyle("-fx-border-color: #b22222");
+		btnSearchInfo.setVisible(false);
+		if(view == SEARCH) btnSearchInfo.setVisible(true);
+		
+		btnSearchInfo.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				//Disable current step
+				Stage dialog = new Stage();
+
+				// populate dialog with controls.
+				dialog.setScene(SearchToolTip.getSearchToolTip());
+				dialog.setResizable(false);
+				dialog.initOwner(primaryStage);
+				dialog.initModality(Modality.APPLICATION_MODAL); 
+				dialog.showAndWait();
+			}	
+		});
 		
 		Button btnShortList = new Button("ShortListed Authors");
 		btnShortList.setStyle("-fx-border-color: #b22222");
@@ -75,7 +94,7 @@ public final class NavigationBar {
 		});
 		
 		HBox hbox = new HBox();
-		hbox.getChildren().addAll(btnShortList, btnLogout);
+		hbox.getChildren().addAll(btnSearchInfo, btnShortList, btnLogout);
 		hbox.setSpacing(10);
 		
 		if(view.equals(SEARCH))
@@ -100,6 +119,7 @@ public final class NavigationBar {
 			break;
 		
 		case SEARCH: 
+			
 			scenetitle = new Text(SEARCH_TITLE);
 			break;
 		
