@@ -1,5 +1,9 @@
 package com.neu.msd.AuthorRetriever.constants;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class SceneContants {
 	
 	public static final String SEARCH = "search";
@@ -11,7 +15,27 @@ public class SceneContants {
 	public static final String RESULT_TITLE = "RESULT";
 	public static final String AUTHOR_TITLE = "AUTHOR PROFILE";
 	
-	//public static final Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();	
+	public static final String FONT_TYPE = "Tahoma";
+	public static final int TITLE_FONT_SIZE = 24;
+	public static final int HEADER_FONT_SIZE = 20;
+	
 	public static final double SCENE_LENGTH = 1000;
 	public static final double SCENE_WIDTH = 720;
+	
+	public static final double SCENE_GRID_GAP = 10;
+	public static final double SCENE_GRID_PADDING = 25;
+	
+	public static final String SEARCH_PAPER_INFO = "Search based on paper information";
+	public static final String NUM_OF_PUBLICATIONS = "Number of minimum Publications:";
+	public static final String PROMPT_NUM_OF_PUBLICATIONS = "Number of papers/articles";
+	public static final String CONFERENCE_PUBLISHED = "Conference published/not published for:";
+	public static final List<String> PUBLISH_OPTIONS = new ArrayList<>(Arrays.asList( "Published in", "Not published in"));
+	public static final String PAPER_YEAR_RANGE = "Year range:";
+	public static final List<String> YEAR_RANGE_OPTIONS = new ArrayList<>(Arrays.asList("before", "between", "after"));
+	public static final String PROMPT_FROM_YEAR = "From year";
+	public static final String TO_LABEL = "to";
+	public static final String PROMPT_TO_YEAR = "To year";
+	public static final String KEYWORD_LABEL = "Keyword or Title:";
+	public static final String PROMPT_KEYWORD = "Enter keyword or title";
+
 }

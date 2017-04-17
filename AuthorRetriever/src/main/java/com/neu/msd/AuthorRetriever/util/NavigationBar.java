@@ -7,6 +7,8 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SEARCH_TITLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.FONT_TYPE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.TITLE_FONT_SIZE;
 
 import application.LoginScene;
 import application.ShortListAuthor;
@@ -103,7 +105,7 @@ public final class NavigationBar {
 			scenetitle = new Text(AUTHOR_TITLE);
 			break;
 		}
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.BOLD, 24));
+		scenetitle.setFont(Font.font(FONT_TYPE, FontWeight.BOLD, TITLE_FONT_SIZE));
 		scenetitle.setFill(Color.FIREBRICK);
 		return scenetitle;
 	}
