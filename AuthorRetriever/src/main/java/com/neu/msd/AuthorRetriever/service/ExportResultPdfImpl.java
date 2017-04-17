@@ -1,5 +1,7 @@
 package com.neu.msd.AuthorRetriever.service;
 
+
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -31,6 +33,13 @@ private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
              Font.BOLD);
 private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
              Font.BOLD);
+
+
+/**
+ * This method is a  implementation  for exporting  authors to Pdf.
+ *  @Given List of Authors,File object to store location of file
+ *  @return:A boolean whether file is created or not 
+ */	
 
 	@Override
 	public boolean exportResultAsPdf(List<Author> result, File file) {
@@ -139,11 +148,7 @@ private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
          subCatPart.add(table);
 	}
 
-	@Override
-	public boolean exportResultAsEmail(List<Author> result, File file) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+
 	private static void addEmptyLine(Paragraph paragraph, int number) {
         for (int i = 0; i < number; i++) {
                 paragraph.add(new Paragraph(" "));
