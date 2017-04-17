@@ -104,14 +104,14 @@ private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
 
 	private void createTable(Section subCatPart,List<Author> result) {
 		// TODO Auto-generated method stub
-		 PdfPTable table = new PdfPTable(3);
+		 PdfPTable table = new PdfPTable(4);
 
          // t.setBorderColor(BaseColor.GRAY);
          // t.setPadding(4);
          // t.setSpacing(4);
          // t.setBorderWidth(1);
 
-         PdfPCell c1 = new PdfPCell(new Phrase("SrNo."));
+         PdfPCell c1 = new PdfPCell(new Phrase("Serial No."));
          c1.setHorizontalAlignment(Element.ALIGN_CENTER);
          table.addCell(c1);
 
@@ -119,14 +119,20 @@ private static Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 12,
          c1.setHorizontalAlignment(Element.ALIGN_CENTER);
          table.addCell(c1);
 
-         c1 = new PdfPCell(new Phrase("Author _ Info"));
+         c1 = new PdfPCell(new Phrase("University"));
          c1.setHorizontalAlignment(Element.ALIGN_CENTER);
          table.addCell(c1);
+         
+         c1 = new PdfPCell(new Phrase("Homepage URL"));
+         c1.setHorizontalAlignment(Element.ALIGN_CENTER);
+         table.addCell(c1);
+         
          table.setHeaderRows(1);
          int i=0;
          for (Author author:result){
          table.addCell(Integer.toString(i));
          table.addCell(author.getName());
+         table.addCell(author.getAffiliation());
          table.addCell(author.getUrl());
          i=i+1; 
          }

@@ -7,10 +7,13 @@ import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELEC
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_PROFILE;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ERROR_RETRIEVING_AUTHOR;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
 
 import com.neu.msd.AuthorRetriever.model.Author;
+import com.neu.msd.AuthorRetriever.service.ExportResult;
+import com.neu.msd.AuthorRetriever.service.ExportResultPdfImpl;
 import com.neu.msd.AuthorRetriever.service.UserService;
 import com.neu.msd.AuthorRetriever.service.UserServiceImpl;
 import com.neu.msd.AuthorRetriever.util.AlertUtil;
@@ -32,6 +35,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 @SuppressWarnings({ "rawtypes", "restriction", "unchecked" })
@@ -66,10 +70,32 @@ public class ShortListAuthor {
         
         Button btnRemoveShortlistedAuthor = new Button("Remove Selected Author");
         btnRemoveShortlistedAuthor.setStyle("-fx-border-color: #b22222");
+        
         Button btnViewShortlistedAuthor = new Button("View Selected Author Profile");
         btnViewShortlistedAuthor.setStyle("-fx-border-color: #b22222");
+        
+        Button buttonExportPdf = new Button("Export PDF");
+	    buttonExportPdf.setStyle("-fx-border-color: #b22222");
+	   
+		buttonExportPdf.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent event) {
+				
+				FileChooser fileChooser = new FileChooser();
+				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("PDF files (*.pdf)", "*.pdf");
+	            fileChooser.getExtensionFilters().add(extFilter);
+	            File file = fileChooser.showSaveDialog(primaryStage);
+	              
+	            if(file != null){
+	                 ExportResult exportResult=new ExportResultPdfImpl();
+	                 exportResult.exportResultAsPdf(shortlistAuthor, file);
+	            }
+			}
+		});
+        
         HBox hbox = new HBox();
-        hbox.getChildren().addAll(btnRemoveShortlistedAuthor, btnViewShortlistedAuthor);
+        hbox.getChildren().addAll(btnRemoveShortlistedAuthor, btnViewShortlistedAuthor, buttonExportPdf);
         hbox.setAlignment(Pos.BOTTOM_CENTER);
         hbox.setPadding(new Insets(15, 15, 15, 15));
         hbox.setSpacing(10);

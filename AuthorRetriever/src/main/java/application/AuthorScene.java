@@ -157,7 +157,7 @@ public class AuthorScene {
 				selectedAuthorList.add(selectedAuthor);
 				userServiceImpl.addSelectedAuthors(selectedAuthorList);
 				AlertUtil alertUtil=new AlertUtil();
-				String message="Succefully saved" +selectedAuthor.getName()+ "to your shortlisted author list";
+				String message="Succefully saved " +selectedAuthor.getName()+ "to your shortlisted author list";
 				alertUtil.displayAlert("Success", selectedAuthor.getName(),message);
 				
 			}	
