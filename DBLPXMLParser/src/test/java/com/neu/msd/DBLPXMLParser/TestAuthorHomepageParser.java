@@ -15,6 +15,7 @@ public class TestAuthorHomepageParser extends TestCase {
     
 	private static Connection dbConnection;
 	private static String FILE_PATH = "test-data/test-homepages.csv";
+	private ParserBase parser;
 	
 	public void setup() throws SQLException{
 		
@@ -28,6 +29,10 @@ public class TestAuthorHomepageParser extends TestCase {
 		
 		setup();
         
+		StandardParserFactory factory = new StandardParserFactory();
+		parser = factory.makeAuthorHomePagesParser(FILE_PATH);
+		parser.executeParser();
+		
 		PreparedStatement selectStmt = dbConnection.prepareStatement("select * from author_homepage");
         ResultSet rs = selectStmt.executeQuery();
         assertTrue(rs.next());

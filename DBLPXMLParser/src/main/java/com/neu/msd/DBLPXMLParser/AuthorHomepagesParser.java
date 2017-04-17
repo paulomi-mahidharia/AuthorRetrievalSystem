@@ -11,13 +11,36 @@ import java.util.List;
 import com.neu.msd.DBLPXMLParser.handler.HandleAuthorHomepages;
 import com.neu.msd.DBLPXMLParser.model.AuthorHomepage;
 
-public class AuthorHomepagesParser {
+public class AuthorHomepagesParser extends ParserBase {
+
+	private String filePath;
+
+	public AuthorHomepagesParser(String path) {
+		filePath = path;
+	}
 
 	public static void main(String[] args) {
-		
+
+	}
+
+	// Loader routine that picks up the file from the specified path
+	public static List<String> loadLinesFromFile(String path) {
+		Path Filepath = Paths.get(path);
+		try {
+			List<String> lines = Files.readAllLines(Filepath);
+			return lines;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ArrayList<String>();
+	}
+
+	@Override
+	public void executeParser() {
 		// Please update the path for your Faculty Affiliation CSV file here.
-		String filepath = args.length > 0 ? args[0] : "homepages.csv";
-		
+		String filepath = (!filePath.isEmpty() && !filePath.equals(null)) ? filePath : "homepages.csv";
+
 		List<String> linesFromFile = loadLinesFromFile(filepath);
 		// Convert the list to an Array of Strings.
 		String[] lines = linesFromFile.toArray(new String[0]);
@@ -42,20 +65,6 @@ public class AuthorHomepagesParser {
 			System.out.println("Error processing homepages for authors.");
 			e.printStackTrace();
 		}
-		
 
-	}
-
-	// Loader routine that picks up the file from the specified path
-	public static List<String> loadLinesFromFile(String path) {
-		Path Filepath = Paths.get(path);
-		try {
-			List<String> lines = Files.readAllLines(Filepath);
-			return lines;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return new ArrayList<String>();
 	}
 }
