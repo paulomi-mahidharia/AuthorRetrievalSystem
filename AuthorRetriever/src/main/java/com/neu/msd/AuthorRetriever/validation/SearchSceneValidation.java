@@ -8,6 +8,11 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+/**
+ * This class is used for search scene validation
+ * @Given:Checkbox Object,CheckBox object,CheckBox object
+ * @return: A string that represents the Search scene validation criteria
+ */
 @SuppressWarnings({ "rawtypes", "restriction" })
 public class SearchSceneValidation {
 	
