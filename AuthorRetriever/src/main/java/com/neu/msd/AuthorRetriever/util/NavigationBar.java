@@ -1,6 +1,8 @@
 package com.neu.msd.AuthorRetriever.util;
 
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.REGISTER;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.REGISTER_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHOR_TITLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.FONT_TYPE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN;
@@ -143,6 +145,9 @@ public final class NavigationBar {
 			
 		case AUTHOR:
 			scenetitle = new Text(AUTHOR_TITLE);
+			break;
+		case REGISTER:
+			scenetitle = new Text(REGISTER_TITLE);
 			break;
 		}
 		scenetitle.setFont(Font.font(FONT_TYPE, FontWeight.BOLD, TITLE_FONT_SIZE));
