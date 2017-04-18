@@ -121,17 +121,16 @@ public class AuthorScene {
 		Text t1 = new Text(10, 50,selectedAuthor.getName());
 		t1.setFont(new Font(24));
        
-        Text t2 = new Text(10, 50, "Affiliated University: " +selectedAuthor.getAffiliation());
+        Text t2 = new Text(10, 50, selectedAuthor.getAffiliation());
 		t2.setFont(new Font(16));
 		
-		Text t3 = new Text(10, 50, "Homepage URL: ");
-		t3.setFont(new Font(16));
+		BorderPane authorInfoPane = new BorderPane();
+		authorInfoPane.setLeft(t2);
 		
-		HBox authorURLHbox = new HBox();
 		if(selectedAuthor.getUrl().equals("None")){
-			final Text noUrl = new Text(10, 50, selectedAuthor.getUrl());
-			noUrl.setFont(new Font(16));
-			authorURLHbox.getChildren().addAll(t3, noUrl);
+			Text t3 = new Text(10, 50, selectedAuthor.getUrl());
+			t3.setFont(new Font(16));
+			authorInfoPane.setRight(t3);
 		}else{
 			final Hyperlink hpl = new Hyperlink(selectedAuthor.getUrl());
 	        hpl.setFont(new Font(16));
@@ -147,16 +146,21 @@ public class AuthorScene {
 	                stageForURL.show();
 	            }
 	        });
-	        authorURLHbox.getChildren().addAll(t3, hpl);
+	        authorInfoPane.setRight(hpl);
 		}
-        
-        authorURLHbox.setSpacing(10);
-        authorURLHbox.setAlignment(Pos.CENTER_LEFT);
 		
         grid.add(t1, 1, 2);
-        grid.add(t2, 1, 3);
-        grid.add(authorURLHbox, 1, 4);
+        grid.add(authorInfoPane, 1, 4);
+        
+        Text table1 = new Text(10, 50, "Publications by "+selectedAuthor.getName()+":");
+        table1.setFont(new Font(16));
+        
+        Text table2 = new Text(10, 50, "Committees served on by "+selectedAuthor.getName()+":");
+        table2.setFont(new Font(16));
+        
+        grid.add(table1, 1, 5);
         grid.add(createPaperInfoTable, 1,6);
+        grid.add(table2, 1, 8);
         grid.add(createConferenceInfoTable, 1,9);
         ColumnConstraints col1Constraints = new ColumnConstraints();
         col1Constraints.setPercentWidth(5);
@@ -207,7 +211,7 @@ public class AuthorScene {
 				selectedAuthorList.add(selectedAuthor);
 				userServiceImpl.addSelectedAuthors(selectedAuthorList);
 				AlertUtil alertUtil=new AlertUtil();
-				String message="Succefully saved " +selectedAuthor.getName()+ "to your shortlisted author list";
+				String message="Succefully saved " +selectedAuthor.getName()+ " to your shortlisted author list";
 				alertUtil.displayAlert("Success", selectedAuthor.getName(),message);
 				
 			}	
