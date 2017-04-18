@@ -57,8 +57,8 @@ public final class NavigationBar {
 		
 		Image info = new Image("file:info.png");
 		ImageView infoIcon = new ImageView(info);
-		infoIcon.setFitHeight(35);
-		infoIcon.setFitWidth(35);
+		infoIcon.setFitHeight(30);
+		infoIcon.setFitWidth(30);
 		infoIcon.setVisible(false);
 		
 		if(view.equalsIgnoreCase(SEARCH)) infoIcon.setVisible(true);
