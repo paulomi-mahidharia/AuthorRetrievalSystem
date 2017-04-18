@@ -21,6 +21,15 @@ public class SceneContants {
 	public static final String AUTHOR_TITLE = "AUTHOR PROFILE";
 	public static final String REGISTER_TITLE = "REGISTER USER";
 	public static final String FONT_TYPE = "Tahoma";
+	public static final String AUTHORNAME = "Author Name";
+	public static final String SERIALNO = "Serial No.";
+	public static final String UNIVERSITY = "University";
+	public static final String URL = "URL";
+	public static final String YEAR = "Year";
+	public static final String NAME = "Name";
+	public static final String TITLE = "Title";
+	public static final String CONFERENCE_TITLE ="Conferance Title";
+	public static final String PAPER_TITLE="Paper Title";
 	public static final int TITLE_FONT_SIZE = 24;
 	public static final int HEADER_FONT_SIZE = 20;
 	

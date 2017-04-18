@@ -67,7 +67,15 @@ import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.RESTART_SEAR
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SEARCH_SIMILAR_AUTHOR;
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.SHORTLIST_AUTHOR;
 import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
-
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHORNAME;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.URL;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.UNIVERSITY;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERIALNO;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.YEAR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.NAME;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.TITLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.CONFERENCE_TITLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.PAPER_TITLE;;
 /**
  * Below class is use to display author details.This class is used to build UI for author information
  * The scene generated from this class displays on UI Author name , author university URL and the papers 
@@ -284,10 +292,10 @@ public class AuthorScene {
 		TableView table = new TableView<>();
 		System.out.println(conferences.size());
 		ObservableList<Conference> confInfoData = FXCollections.observableArrayList(conferences);
-		TableColumn<Conference,Number> conferenceId = new TableColumn("Serial No.");
-        TableColumn year = new TableColumn("Year");
-        TableColumn name = new TableColumn("Name");
-        TableColumn title = new TableColumn("Title");
+		TableColumn<Conference,Number> conferenceId = new TableColumn(SERIALNO);
+        TableColumn year = new TableColumn(YEAR);
+        TableColumn name = new TableColumn(NAME);
+        TableColumn title = new TableColumn(TITLE);
         
         conferenceId.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
       
@@ -306,11 +314,11 @@ public class AuthorScene {
 		TableView table = new TableView<>();
 		
 		ObservableList<AuthorPaper> paperInfoData = FXCollections.observableArrayList(paperInfo);
-		TableColumn<AuthorPaper,Number> paperId = new TableColumn("Serial No.");
-        TableColumn confName = new TableColumn("Conferance Title");
-        TableColumn paperTitle = new TableColumn("Paper Title");
-        TableColumn year = new TableColumn("Year");
-        TableColumn url = new TableColumn("URL");
+		TableColumn<AuthorPaper,Number> paperId = new TableColumn(SERIALNO);
+        TableColumn confName = new TableColumn(CONFERENCE_TITLE);
+        TableColumn paperTitle = new TableColumn(PAPER_TITLE);
+        TableColumn year = new TableColumn(YEAR);
+        TableColumn url = new TableColumn(URL);
         
         paperId.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
         confName.setCellValueFactory(new PropertyValueFactory<>("confName"));

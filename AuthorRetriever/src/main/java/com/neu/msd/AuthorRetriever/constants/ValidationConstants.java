@@ -22,8 +22,8 @@ public class ValidationConstants {
 	
 	public static final String INVALID_DATE_RANGE = "Please select a valid date range";
 	public static final String INVALID_DATE = "Please select a valid date";
+	public static final String INVALID_CREDENTIALS = "Invalid credentials!";
 	public static final String VALID_DATE = "Valid date selection";
-	
 	public static final String INVALID_NUMBER_OF_PAPERS = "Please enter valid number of publications (0-999)";
 	public static final String INVALID_CONFERENCE_NAME = "Please enter a valid conference name";
 	public static final String INVALID_KEYWORD = "Please enter a valid keyword or title";
@@ -41,5 +41,6 @@ public class ValidationConstants {
 	public static final String PASSWORD_PATTERN = "((?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})";
 	
 	public static final String NO_CONFERENCES_AVAILABLE = "No conferences available";
-
+	public static final String PASSWORD_MISMATCH ="Password and Renter Password  do not match!";
+	public static final String INVALID_CRITERIA ="Password doesn't match Password Criteria";
 }
