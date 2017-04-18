@@ -1,10 +1,15 @@
 package application;
 
+import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.BUTTON_STYLE;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_GAP;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_PADDING;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.PASSWORD_PATTERN;
 import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
-
+import static com.neu.msd.AuthorRetriever.util.NavigationBar.getHeaderPane;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.REGISTER;
 import java.util.regex.Pattern;
 
 import com.neu.msd.AuthorRetriever.model.User;
@@ -20,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -41,48 +47,73 @@ import javafx.stage.Stage;
 public class RegistrationScene {
 	
 	
+	private static GridPane setUpGrid() {
+
+		GridPane grid = new GridPane();
+		grid.setAlignment(Pos.TOP_CENTER);
+		grid.setHgap(SCENE_GRID_GAP);
+		grid.setVgap(SCENE_GRID_GAP);
+		grid.setPadding(new Insets(SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING, SCENE_GRID_PADDING));
+		return grid;
+	}
+
 
 	public static void  getRegisterScene(Stage primaryStage){
-		GridPane grid = new GridPane();
-		grid.setAlignment(Pos.CENTER);
-		grid.setHgap(10);
-		grid.setVgap(10);
-		grid.setPadding(new Insets(25, 25, 25, 25));
-				
-		Text scenetitle = new Text("Registration Page!");
-		scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-		grid.add(scenetitle, 0, 0, 2, 1);
+		
+		GridPane grid = setUpGrid();
+		BorderPane scenetitle = getHeaderPane(REGISTER, primaryStage);
+		scenetitle.getChildren().remove(0);
+		scenetitle.getChildren().remove(1);
+		grid.add(scenetitle, 0, 0, 10, 1);
 
+				
+		
 		Label userName = new Label("User Name:");
-		grid.add(userName, 0, 1);
+		grid.add(userName, 0, 25);
 
 		TextField userTextField = new TextField();
 		userTextField.setPromptText("Enter username");
-		grid.add(userTextField, 1, 1);
+		grid.add(userTextField, 1, 25);
 
 		Label pw = new Label("Password:");
-		grid.add(pw, 0, 2);
+		grid.add(pw, 0, 26);
 
 		PasswordField pwBox = new PasswordField();
 		pwBox.setPromptText("Enter password");
-		grid.add(pwBox, 1, 2);
+		grid.add(pwBox, 1, 26);
 		
 		Label reEnterpw = new Label("Re-Enter Password:");
-		grid.add(reEnterpw, 0, 3);
+		grid.add(reEnterpw, 0, 27);
 
 		PasswordField renterpwBox = new PasswordField();
 		renterpwBox.setPromptText("Re-Enter password");
-		grid.add(renterpwBox, 1, 3);
+		grid.add(renterpwBox, 1, 27);
 
 		Button btn = new Button("Register");
+		btn.setStyle(BUTTON_STYLE);
 		showHandCursor(btn);
+		
+		Button btnLogin=new Button("Login");
+		btnLogin.setStyle(BUTTON_STYLE);
+		showHandCursor(btnLogin);
+		
+	
 		HBox hbBtn = new HBox(10);
 		hbBtn.setAlignment(Pos.BOTTOM_CENTER);
-		hbBtn.getChildren().add(btn);
-		grid.add(hbBtn, 1, 4);
+		hbBtn.getChildren().addAll(btn,btnLogin);
+		grid.add(hbBtn, 1, 28);
 		
 		final Text actiontarget = new Text();
         grid.add(actiontarget, 1, 6);
+        
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				LoginScene.displayLoginScene(primaryStage);
+				
+			}
+		});
         
         btn.setOnAction(new EventHandler<ActionEvent>() {
         	 
