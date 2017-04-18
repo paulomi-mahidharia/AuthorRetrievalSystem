@@ -204,6 +204,7 @@ public class SearchScene {
 		RadioButton radioButtonAnd = new RadioButton(AND_RADIO);
 		radioButtonAnd.setToggleGroup(unionGroup);
 		radioButtonAnd.setUserData(AND_RADIO);
+		radioButtonAnd.setSelected(true);
 		radioButtonAnd.setFont(Font.font(FONT_TYPE, FontWeight.NORMAL, HEADER_FONT_SIZE));
 		
 		RadioButton radioButtonOr = new RadioButton(OR_RADIO);
