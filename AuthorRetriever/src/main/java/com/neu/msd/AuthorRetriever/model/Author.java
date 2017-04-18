@@ -2,8 +2,6 @@ package com.neu.msd.AuthorRetriever.model;
 
 import java.util.List;
 
-import com.neu.msd.AuthorRetriever.model.Inproceeding;
-
 public class Author implements Comparable<Author> {
 
 	private int authorId;
@@ -16,10 +14,6 @@ public class Author implements Comparable<Author> {
 	private String url;
 	private String affiliation;
 	private List<String> aliasNames;
-	private List<Inproceeding> inproceedings;
-	private List<Article> articles;
-	private List<Thesis> thesis;
-	private List<Journal> journals;
 	private List<AuthorPaper> papers;
 	private List<Conference> conferences;
 
@@ -101,38 +95,6 @@ public class Author implements Comparable<Author> {
 
 	public void setAliasNames(List<String> aliasNames) {
 		this.aliasNames = aliasNames;
-	}
-
-	public List<Inproceeding> getInproceedings() {
-		return inproceedings;
-	}
-
-	public void setInproceedings(List<Inproceeding> inproceedings) {
-		this.inproceedings = inproceedings;
-	}
-
-	public List<Article> getArticles() {
-		return articles;
-	}
-
-	public void setArticles(List<Article> articles) {
-		this.articles = articles;
-	}
-
-	public List<Thesis> getThesis() {
-		return thesis;
-	}
-
-	public void setThesis(List<Thesis> thesis) {
-		this.thesis = thesis;
-	}
-
-	public List<Journal> getJournals() {
-		return journals;
-	}
-
-	public void setJournals(List<Journal> journals) {
-		this.journals = journals;
 	}
 
 	@Override
