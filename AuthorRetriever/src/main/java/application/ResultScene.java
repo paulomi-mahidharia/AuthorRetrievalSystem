@@ -6,6 +6,11 @@ import static com.neu.msd.AuthorRetriever.constants.SceneContants.RESULT;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_WIDTH;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ERROR_RETRIEVING_AUTHOR;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHORNAME;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.URL;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.UNIVERSITY;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERIALNO;
+
 import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
 
 import java.io.File;
@@ -77,18 +82,18 @@ public class ResultScene {
         
 		table.setEditable(true);
 		ObservableList<Author> authorData = FXCollections.observableArrayList(authorList);
-        TableColumn<Author,Number> srNo = new TableColumn("Serial No.");
-        TableColumn author = new TableColumn("Author");
-
+        TableColumn<Author,Number> srNo = new TableColumn(SERIALNO);
+        TableColumn author = new TableColumn(AUTHORNAME);
+        
         PropertyValueFactory<Author,Hyperlink> rmbutton = new PropertyValueFactory<Author,Hyperlink>("name");
         author.setCellValueFactory(rmbutton);
-        srNo.setCellValueFactory(new PropertyValueFactory<>("authorId"));
+        
         srNo.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
       
-        TableColumn authorColumn = new TableColumn("University");
+        TableColumn authorColumn = new TableColumn(UNIVERSITY);
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("affiliation"));
         
-        TableColumn authorUrlColumn = new TableColumn("URL");
+        TableColumn authorUrlColumn = new TableColumn(URL);
         authorUrlColumn.setCellValueFactory(new PropertyValueFactory<>("url"));
         
         table.getColumns().addAll(srNo, author, authorColumn, authorUrlColumn);
@@ -140,9 +145,9 @@ public class ResultScene {
 		
 		bp.setCenter(resultScenePaginate.paginate());
 
-		stackPane.getChildren().add(bp);
+		
 		resultScene = new Scene(stackPane, SCENE_LENGTH, SCENE_WIDTH, Color.BEIGE);
-		SceneStack.setCurrentScene(resultScene);
+		
 		resultScene.getStylesheets().add(ResultScene.class.getClassLoader().getResource("table.css").toString());
 
 		primaryStage.setScene(resultScene);
@@ -154,11 +159,16 @@ public class ResultScene {
                 for (Author p : c.getList()) {
                   author=p;
                 }
+               
                 loadAuthorInformation(author, primaryStage, bp);
 
             }
         });
+		table.getSelectionModel().clearSelection();
+		stackPane.getChildren().add(bp);
 		
+		SceneStack.setCurrentScene(resultScene);
+		 
 		primaryStage.show();
 	}
 	

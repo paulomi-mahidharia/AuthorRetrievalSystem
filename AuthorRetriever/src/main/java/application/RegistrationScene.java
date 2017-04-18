@@ -2,6 +2,9 @@ package application;
 
 import static com.neu.msd.AuthorRetriever.constants.ButtonConstants.BUTTON_STYLE;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.LOGIN;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.INVALID_CREDENTIALS;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.INVALID_CRITERIA;
+import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.PASSWORD_MISMATCH;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_GAP;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_GRID_PADDING;
 import static com.neu.msd.AuthorRetriever.constants.SceneContants.SCENE_LENGTH;
@@ -135,16 +138,16 @@ public class RegistrationScene {
             			SearchScene.displaySearchScene(primaryStage); 		
             		}else{
             			actiontarget.setFill(Color.FIREBRICK);
-            			actiontarget.setText("Invalid credentials!");
+            			actiontarget.setText(INVALID_CREDENTIALS);
             		}
             	}
             	else{
             		actiontarget.setFill(Color.FIREBRICK);
-        			actiontarget.setText("Password and Renter Password  do not match!");
+        			actiontarget.setText(PASSWORD_MISMATCH);
             	}
             }else{
             	actiontarget.setFill(Color.FIREBRICK);
-    			actiontarget.setText("Password doesn't match Password Criteria");
+    			actiontarget.setText(INVALID_CRITERIA);
         	}
             }
             	

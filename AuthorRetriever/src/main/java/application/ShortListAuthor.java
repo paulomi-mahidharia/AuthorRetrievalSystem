@@ -9,6 +9,10 @@ import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELEC
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.NO_SELECTED_AUTHOR_PROFILE;
 import static com.neu.msd.AuthorRetriever.constants.ValidationConstants.ERROR_RETRIEVING_AUTHOR;
 import static com.neu.msd.AuthorRetriever.util.HandCursor.showHandCursor;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.AUTHORNAME;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.URL;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.UNIVERSITY;
+import static com.neu.msd.AuthorRetriever.constants.SceneContants.SERIALNO;
 
 import java.io.File;
 import java.sql.SQLException;
@@ -76,10 +80,10 @@ public class ShortListAuthor {
 		System.out.println(shortlistAuthor.size());
 		
 		ObservableList<Author> authorInfoData = FXCollections.observableArrayList(shortlistAuthor);
-		TableColumn<Author,Number> authorId = new TableColumn("Serial No.");
-        TableColumn name = new TableColumn("Author Name");
-        TableColumn authorInfo = new TableColumn("University");
-        TableColumn authorURL = new TableColumn("URL");
+		TableColumn<Author,Number> authorId = new TableColumn(SERIALNO);
+        TableColumn name = new TableColumn(AUTHORNAME);
+        TableColumn authorInfo = new TableColumn(UNIVERSITY);
+        TableColumn authorURL = new TableColumn(URL);
        
         authorId.setCellValueFactory(column-> new ReadOnlyObjectWrapper<Number>(table.getItems().indexOf(column.getValue())+1));
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
